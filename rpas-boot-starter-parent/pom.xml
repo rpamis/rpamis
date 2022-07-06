@@ -3,13 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <groupId>org.springframework.boot</groupId>
-        <version>2.3.4.RELEASE</version>
-        <relativePath/>
-    </parent>
-
     <groupId>com.benym.rpas</groupId>
     <artifactId>rpas-boot-starter-parent</artifactId>
     <version>1.0.0.RELEASE</version>
@@ -26,10 +19,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <!-- Spring -->
-
+        <springboot.version>2.3.4.RELEASE</springboot.version>
+        <springcloud.version>Greenwich.SR2</springcloud.version>
         <!-- 日志跟踪 -->
         <log4j.version>2.17.0</log4j.version>
-        <logback.version>1.2.10</logback.version>
+        <logback.version>1.2.3</logback.version>
         <skywalking.version>8.1.0</skywalking.version>
         <!-- Redis -->
         <redisson.version>3.17.0</redisson.version>
@@ -38,7 +32,7 @@
         <!-- 存储 -->
         <minio.version>7.0.2</minio.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
-        <dynamic-datasource.version>3.1.1</dynamic-datasource.version>
+        <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
         <mysql.version>8.0.20</mysql.version>
         <mariadb.version>2.6.2</mariadb.version>
         <shardingsphere.version>4.0.1</shardingsphere.version>
@@ -65,9 +59,16 @@
         <dependencies>
             <!-- Spring -->
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springboot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Greenwich.SR2</version>
+                <version>${springcloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
