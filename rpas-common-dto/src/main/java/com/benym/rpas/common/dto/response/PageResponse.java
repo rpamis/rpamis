@@ -1,4 +1,4 @@
-package com.benym.rpas.common.pojo.response;
+package com.benym.rpas.common.dto.response;
 
 import java.util.ArrayList;
 import java.util.Collection;

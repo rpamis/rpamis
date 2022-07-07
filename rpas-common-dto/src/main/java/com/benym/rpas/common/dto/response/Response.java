@@ -1,7 +1,7 @@
-package com.benym.rpas.common.pojo.response;
+package com.benym.rpas.common.dto.response;
 
-import com.benym.rpas.common.pojo.enums.ResponseCode;
-import com.benym.rpas.common.pojo.enums.StatusCode;
+import com.benym.rpas.common.dto.enums.ResponseCode;
+import com.benym.rpas.common.dto.enums.StatusCode;
 import java.io.Serializable;
 
 /**

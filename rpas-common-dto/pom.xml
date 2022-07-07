@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rpas-common-pojo</artifactId>
-    <version>${rpas-common-pojo.version}</version>
-    <name>rpas-common-pojo</name>
+    <artifactId>rpas-common-dto</artifactId>
+    <version>${rpas-common-dto.version}</version>
+    <name>rpas-common-dto</name>
     <packaging>jar</packaging>
-    <description>rpas-common-pojo</description>
+    <description>rpas-common-dto</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

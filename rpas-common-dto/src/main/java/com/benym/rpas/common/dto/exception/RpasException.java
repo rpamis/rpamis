@@ -1,6 +1,6 @@
-package com.benym.rpas.common.pojo.exception;
+package com.benym.rpas.common.dto.exception;
 
-import com.benym.rpas.common.pojo.enums.StatusCode;
+import com.benym.rpas.common.dto.enums.StatusCode;
 
 /**
  * @Time : 2022/7/6 21:39
