@@ -52,6 +52,8 @@
         <lombok.version>1.18.12</lombok.version>
 
         <!-- 自研组件 -->
+        <rpas-common-pojo.version>1.0.0</rpas-common-pojo.version>
+        <rpas-common-core.version>1.0.0</rpas-common-core.version>
 
     </properties>
 
