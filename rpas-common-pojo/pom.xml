@@ -10,10 +10,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpas-common-pojo</artifactId>
+    <version>${rpas-common-pojo.version}</version>
+    <name>rpas-common-pojo</name>
+    <packaging>jar</packaging>
+    <description>rpas-common-pojo</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.12.2</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>
