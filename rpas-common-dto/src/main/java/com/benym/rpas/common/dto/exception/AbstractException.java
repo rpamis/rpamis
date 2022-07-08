@@ -1,6 +1,10 @@
 package com.benym.rpas.common.dto.exception;
 
+import com.benym.rpas.common.dto.enums.StatusCode;
+
 /**
+ * 定义抽象异常类
+ *
  * @Time : 2022/7/7 22:20
  */
 public abstract class AbstractException extends RuntimeException {
@@ -9,22 +13,43 @@ public abstract class AbstractException extends RuntimeException {
 
     private int errCode;
 
-    public AbstractException(String errMessage) {
+    private String errMessage;
+
+    private String detailMessage;
+
+    public AbstractException() {
+        super();
+    }
+
+    public AbstractException(String detailMessage) {
+        super(detailMessage);
+    }
+
+    public AbstractException(String detailMessage, Throwable throwable) {
+        super(detailMessage, throwable);
+    }
+
+    public AbstractException(int errCode, String errMessage, String detailMessage) {
         super(errMessage);
+        this.setErrCode(errCode);
+        this.setErrMessage(errMessage);
+        this.setDetailMessage(detailMessage);
     }
 
     public AbstractException(int errCode, String errMessage) {
-        super(errMessage);
-        this.errCode = errCode;
+        this(errCode, errMessage, null);
     }
 
-    public AbstractException(String errMessage, Throwable e) {
-        super(errMessage, e);
+    public AbstractException(StatusCode statusCode) {
+        this(statusCode.getCode(), statusCode.getMessage(), null);
     }
 
-    public AbstractException(int errCode, String errMessage,Throwable e){
-        super(errMessage,e);
-        this.errCode = errCode;
+    public AbstractException(StatusCode statusCode, String detailMessage) {
+        this(statusCode.getCode(), statusCode.getMessage(), detailMessage);
+    }
+
+    public AbstractException(StatusCode statusCode, Throwable throwable) {
+        super(statusCode.getMessage(), throwable);
     }
 
     public int getErrCode() {
@@ -33,5 +58,21 @@ public abstract class AbstractException extends RuntimeException {
 
     public void setErrCode(int errCode) {
         this.errCode = errCode;
+    }
+
+    public String getErrMessage() {
+        return errMessage;
+    }
+
+    public void setErrMessage(String errMessage) {
+        this.errMessage = errMessage;
+    }
+
+    public String getDetailMessage() {
+        return detailMessage;
+    }
+
+    public void setDetailMessage(String detailMessage) {
+        this.detailMessage = detailMessage;
     }
 }
