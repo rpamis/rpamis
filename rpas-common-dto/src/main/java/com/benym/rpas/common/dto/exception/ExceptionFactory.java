@@ -1,31 +1,67 @@
 package com.benym.rpas.common.dto.exception;
 
+import com.benym.rpas.common.dto.enums.StatusCode;
+
 /**
+ * 异常工厂
+ *
  * @Time : 2022/7/7 22:46
  */
 public class ExceptionFactory {
 
-    public static BizException bizException(String errorMessage) {
-        return new BizException(errorMessage);
+    public static BizException bizException() {
+        return new BizException();
     }
 
-    public static BizException bizException(int errorCode, String errorMessage) {
-        return new BizException(errorCode, errorMessage);
+    public static BizException bizException(String detailMessage) {
+        return new BizException(detailMessage);
     }
 
-    public static SysException sysException(String errorMessage) {
-        return new SysException(errorMessage);
+    public static BizException bizException(int errCode, String errMessage) {
+        return new BizException(errCode, errMessage);
     }
 
-    public static SysException sysException(int errorCode, String errorMessage) {
-        return new SysException(errorCode, errorMessage);
+    public static BizException bizException(String detailMessage, Throwable e) {
+        return new BizException(detailMessage, e);
     }
 
-    public static SysException sysException(String errorMessage, Throwable e) {
-        return new SysException(errorMessage, e);
+    public static BizException bizException(Throwable e) {
+        return new BizException(e);
     }
 
-    public static SysException sysException(int errorCode, String errorMessage, Throwable e) {
-        return new SysException(errorCode, errorMessage, e);
+    public static SysException sysException() {
+        return new SysException();
+    }
+
+    public static SysException sysException(String detailMessage) {
+        return new SysException(detailMessage);
+    }
+
+    public static SysException sysException(int errCode, String errMessage) {
+        return new SysException(errCode, errMessage);
+    }
+
+    public static SysException sysException(String detailMessage, Throwable e) {
+        return new SysException(detailMessage, e);
+    }
+
+    public static RpasException rpasException() {
+        return new RpasException();
+    }
+
+    public static RpasException rpasException(int errCode, String errMessage, String detailMessage) {
+        return new RpasException(errCode,errMessage,detailMessage);
+    }
+
+    public static RpasException rpasException(int errCode, String errMessage) {
+        return new RpasException(errCode,errMessage);
+    }
+
+    public static RpasException rpasException(StatusCode statusCode) {
+        return new RpasException(statusCode);
+    }
+
+    public static RpasException rpasException(StatusCode statusCode, String detailMessage) {
+        return new RpasException(statusCode, detailMessage);
     }
 }
