@@ -3,6 +3,8 @@ package com.benym.rpas.common.dto.exception;
 import com.benym.rpas.common.dto.enums.ResponseCode;
 
 /**
+ * 定义业务异常类，固定状态码
+ *
  * @Time : 2022/7/7 22:37
  */
 public class BizException extends AbstractException {
@@ -11,19 +13,23 @@ public class BizException extends AbstractException {
 
     private static final ResponseCode DEAULT_BIZ_ERRCODE = ResponseCode.BIZ_EXCEPTION_CODE;
 
-    public BizException(String errMessage) {
-        super(DEAULT_BIZ_ERRCODE.getCode(), errMessage);
+    public BizException() {
+        super(DEAULT_BIZ_ERRCODE);
+    }
+
+    public BizException(String detailMessage) {
+        super(DEAULT_BIZ_ERRCODE.getCode(), DEAULT_BIZ_ERRCODE.getMessage(), detailMessage);
+    }
+
+    public BizException(String detailMessage, Throwable e) {
+        super(detailMessage, e);
     }
 
     public BizException(int errCode, String errMessage) {
         super(errCode, errMessage);
     }
 
-    public BizException(String errMessage, Throwable e) {
-        super(DEAULT_BIZ_ERRCODE.getCode(), errMessage, e);
-    }
-
-    public BizException(int errCode, String errMessage, Throwable e) {
-        super(errCode, errMessage, e);
+    public BizException(Throwable e) {
+        super(DEAULT_BIZ_ERRCODE, e);
     }
 }
