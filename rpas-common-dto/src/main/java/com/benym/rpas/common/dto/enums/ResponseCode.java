@@ -10,7 +10,9 @@ public enum ResponseCode implements StatusCode {
     FAILED(500, "请求失败"),
     BIZ_EXCEPTION_CODE(20000,"业务异常"),
     SYS_EXCEPTION_CODE(20001,"系统异常"),
-    VALIDATE_ERROR(20002, "参数校验失败");
+    RPAS_EXCEPTION_CODE(20002,"系统内部异常"),
+    UNKNOWN_EXCEPTION_CODE(20003,"未知异常"),
+    VALIDATE_ERROR(20003, "参数校验失败");
 
     private final int code;
     private final String message;

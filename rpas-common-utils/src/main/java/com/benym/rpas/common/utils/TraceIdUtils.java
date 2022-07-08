@@ -1,5 +1,6 @@
 package com.benym.rpas.common.utils;
 
+import com.benym.rpas.common.dto.enums.TraceType;
 import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +17,10 @@ public class TraceIdUtils {
     public TraceIdUtils() {
     }
 
-    public static String getTraceId() {
+    public static String getTraceId(String traceType) {
         String traceId = null;
         try {
-            if (true) {
+            if (TraceType.SKYWALK.getType().equals(traceType)) {
                 traceId = TraceContext.traceId();
             } else {
                 traceId = MDC.get("X-B3-TraceId");
