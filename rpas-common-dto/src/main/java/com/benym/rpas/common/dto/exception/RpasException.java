@@ -3,6 +3,8 @@ package com.benym.rpas.common.dto.exception;
 import com.benym.rpas.common.dto.enums.StatusCode;
 
 /**
+ * 自定义异常类，接受任意状态码
+ *
  * @Time : 2022/7/6 21:39
  */
 public class RpasException extends RuntimeException {
