@@ -17,6 +17,8 @@ public class Response<T> implements Serializable {
 
     private String detailMessage;
 
+    private String requestId;
+
     private T data;
 
     public Response() {
@@ -126,6 +128,14 @@ public class Response<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 
     @Override
