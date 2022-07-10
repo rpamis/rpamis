@@ -24,7 +24,7 @@
         <!-- 日志跟踪 -->
         <log4j.version>2.17.0</log4j.version>
         <logback.version>1.2.3</logback.version>
-        <skywalking.version>8.1.0</skywalking.version>
+        <skywalking.version>8.7.0</skywalking.version>
         <!-- Redis -->
         <redisson.version>3.17.0</redisson.version>
         <!-- Kafka -->
@@ -50,6 +50,7 @@
         <commons-io.version>2.6</commons-io.version>
         <commons-lang.version>2.6</commons-lang.version>
         <lombok.version>1.18.12</lombok.version>
+        <hutool.version>5.8.4</hutool.version>
 
         <!-- 自研组件 -->
         <rpas-common-dto.version>1.0.0</rpas-common-dto.version>
@@ -218,6 +219,11 @@
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>${commons-lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
 
         </dependencies>

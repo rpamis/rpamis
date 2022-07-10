@@ -2,7 +2,6 @@ package com.benym.rpas.common.core.trace;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.UUID;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -10,6 +9,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import com.benym.rpas.common.dto.enums.Trace;
+import com.benym.rpas.common.utils.SnowflakeUtils;
+import com.benym.rpas.common.utils.TraceIdUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -32,21 +34,22 @@ public class TraceFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        String traceId = MDC.get("X-B3-TraceId");
-        if (traceId == null) {
-            traceId = UUID.randomUUID().toString();
-            MDC.put("X-B3-TraceId", traceId);
-        }
+        Trace trace = TraceIdUtils.getTrace();
         TraceWrapper traceWrapper = null;
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-            if (httpServletRequest.getHeader("X-B3-TraceId") == null) {
+            if (httpServletRequest.getHeader(Trace.TRACE_ID) == null) {
                 traceWrapper = new TraceWrapper(httpServletRequest);
-                traceWrapper.putHeader("X-B3-TraceId", traceId);
+                traceWrapper.putHeader(Trace.TRACE_ID, trace.getTraceId());
+                traceWrapper.putHeader(Trace.SPAN_ID, trace.getSpanId());
             }
         }
         try {
             chain.doFilter(Objects.nonNull(traceWrapper) ? traceWrapper : request, response);
+            // doFilter之后表示当前请求结束，下一次属于另外一个Span
+            MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtils.get().next()));
+            // 请求完成之后同步清理traceId
+            TraceIdUtils.clearTrace();
         } catch (Exception e) {
             logger.warn("traceId Filter error{}", e.getMessage());
         }
