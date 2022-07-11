@@ -8,10 +8,10 @@ public interface StatusCode {
     /**
      * 状态码
      */
-    public String getCode();
+    String getCode();
 
     /**
      * 消息
      */
-    public String getMessage();
+    String getMessage();
 }
