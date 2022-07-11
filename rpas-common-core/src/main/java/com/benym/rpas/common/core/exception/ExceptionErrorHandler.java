@@ -70,7 +70,7 @@ public class ExceptionErrorHandler {
     @ExceptionHandler(BizException.class)
     public ResponseEntity<Response<Object>> handleBizException(BizException bizException) {
         final Trace trace = TraceIdUtils.getTrace();
-        int errCode = bizException.getErrCode();
+        String errCode = bizException.getErrCode();
         String message = bizException.getMessage();
         String detailMessage = bizException.getDetailMessage();
         logger.error("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, detailMessage);
@@ -85,7 +85,7 @@ public class ExceptionErrorHandler {
     @ExceptionHandler(SysException.class)
     public ResponseEntity<Response<Object>> handleSysException(SysException sysException) {
         final Trace trace = TraceIdUtils.getTrace();
-        int errCode = sysException.getErrCode();
+        String errCode = sysException.getErrCode();
         String message = sysException.getMessage();
         String detailMessage = sysException.getDetailMessage();
         logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, detailMessage);
@@ -100,7 +100,7 @@ public class ExceptionErrorHandler {
     @ExceptionHandler(RpasException.class)
     public ResponseEntity<Response<Object>> handleRpasException(RpasException rpasException) {
         final Trace trace = TraceIdUtils.getTrace();
-        int errCode = rpasException.getErrCode();
+        String errCode = rpasException.getErrCode();
         String message = rpasException.getMessage();
         String detailMessage = rpasException.getDetailMessage();
         logger.error("请求Id:{}, SpanId:{}, 系统内部异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, detailMessage);
