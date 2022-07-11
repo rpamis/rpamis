@@ -25,7 +25,7 @@ public class BizException extends AbstractException {
         super(detailMessage, e);
     }
 
-    public BizException(int errCode, String errMessage) {
+    public BizException(String errCode, String errMessage) {
         super(errCode, errMessage);
     }
 
