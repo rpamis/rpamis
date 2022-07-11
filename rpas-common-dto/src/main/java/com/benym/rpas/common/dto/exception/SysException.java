@@ -25,7 +25,7 @@ public class SysException extends AbstractException {
         super(detailMessage, e);
     }
 
-    public SysException(int errCode, String errMessage) {
+    public SysException(String errCode, String errMessage) {
         super(errCode, errMessage);
     }
 
