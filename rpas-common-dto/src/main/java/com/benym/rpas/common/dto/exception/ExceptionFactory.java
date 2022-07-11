@@ -17,7 +17,7 @@ public class ExceptionFactory {
         return new BizException(detailMessage);
     }
 
-    public static BizException bizException(int errCode, String errMessage) {
+    public static BizException bizException(String errCode, String errMessage) {
         return new BizException(errCode, errMessage);
     }
 
@@ -37,7 +37,7 @@ public class ExceptionFactory {
         return new SysException(detailMessage);
     }
 
-    public static SysException sysException(int errCode, String errMessage) {
+    public static SysException sysException(String errCode, String errMessage) {
         return new SysException(errCode, errMessage);
     }
 
@@ -49,11 +49,11 @@ public class ExceptionFactory {
         return new RpasException();
     }
 
-    public static RpasException rpasException(int errCode, String errMessage, String detailMessage) {
+    public static RpasException rpasException(String errCode, String errMessage, String detailMessage) {
         return new RpasException(errCode,errMessage,detailMessage);
     }
 
-    public static RpasException rpasException(int errCode, String errMessage) {
+    public static RpasException rpasException(String errCode, String errMessage) {
         return new RpasException(errCode,errMessage);
     }
 
