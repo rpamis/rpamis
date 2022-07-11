@@ -11,7 +11,7 @@ public class RpasException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private int errCode;
+    private String errCode;
 
     private String errMessage;
 
@@ -21,14 +21,14 @@ public class RpasException extends RuntimeException {
         super();
     }
 
-    public RpasException(int errCode, String errMessage, String detailMessage) {
+    public RpasException(String errCode, String errMessage, String detailMessage) {
         super(errMessage);
         this.setErrCode(errCode);
         this.setErrMessage(errMessage);
         this.setDetailMessage(detailMessage);
     }
 
-    public RpasException(int errCode, String errMessage) {
+    public RpasException(String errCode, String errMessage) {
         this(errCode, errMessage, null);
     }
 
@@ -40,11 +40,11 @@ public class RpasException extends RuntimeException {
         this(statusCode.getCode(), statusCode.getMessage(), detailMessage);
     }
 
-    public int getErrCode() {
+    public String getErrCode() {
         return errCode;
     }
 
-    public void setErrCode(int errCode) {
+    public void setErrCode(String errCode) {
         this.errCode = errCode;
     }
 
