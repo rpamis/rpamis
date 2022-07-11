@@ -11,7 +11,7 @@ public abstract class AbstractException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private int errCode;
+    private String errCode;
 
     private String errMessage;
 
@@ -29,14 +29,14 @@ public abstract class AbstractException extends RuntimeException {
         super(detailMessage, throwable);
     }
 
-    public AbstractException(int errCode, String errMessage, String detailMessage) {
+    public AbstractException(String errCode, String errMessage, String detailMessage) {
         super(errMessage);
         this.setErrCode(errCode);
         this.setErrMessage(errMessage);
         this.setDetailMessage(detailMessage);
     }
 
-    public AbstractException(int errCode, String errMessage) {
+    public AbstractException(String errCode, String errMessage) {
         this(errCode, errMessage, null);
     }
 
@@ -52,11 +52,11 @@ public abstract class AbstractException extends RuntimeException {
         super(statusCode.getMessage(), throwable);
     }
 
-    public int getErrCode() {
+    public String getErrCode() {
         return errCode;
     }
 
-    public void setErrCode(int errCode) {
+    public void setErrCode(String errCode) {
         this.errCode = errCode;
     }
 
