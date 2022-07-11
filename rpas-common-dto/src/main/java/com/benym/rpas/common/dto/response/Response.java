@@ -11,7 +11,7 @@ public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int errCode;
+    private String errCode;
 
     private String errMessage;
 
@@ -25,18 +25,18 @@ public class Response<T> implements Serializable {
 
     }
 
-    public Response(int errCode, String errMessage, String detailMessage) {
+    public Response(String errCode, String errMessage, String detailMessage) {
         this.errCode = errCode;
         this.errMessage = errMessage;
         this.detailMessage = detailMessage;
     }
 
-    public Response(int errCode, String errMessage) {
+    public Response(String errCode, String errMessage) {
         this(errCode, errMessage, "");
     }
 
     public Response(T data) {
-        errCode = 0;
+        errCode = "";
         errMessage = "";
         setData(data);
     }
@@ -50,7 +50,7 @@ public class Response<T> implements Serializable {
         return new Response<>(ResponseCode.SUCCESS);
     }
 
-    public static <T> Response<T> success(T data, int errCode, String errMessage) {
+    public static <T> Response<T> success(T data, String errCode, String errMessage) {
         Response<T> response = new Response<>();
         response.setData(data);
         response.setErrCode(errCode);
@@ -67,7 +67,7 @@ public class Response<T> implements Serializable {
     }
 
 
-    public static <T> Response<T> fail(int errCode, String errMessage) {
+    public static <T> Response<T> fail(String errCode, String errMessage) {
         Response<T> response = new Response<>();
         response.setErrCode(errCode);
         response.setErrMessage(errMessage);
@@ -90,7 +90,7 @@ public class Response<T> implements Serializable {
         return response;
     }
 
-    public static <T> Response<T> fail(T data, int errCode, String errMessage) {
+    public static <T> Response<T> fail(T data, String errCode, String errMessage) {
         Response<T> response = new Response<>();
         response.setData(data);
         response.setErrCode(errCode);
@@ -98,11 +98,11 @@ public class Response<T> implements Serializable {
         return response;
     }
 
-    public int getErrCode() {
+    public String getErrCode() {
         return errCode;
     }
 
-    public void setErrCode(int errCode) {
+    public void setErrCode(String errCode) {
         this.errCode = errCode;
     }
 
