@@ -8,7 +8,7 @@ public interface StatusCode {
     /**
      * 状态码
      */
-    public int getCode();
+    public String getCode();
 
     /**
      * 消息
