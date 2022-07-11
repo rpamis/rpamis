@@ -12,7 +12,9 @@ public enum ResponseCode implements StatusCode {
     SYS_EXCEPTION_CODE(20001,"系统异常"),
     RPAS_EXCEPTION_CODE(20002,"系统内部异常"),
     UNKNOWN_EXCEPTION_CODE(20003,"未知异常"),
-    VALIDATE_ERROR(20003, "参数校验失败");
+    VALIDATE_ERROR(20003, "参数校验失败"),
+    READ_JSON_ERROR(20004,"Json格式不正确"),
+    INVALID_PARAMETER(20005,"参数错误");
 
     private final int code;
     private final String message;
