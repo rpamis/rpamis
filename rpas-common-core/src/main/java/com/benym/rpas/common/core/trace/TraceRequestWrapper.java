@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  *
  * @date 2022/7/8 4:52 下午
  */
-public class TraceWrapper extends HttpServletRequestWrapper {
+public class TraceRequestWrapper extends HttpServletRequestWrapper {
 
     private final Map<String, String> headers;
 
