@@ -18,7 +18,7 @@ public class PageResponse<T> {
 
     private int pageSize = 1;
 
-    private Collection<T> data;
+    private Collection<T> list;
 
     public int getTotalCount() {
         return totalCount;
@@ -51,22 +51,22 @@ public class PageResponse<T> {
         this.pageSize = pageSize;
     }
 
-    public List<T> getData() {
-        if (null == data) {
+    public List<T> getList() {
+        if (null == list) {
             return Collections.emptyList();
         }
-        if (data instanceof List) {
-            return (List<T>) data;
+        if (list instanceof List) {
+            return (List<T>) list;
         }
-        return new ArrayList<>(data);
+        return new ArrayList<>(list);
     }
 
-    public void setData(Collection<T> data) {
-        this.data = data;
+    public void setList(Collection<T> data) {
+        this.list = data;
     }
 
     public boolean isEmpty() {
-        return data == null || data.isEmpty();
+        return list == null || list.isEmpty();
     }
 
     public boolean isNotEmpty() {
