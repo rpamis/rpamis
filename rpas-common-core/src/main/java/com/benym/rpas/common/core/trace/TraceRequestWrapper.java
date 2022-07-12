@@ -24,7 +24,7 @@ public class TraceRequestWrapper extends HttpServletRequestWrapper {
      * @param request The request to wrap
      * @throws IllegalArgumentException if the request is null
      */
-    public TraceWrapper(HttpServletRequest request) {
+    public TraceRequestWrapper(HttpServletRequest request) {
         super(request);
         this.headers = new HashMap<>();
     }
