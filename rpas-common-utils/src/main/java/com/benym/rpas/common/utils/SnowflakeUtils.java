@@ -7,7 +7,7 @@ import cn.hutool.core.lang.generator.SnowflakeGenerator;
  */
 public class SnowflakeUtils {
 
-    private volatile static SnowflakeGenerator snowflakeGenerator;
+    private static volatile SnowflakeGenerator snowflakeGenerator;
 
     public static SnowflakeGenerator get() {
         if (snowflakeGenerator == null) {
