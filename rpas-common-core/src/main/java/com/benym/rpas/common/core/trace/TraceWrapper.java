@@ -40,6 +40,15 @@ public class TraceWrapper extends HttpServletRequestWrapper {
         return Collections.enumeration(names);
     }
 
+    public Map<String, String> getHeaders() {
+        Enumeration<String> headerNames = super.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            headers.put(headerName, super.getHeader(headerName));
+        }
+        return headers;
+    }
+
     @Override
     public Enumeration<String> getHeaders(String key) {
         List<String> values = Collections.list(super.getHeaders(key));
