@@ -29,11 +29,12 @@ public class LoggerHttp {
         return requestLog;
     }
 
-    public static void update(RequestLog requestLog, TraceResponseWrapper traceResponseWrapper) throws IOException {
+    public static void update(RequestLog requestLog, TraceResponseWrapper traceResponseWrapper, long totalTime) throws IOException {
         requestLog.setStatus(traceResponseWrapper.getStatus());
         requestLog.setResponse(new String(traceResponseWrapper.getContentAsByteArray()));
         traceResponseWrapper.copyBodyToResponse();
         requestLog.setResponseHeaders(traceResponseWrapper.getHeaders());
+        requestLog.setTotalTime(totalTime);
     }
 
     public static String getPostData(TraceRequestWrapper traceRequestWrapper) {
