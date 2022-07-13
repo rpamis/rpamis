@@ -13,6 +13,7 @@
         <module>rpas-common-dto</module>
         <module>rpas-common-core</module>
         <module>rpas-common-utils</module>
+        <module>rpas-architecture-build</module>
     </modules>
 
     <properties>
