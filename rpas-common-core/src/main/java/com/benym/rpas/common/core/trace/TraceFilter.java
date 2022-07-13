@@ -55,16 +55,16 @@ public class TraceFilter implements Filter {
         traceRequestWrapper.putHeader(Trace.SPAN_ID, trace.getSpanId());
         try {
             chain.doFilter(traceRequestWrapper, response);
+            // doFilter之后表示当前请求结束，下一次属于另外一个Span
+            MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtils.get().next()));
+            // 请求完成之后同步清理traceId
+            TraceIdUtils.clearTrace();
             if (traceLogActivate) {
                 // 更新出参信息
                 LoggerHttp.update(requestLog, traceResponseWrapper);
                 // 打印请求日志，包括入参、出参
                 logger.info(JSONUtil.toJsonStr(requestLog));
             }
-            // doFilter之后表示当前请求结束，下一次属于另外一个Span
-            MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtils.get().next()));
-            // 请求完成之后同步清理traceId
-            TraceIdUtils.clearTrace();
         } catch (Exception e) {
             logger.warn("traceId Filter error{}", e.getMessage());
         }
