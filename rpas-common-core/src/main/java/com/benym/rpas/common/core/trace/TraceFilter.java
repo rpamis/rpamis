@@ -21,6 +21,7 @@ import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 /**
  * @Time : 2022/7/7 22:01
@@ -42,6 +43,8 @@ public class TraceFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        StopWatch stopWatch = new StopWatch("Http Trace");
+        stopWatch.start();
         Trace trace = TraceIdUtils.getTrace();
         TraceRequestWrapper traceRequestWrapper;
         RequestLog requestLog = null;
@@ -59,11 +62,14 @@ public class TraceFilter implements Filter {
             MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtils.get().next()));
             // 请求完成之后同步清理traceId
             TraceIdUtils.clearTrace();
+            stopWatch.stop();
             if (traceLogActivate) {
                 // 更新出参信息
-                LoggerHttp.update(requestLog, traceResponseWrapper);
+                LoggerHttp.update(requestLog, traceResponseWrapper, stopWatch.getTotalTimeMillis());
                 // 打印请求日志，包括入参、出参
                 logger.info(JSONUtil.toJsonStr(requestLog));
+            } else {
+                logger.info("请求url:{}, 耗时(ms):{}",traceRequestWrapper.getRequestURI(), stopWatch.getTotalTimeMillis());
             }
         } catch (Exception e) {
             logger.warn("traceId Filter error{}", e.getMessage());
