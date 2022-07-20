@@ -51,7 +51,7 @@
         <commons-lang.version>2.6</commons-lang.version>
         <lombok.version>1.18.12</lombok.version>
         <hutool.version>5.8.4</hutool.version>
-
+        <swagger.version>2.6.1</swagger.version>
         <!-- 自研组件 -->
         <rpas-common-dto.version>1.0.0</rpas-common-dto.version>
         <rpas-common-core.version>1.0.0</rpas-common-core.version>
@@ -229,6 +229,16 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
             </dependency>
 
         </dependencies>
