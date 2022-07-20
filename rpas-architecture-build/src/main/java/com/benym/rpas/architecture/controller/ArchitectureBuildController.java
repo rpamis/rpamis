@@ -6,6 +6,8 @@ import com.benym.rpas.architecture.service.BuildService;
 import com.benym.rpas.common.dto.response.Response;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,12 @@ public class ArchitectureBuildController {
     public Response<String> build(@RequestBody BaseProjectConfig baseProjectConfig) {
         FileVO fileVO = buildService.architectureBuild(baseProjectConfig);
         return Response.success(fileVO.getFilePath());
+    }
+
+    @ApiOperation("下载项目")
+    @GetMapping("/download/{id}")
+    public void download(@PathVariable("id") String id) {
+        buildService.download(id);
     }
 
 }
