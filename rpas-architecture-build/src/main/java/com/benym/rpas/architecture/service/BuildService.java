@@ -10,4 +10,6 @@ public interface BuildService {
 
     FileVO architectureBuild(BaseProjectConfig baseProjectConfig);
 
+    void download(String id);
+
 }
