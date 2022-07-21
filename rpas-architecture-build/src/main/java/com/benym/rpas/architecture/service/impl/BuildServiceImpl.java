@@ -3,8 +3,12 @@ package com.benym.rpas.architecture.service.impl;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.json.JSONUtil;
 import com.benym.rpas.architecture.config.BaseProjectConfig;
+import com.benym.rpas.architecture.consts.TemplateType;
 import com.benym.rpas.architecture.pojo.FileVO;
 import com.benym.rpas.architecture.service.BuildService;
+import com.benym.rpas.architecture.template.BuildAbstractTemplate;
+import com.benym.rpas.architecture.template.MultiMouduleTemplate;
+import com.benym.rpas.architecture.template.TemplateFactory;
 import com.benym.rpas.common.dto.exception.ExceptionFactory;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
@@ -44,7 +48,14 @@ public class BuildServiceImpl implements BuildService {
 
     @Override
     public FileVO architectureBuild(BaseProjectConfig baseProjectConfig) {
-        return null;
+        BuildAbstractTemplate template;
+        try {
+            template = TemplateFactory.getTemplate(baseProjectConfig.getTemplateType());
+        } catch (Exception e) {
+            logger.error("获取模板异常{}", JSONUtil.toJsonStr(e.getStackTrace()));
+            throw ExceptionFactory.bizException("获取模板异常", e.getMessage());
+        }
+        return template.createProject();
     }
 
     private void generate(Template template, BaseProjectConfig baseProjectConfig) {
