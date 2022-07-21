@@ -19,14 +19,17 @@ public class Project {
     @ApiModelProperty("jar or war")
     private String packaging;
 
-    @ApiModelProperty("项目描述")
-    private String description;
-
     @ApiModelProperty("Java版本")
     private String javaVersion;
 
     @ApiModelProperty("项目版本")
     private String version;
+
+    @ApiModelProperty("package")
+    private String packageName;
+
+    @ApiModelProperty("项目描述")
+    private String description;
 
     public String getGroupId() {
         return groupId;
@@ -82,5 +85,13 @@ public class Project {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 }
