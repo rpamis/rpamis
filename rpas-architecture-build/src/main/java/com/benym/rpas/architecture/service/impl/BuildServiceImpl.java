@@ -55,7 +55,7 @@ public class BuildServiceImpl implements BuildService {
             logger.error("获取模板异常{}", JSONUtil.toJsonStr(e.getStackTrace()));
             throw ExceptionFactory.bizException("获取模板异常", e.getMessage());
         }
-        return template.createProject();
+        return template.createProject(baseProjectConfig);
     }
 
     private void generate(Template template, BaseProjectConfig baseProjectConfig) {
