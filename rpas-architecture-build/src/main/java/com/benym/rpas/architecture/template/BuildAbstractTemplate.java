@@ -13,18 +13,21 @@ import org.springframework.boot.CommandLineRunner;
  */
 public abstract class BuildAbstractTemplate implements CommandLineRunner {
 
-    private Map<String, String> pathMap = new HashMap<>();
+    protected Map<String, String> pathMap = new HashMap<>(64);
 
-    protected abstract void initPath(BaseProjectConfig baseProjectConfig);
+    protected BaseProjectConfig rpasConfig;
 
-    protected abstract void resolve(BaseProjectConfig baseProjectConfig);
+    protected abstract void initPath();
 
-    protected abstract FileVO create(BaseProjectConfig baseProjectConfig);
+    protected abstract void resolve();
+
+    protected abstract FileVO create();
 
     public final FileVO createProject(BaseProjectConfig baseProjectConfig) {
-        initPath(baseProjectConfig);
-        resolve(baseProjectConfig);
-        FileVO fileVO = create(baseProjectConfig);
+        rpasConfig = baseProjectConfig;
+        initPath();
+        resolve();
+        FileVO fileVO = create();
         return fileVO;
     }
 }
