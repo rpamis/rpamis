@@ -21,17 +21,17 @@ public class SingleMouduleTemplate extends BuildAbstractTemplate {
     }
 
     @Override
-    protected void initPath(BaseProjectConfig baseProjectConfig) {
+    protected void initPath() {
 
     }
 
     @Override
-    protected void resolve(BaseProjectConfig baseProjectConfig) {
+    protected void resolve() {
 
     }
 
     @Override
-    protected FileVO create(BaseProjectConfig baseProjectConfig) {
+    protected FileVO create() {
         return null;
     }
 }
