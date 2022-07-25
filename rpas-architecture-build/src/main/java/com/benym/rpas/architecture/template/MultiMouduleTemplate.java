@@ -21,17 +21,21 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
     }
 
     @Override
-    protected void initPath(BaseProjectConfig baseProjectConfig) {
+    protected void initPath() {
+        String artifactId = rpasConfig.getProject().getArtifactId();
+        String apiMoudule = artifactId + "-api";
+        String daoMoudule = artifactId + "-dao";
+        String serviceMoudule = artifactId + "-service";
+        String webMoudule = artifactId + "-web";
+    }
+
+    @Override
+    protected void resolve() {
 
     }
 
     @Override
-    protected void resolve(BaseProjectConfig baseProjectConfig) {
-
-    }
-
-    @Override
-    protected FileVO create(BaseProjectConfig baseProjectConfig) {
+    protected FileVO create() {
         return null;
     }
 }
