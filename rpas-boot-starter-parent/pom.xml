@@ -21,6 +21,8 @@
         <!-- Spring -->
         <springboot.version>2.3.4.RELEASE</springboot.version>
         <springcloud.version>Greenwich.SR2</springcloud.version>
+        <consul.version>2.2.5.RELEASE</consul.version>
+        <feign.version>2.1.5.RELEASE</feign.version>
         <!-- 日志跟踪 -->
         <log4j.version>2.17.0</log4j.version>
         <logback.version>1.2.3</logback.version>
@@ -75,6 +77,18 @@
                 <version>${springcloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-consul-dependencies</artifactId>
+                <version>${consul.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${feign.version}</version>
             </dependency>
             <!-- 日志跟踪 -->
             <dependency>
