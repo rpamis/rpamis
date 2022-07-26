@@ -3,6 +3,7 @@ package com.benym.rpas.architecture.service.impl;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.json.JSONUtil;
 import com.benym.rpas.architecture.config.BaseProjectConfig;
+import com.benym.rpas.architecture.consts.ProjectPath;
 import com.benym.rpas.architecture.consts.TemplateType;
 import com.benym.rpas.architecture.pojo.FileVO;
 import com.benym.rpas.architecture.service.BuildService;
@@ -15,6 +16,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -41,9 +43,14 @@ public class BuildServiceImpl implements BuildService {
     private static Configuration cfg;
 
     static {
-        cfg = new Configuration(Configuration.VERSION_2_3_30);
-        cfg.setTemplateLoader(new ClassTemplateLoader(BuildServiceImpl.class, "/templates"));
-        cfg.setDefaultEncoding("UTF-8");
+        try {
+            cfg = new Configuration(Configuration.VERSION_2_3_30);
+            File file = new File(ProjectPath.BUILD_PATH + "/src/main/resources/templates");
+            cfg.setDirectoryForTemplateLoading(file);
+            cfg.setDefaultEncoding("UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -58,17 +65,15 @@ public class BuildServiceImpl implements BuildService {
         return template.createProject(baseProjectConfig);
     }
 
-    private void generate(Template template, BaseProjectConfig baseProjectConfig) {
-        File file = new File("");
+    @Override
+    public void generate(File file, String templatesFtl, BaseProjectConfig baseProjectConfig) {
         if (!file.exists()) {
             file.mkdirs();
         }
-        String fileName = "";
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
-            template.process(baseProjectConfig, outputStreamWriter);
-            fileOutputStream.close();
+            OutputStreamWriter outputStreamWriter  = new OutputStreamWriter(new FileOutputStream(file));
+            cfg.getTemplate(templatesFtl,"UTF-8").process(baseProjectConfig, outputStreamWriter);
+            outputStreamWriter.flush();
             outputStreamWriter.close();
         } catch (IOException | TemplateException e) {
             logger.error("文件生成异常{}", JSONUtil.toJsonStr(e.getStackTrace()));
