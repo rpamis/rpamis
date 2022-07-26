@@ -11,7 +11,7 @@ public interface ProjectPath {
 
     String CACHETEMP_PATH = BUILD_PATH + "project_cache" + File.separator;
 
-    String SRC_PATH = BUILD_PATH + "src" + File.separator;
+    String SRC_PATH = "src" + File.separator;
 
     String MAIN_PATH = SRC_PATH + "main" + File.separator;
 
@@ -29,7 +29,32 @@ public interface ProjectPath {
 
     String PRACTICE_PATH = TEMPLATES_PATH + "practice" + File.separator;
 
-    String APPLICATION_YAML_NAME = "application.yaml.ftl";
+    String POJO_PATH = "pojo" + File.separator;
 
-    String BOOTSTRAP_YAML_NAME = "bootstrap.yaml.ftl";
+    String DTO_PATH = "dto" + File.separator;
+
+    String VO_PATH = "vo" + File.separator;
+
+    String DO_PATH = "domain" + File.separator;
+
+    String QUERY_PATH = "query" + File.separator;
+
+    String API_PATH = "api" + File.separator;
+
+    String CONFIG_PATH = "config" + File.separator;
+
+    String SERVICE_PATH = "service" + File.separator;
+
+    String SERVICE_IMPL_PATH = "impl" + File.separator;
+
+    String DAO_PATH = "dao" + File.separator;
+
+    String DAO_IMPL_PATH = "impl" + File.separator;
+
+    String MAPPER_PATH = "mapper" + File.separator;
+
+    String MAPPER_XML_PATH = "mapper" + File.separator;
+
+    String CONTROLLER_PATH = "controller" + File.separator;
+
 }
