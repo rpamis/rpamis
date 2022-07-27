@@ -1,13 +1,19 @@
 package com.benym.rpas.architecture.template;
 
+import cn.hutool.core.io.FileUtil;
 import com.benym.rpas.architecture.config.BaseProjectConfig;
 import com.benym.rpas.architecture.consts.ProjectKey;
 import com.benym.rpas.architecture.consts.ProjectPath;
+import com.benym.rpas.architecture.consts.ProjectTemplate;
 import com.benym.rpas.architecture.consts.TemplateType;
 import com.benym.rpas.architecture.pojo.FileVO;
 import com.benym.rpas.architecture.pojo.Project;
+import com.benym.rpas.architecture.service.BuildService;
 import java.io.File;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,6 +24,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MultiMouduleTemplate extends BuildAbstractTemplate {
 
+
+    @Autowired
+    private BuildService buildService;
 
 
     @Override
@@ -33,18 +42,32 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         String serviceMoudule = artifactId + "-service";
         String webMoudule = artifactId + "-web";
         // 构建生成项目的基础存储路径
-        String cachePath = ProjectPath.CACHETEMP_PATH + File.separator + artifactId + File.separator;
+        String cachePath =
+                ProjectPath.CACHETEMP_PATH + File.separator + artifactId + File.separator;
         // 获取基础包的路径
         String packageName = rpasConfig.getProject().getPackageName();
-        String packagePath = packageName.replaceAll("\\.","\\" + File.separator);
+        String packagePath = packageName.replaceAll("\\.", "\\" + File.separator);
         // 构建出各模块的基础路径
-        String apiPackagePath = cachePath + apiMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator + packagePath + File.separator;
-        String daoResourcePath = cachePath + daoMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator + ProjectPath.RESOURCE_PATH + File.separator;
-        String daoPackagePath = cachePath + daoMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator + packagePath + File.separator;
-        String servicePackagePath = cachePath + serviceMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator + packagePath + File.separator;
-        String webApplicationPath = cachePath + webMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator;
-        String webResourcePath = cachePath + webMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator + ProjectPath.RESOURCE_PATH + File.separator;
-        String webPackagePath = cachePath + webMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator + packagePath + File.separator;
+        String apiPackagePath =
+                cachePath + apiMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator
+                        + packagePath + File.separator;
+        String daoResourcePath =
+                cachePath + daoMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator
+                        + ProjectPath.RESOURCE_PATH + File.separator;
+        String daoPackagePath =
+                cachePath + daoMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator
+                        + packagePath + File.separator;
+        String servicePackagePath =
+                cachePath + serviceMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator
+                        + packagePath + File.separator;
+        String webApplicationPath =
+                cachePath + webMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator;
+        String webResourcePath =
+                cachePath + webMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator
+                        + ProjectPath.RESOURCE_PATH + File.separator;
+        String webPackagePath =
+                cachePath + webMoudule + File.separator + ProjectPath.JAVA_PATH + File.separator
+                        + packagePath + File.separator;
         // 构建出各个模块中基础文件夹的路径
         // api
         String apiMouduleApiDir = apiPackagePath + ProjectPath.API_PATH;
@@ -101,11 +124,19 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
 
     @Override
     protected void resolve() {
-
+        if (rpasConfig.getDependency().getConsul() != null) {
+            ftlMap.add(ProjectKey.YAML_RESOURCE_PATH, ProjectTemplate.BOOTSTRAP_YAML_NAME);
+        }
+        if (rpasConfig.getDependency().getDatabase().getCrud()) {
+            // todo crud模板
+            System.out.println(1);
+        }
+        ftlMap.add(ProjectKey.YAML_RESOURCE_PATH, ProjectTemplate.APPLICATION_YAML_NAME);
     }
 
     @Override
     protected FileVO create() {
+        pathMap.forEach((key, value) -> FileUtil.touch(value));
         return null;
     }
 }
