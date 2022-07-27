@@ -1,15 +1,18 @@
 package com.benym.rpas.architecture.pojo;
 
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @date 2022/7/20 4:47 下午
  */
 public class Project {
 
+    @NotBlank(message = "groupId不能为空")
     @ApiModelProperty("groupId")
     private String groupId;
 
+    @NotBlank(message = "artifactId不能为空")
     @ApiModelProperty("artifactId")
     private String artifactId;
 
@@ -25,6 +28,7 @@ public class Project {
     @ApiModelProperty("项目版本")
     private String version;
 
+    @NotBlank(message = "packageName不能为空")
     @ApiModelProperty("package")
     private String packageName;
 
