@@ -26,9 +26,9 @@ public class ArchitectureBuildController {
 
     @ApiOperation("项目生成")
     @PostMapping("/build")
-    public Response<String> build(@RequestBody @Validated BaseProjectConfig baseProjectConfig) {
+    public Response<FileVO> build(@RequestBody @Validated BaseProjectConfig baseProjectConfig) {
         FileVO fileVO = buildService.architectureBuild(baseProjectConfig);
-        return Response.success(fileVO.getFilePath());
+        return Response.success(fileVO);
     }
 
     @ApiOperation("下载项目")

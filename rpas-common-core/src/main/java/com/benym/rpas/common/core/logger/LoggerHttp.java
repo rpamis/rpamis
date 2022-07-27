@@ -5,8 +5,6 @@ import com.benym.rpas.common.core.trace.TraceRequestWrapper;
 import com.benym.rpas.common.core.trace.TraceResponseWrapper;
 import com.benym.rpas.common.dto.request.RequestLog;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
@@ -38,18 +36,6 @@ public class LoggerHttp {
     }
 
     public static String getPostData(TraceRequestWrapper traceRequestWrapper) {
-        StringBuilder data = new StringBuilder();
-        String line;
-        BufferedReader reader;
-        try {
-            reader = traceRequestWrapper.getReader();
-            while (null != (line = reader.readLine())) {
-                data.append(line);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return JSONUtil.toJsonStr(data.toString());
+        return JSONUtil.toJsonStr(traceRequestWrapper.getPostData());
     }
 }

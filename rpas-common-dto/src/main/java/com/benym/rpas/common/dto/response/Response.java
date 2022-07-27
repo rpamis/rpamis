@@ -17,8 +17,6 @@ public class Response<T> implements Serializable {
 
     private String detailMessage;
 
-    private String traceId;
-
     private T data;
 
     public Response() {
@@ -130,21 +128,12 @@ public class Response<T> implements Serializable {
         this.data = data;
     }
 
-    public String getTraceId() {
-        return traceId;
-    }
-
-    public void setTraceId(String traceId) {
-        this.traceId = traceId;
-    }
-
     @Override
     public String toString() {
         return "Response{" +
                 "errCode=" + errCode +
                 ", errMessage='" + errMessage + '\'' +
                 ", detailMessage='" + detailMessage + '\'' +
-                ", traceId='" + traceId + '\'' +
                 ", data=" + data +
                 '}';
     }

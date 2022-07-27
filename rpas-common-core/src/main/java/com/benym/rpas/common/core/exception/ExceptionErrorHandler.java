@@ -32,13 +32,12 @@ public class ExceptionErrorHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Response<Object>> handleBindException(MethodArgumentNotValidException validException) {
         final Trace trace = TraceIdUtils.getTrace();
-        String validateMessage = validException.getBindingResult().getFieldError().getDefaultMessage();
+        String validateMessage = Objects.requireNonNull(validException.getBindingResult().getFieldError()).getDefaultMessage();
         logger.error("请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
         if (logger.isDebugEnabled()) {
             logger.error(validException.getMessage(), validException);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR, validateMessage);
-        failResponse.setTraceId(trace.getTraceId());
         return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -51,7 +50,6 @@ public class ExceptionErrorHandler {
             logger.error(notReadableException.getMessage(), notReadableException);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.READ_JSON_ERROR, ResponseCode.READ_JSON_ERROR.getMessage());
-        failResponse.setTraceId(trace.getTraceId());
         return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -64,7 +62,6 @@ public class ExceptionErrorHandler {
             logger.error(misException.getMessage(), misException);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.INVALID_PARAMETER, missParams);
-        failResponse.setTraceId(trace.getTraceId());
         return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -79,7 +76,6 @@ public class ExceptionErrorHandler {
             logger.error(message, bizException);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.BIZ_EXCEPTION_CODE, detailMessage);
-        failResponse.setTraceId(trace.getTraceId());
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -94,7 +90,6 @@ public class ExceptionErrorHandler {
             logger.error(message, sysException);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.SYS_EXCEPTION_CODE, detailMessage);
-        failResponse.setTraceId(trace.getTraceId());
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -109,7 +104,6 @@ public class ExceptionErrorHandler {
             logger.error(message, rpasException);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.RPAS_EXCEPTION_CODE, detailMessage);
-        failResponse.setTraceId(trace.getTraceId());
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -121,7 +115,6 @@ public class ExceptionErrorHandler {
             logger.error(exception.getMessage(), exception);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.UNKNOWN_EXCEPTION_CODE, exception.getMessage());
-        failResponse.setTraceId(trace.getTraceId());
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

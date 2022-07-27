@@ -1,11 +1,17 @@
 package com.benym.rpas.common.core.trace;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ReadListener;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
@@ -18,6 +24,10 @@ public class TraceRequestWrapper extends HttpServletRequestWrapper {
 
     private final Map<String, String> headers;
 
+    // 用于存储post参数
+    // 避免HttpServletRequest的getInputStream()和getReader()因为只能读取一次，造成异常
+    private final byte[] postData;
+
     /**
      * Constructs a request object wrapping the given request.
      *
@@ -27,6 +37,20 @@ public class TraceRequestWrapper extends HttpServletRequestWrapper {
     public TraceRequestWrapper(HttpServletRequest request) {
         super(request);
         this.headers = new HashMap<>();
+        StringBuilder data = new StringBuilder();
+        String line;
+        BufferedReader reader;
+        try {
+            //
+            reader = request.getReader();
+            while (null != (line = reader.readLine())) {
+                data.append(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        this.postData = data.toString().getBytes(StandardCharsets.UTF_8);
     }
 
     public void putHeader(String key, String value) {
@@ -65,5 +89,35 @@ public class TraceRequestWrapper extends HttpServletRequestWrapper {
             value = headers.get(key);
         }
         return value;
+    }
+
+    public String getPostData() {
+        return new String(postData, StandardCharsets.UTF_8);
+    }
+
+    @Override
+    public ServletInputStream getInputStream() throws IOException {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(postData);
+        return new ServletInputStream() {
+
+            @Override
+            public int read() throws IOException {
+                return byteArrayInputStream.read();
+            }
+
+            @Override
+            public void setReadListener(ReadListener listener) {
+            }
+
+            @Override
+            public boolean isReady() {
+                return false;
+            }
+
+            @Override
+            public boolean isFinished() {
+                return false;
+            }
+        };
     }
 }

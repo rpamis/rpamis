@@ -2,7 +2,9 @@ package com.benym.rpas.architecture;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan(value = "com.benym.rpas")
 @SpringBootApplication
 public class RpasArchitectureBuildApplication {
 
