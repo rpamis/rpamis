@@ -50,7 +50,7 @@ public class TraceFilter implements Filter {
         RequestLog requestLog = null;
         TraceResponseWrapper traceResponseWrapper = new TraceResponseWrapper((HttpServletResponse) response);
         traceRequestWrapper = new TraceRequestWrapper((HttpServletRequest) request);
-        if (true) {
+        if (traceLogActivate) {
             requestLog = LoggerHttp.init(traceRequestWrapper);
         }
         // 初始化入参信息
@@ -63,7 +63,7 @@ public class TraceFilter implements Filter {
             // 请求完成之后同步清理traceId
             TraceIdUtils.clearTrace();
             stopWatch.stop();
-            if (true) {
+            if (traceLogActivate) {
                 // 更新出参信息
                 LoggerHttp.update(requestLog, traceResponseWrapper, stopWatch.getTotalTimeMillis());
                 // 打印请求日志，包括入参、出参
