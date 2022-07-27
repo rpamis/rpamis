@@ -255,6 +255,23 @@
                 <version>${swagger.version}</version>
             </dependency>
 
+            <!-- 自研组件 -->
+            <dependency>
+                <groupId>com.benym.rpas</groupId>
+                <artifactId>rpas-common-dto</artifactId>
+                <version>${rpas-common-dto.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.benym.rpas</groupId>
+                <artifactId>rpas-common-core</artifactId>
+                <version>${rpas-common-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.benym.rpas</groupId>
+                <artifactId>rpas-common-utils</artifactId>
+                <version>${rpas-common-utils.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -284,6 +301,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${springboot.version}</version>
                     <executions>
                         <execution>
                             <id>repackage</id>

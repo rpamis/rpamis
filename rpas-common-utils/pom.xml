@@ -6,11 +6,12 @@
         <groupId>com.benym.rpas</groupId>
         <artifactId>rpas-boot-starter-parent</artifactId>
         <version>1.0.0.RELEASE</version>
+        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpas-common-utils</artifactId>
-    <version>${rpas-common-utils.version}</version>
+    <version>1.0.0</version>
     <name>rpas-common-utils</name>
     <packaging>jar</packaging>
     <description>rpas-common-utils</description>
@@ -37,18 +38,22 @@
         <dependency>
             <groupId>org.apache.skywalking</groupId>
             <artifactId>apm-toolkit-trace</artifactId>
+            <version>8.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.skywalking</groupId>
             <artifactId>apm-toolkit-logback-1.x</artifactId>
+            <version>8.7.0</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
+            <version>5.8.4</version>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
+            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
