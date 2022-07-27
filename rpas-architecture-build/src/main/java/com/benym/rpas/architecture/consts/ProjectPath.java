@@ -29,6 +29,8 @@ public interface ProjectPath {
 
     String PRACTICE_PATH = TEMPLATES_PATH + "practice" + File.separator;
 
+    String APPLICATION_PATH = TEMPLATES_PATH + "application" + File.separator;
+
     String POJO_PATH = "pojo" + File.separator;
 
     String DTO_PATH = "dto" + File.separator;
