@@ -45,7 +45,7 @@ public class BuildServiceImpl implements BuildService {
     static {
         try {
             cfg = new Configuration(Configuration.VERSION_2_3_30);
-            File file = new File(ProjectPath.BUILD_PATH + "/src/main/resources/templates");
+            File file = new File(ProjectPath.BUILD_PATH + "rpas-architecture-build/src/main/resources/templates");
             cfg.setDirectoryForTemplateLoading(file);
             cfg.setDefaultEncoding("UTF-8");
         } catch (IOException e) {
