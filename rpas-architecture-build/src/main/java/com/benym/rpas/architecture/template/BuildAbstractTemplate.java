@@ -5,6 +5,8 @@ import com.benym.rpas.architecture.pojo.FileVO;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 /**
  * 模板方法
@@ -14,6 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 public abstract class BuildAbstractTemplate implements CommandLineRunner {
 
     protected Map<String, String> pathMap = new HashMap<>(64);
+
+    protected MultiValueMap<String, String> ftlMap = new LinkedMultiValueMap<>(64);
 
     protected BaseProjectConfig rpasConfig;
 
