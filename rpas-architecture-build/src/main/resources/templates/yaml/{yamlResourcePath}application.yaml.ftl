@@ -1,13 +1,28 @@
 
 spring:
   application:
-    name: reliableMessage
+    name: ${project.artifactId!}
+<#if dependency.database.enabled==true>
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/reliableMessage?characterEncoding=utf8&rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
+    url: jdbc:mysql://${dependency.database.host!}:${dependency.database.port!}/${dependency.database.databaseName}?characterEncoding=utf8&rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: ${dependency.database.userName}
+    password: ${dependency.database.passWord}
+
+  mybatis-plus:
+    mapper-locations: classpath:/mapper/*.xml
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    global-config:
+      db-config:
+        # 全局删除字段名
+        logic-delete-field: deleted
+        # 逻辑已删除值
+        logic-delete-value: 1
+        # 逻辑未删除值
+        logic-not-delete-value: 0  
+</#if>
   kafka:
     bootstrap-servers: localhost:9092
     producer:
@@ -58,20 +73,7 @@ logging:
 server:
   port: 8768
   servlet:
-    context-path: /reliableMessage
-
-mybatis-plus:
-  mapper-locations: classpath:/mapper/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      # 全局删除字段名
-      logic-delete-field: deleted
-      # 逻辑已删除值
-      logic-delete-value: 1
-      # 逻辑未删除值
-      logic-not-delete-value: 0
+    context-path: /${project.artifactId!}
 
 message:
   topic: test_message
