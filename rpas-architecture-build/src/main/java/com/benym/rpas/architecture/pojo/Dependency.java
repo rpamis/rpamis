@@ -9,6 +9,8 @@ public class Dependency {
 
     private Feign feign;
 
+    private Database database;
+
     public Consul getConsul() {
         return consul;
     }
@@ -23,5 +25,13 @@ public class Dependency {
 
     public void setFeign(Feign feign) {
         this.feign = feign;
+    }
+
+    public Database getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(Database database) {
+        this.database = database;
     }
 }
