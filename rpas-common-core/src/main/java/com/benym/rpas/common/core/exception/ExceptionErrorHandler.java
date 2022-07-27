@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -28,13 +29,13 @@ public class ExceptionErrorHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionErrorHandler.class);
 
-    @ExceptionHandler(org.springframework.validation.BindException.class)
-    public ResponseEntity<Response<Object>> handleBindException(BindException bindException) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Response<Object>> handleBindException(MethodArgumentNotValidException validException) {
         final Trace trace = TraceIdUtils.getTrace();
-        String validateMessage = Objects.requireNonNull(bindException.getFieldError()).getDefaultMessage();
+        String validateMessage = validException.getBindingResult().getFieldError().getDefaultMessage();
         logger.error("请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
         if (logger.isDebugEnabled()) {
-            logger.error(bindException.getMessage(), bindException);
+            logger.error(validException.getMessage(), validException);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR, validateMessage);
         failResponse.setTraceId(trace.getTraceId());
