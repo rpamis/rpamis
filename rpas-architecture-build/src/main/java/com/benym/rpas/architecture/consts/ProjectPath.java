@@ -9,6 +9,8 @@ public interface ProjectPath {
 
     String BUILD_PATH = System.getProperty("user.dir") + File.separator;
 
+    String BUILD_PROJECT_NAME = "rpas-architecture-build" + File.separator;
+
     String CACHETEMP_PATH = BUILD_PATH + "project_cache" + File.separator;
 
     String SRC_PATH = "src" + File.separator;
