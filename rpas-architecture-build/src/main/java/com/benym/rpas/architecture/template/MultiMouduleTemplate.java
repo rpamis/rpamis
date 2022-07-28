@@ -1,6 +1,7 @@
 package com.benym.rpas.architecture.template;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import com.benym.rpas.architecture.config.BaseProjectConfig;
 import com.benym.rpas.architecture.consts.ProjectKey;
 import com.benym.rpas.architecture.consts.ProjectPath;
@@ -11,6 +12,7 @@ import com.benym.rpas.architecture.pojo.Project;
 import com.benym.rpas.architecture.service.BuildService;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -84,7 +86,8 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         String daoMouduleMapperXmlDir = daoResourcePath + ProjectPath.MAPPER_XML_PATH;
         // service
         String serviceMouduleServiceDir = servicePackagePath + ProjectPath.SERVICE_PATH;
-        String serviceMouduleServiceImplDir = serviceMouduleServiceDir + ProjectPath.SERVICE_IMPL_PATH;
+        String serviceMouduleServiceImplDir =
+                serviceMouduleServiceDir + ProjectPath.SERVICE_IMPL_PATH;
         String serviceMoudulePojoDir = servicePackagePath + ProjectPath.POJO_PATH;
         String serviceMouduleDtoDir = serviceMoudulePojoDir + ProjectPath.DTO_PATH;
         String serviceMouduleVoDir = serviceMoudulePojoDir + ProjectPath.VO_PATH;
@@ -136,12 +139,27 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
                 }
             }
         }
-        ftlMap.add(ProjectKey.YAML_RESOURCE_PATH, ProjectTemplate.APPLICATION_YAML_NAME);
+//        ftlMap.add(ProjectKey.YAML_RESOURCE_PATH, ProjectTemplate.APPLICATION_YAML_NAME);
+        ftlMap.add(ProjectKey.WEB_APPLICATION_PATH, ProjectTemplate.APPLICATION_JAVA_NAME);
     }
 
     @Override
     protected FileVO create() {
+        // 创建初始文件夹
         pathMap.forEach((key, value) -> FileUtil.mkdir(value));
+        // 根据模板生成文件
+        ftlMap.forEach((key, value) -> {
+            List<String> valueList = ftlMap.get(key);
+            valueList.forEach(ftlFileName -> {
+                String[] split = ftlFileName.split("#");
+                String s = pathMap.get(split[0]);
+                String ftlFilePath = "/application/" + ftlFileName;
+                File file = new File(
+                        pathMap.get(split[0]), rpasConfig.getProject().getArtifactId() + StrUtil
+                        .removeSuffix(split[1], ".ftl"));
+                buildService.generate(file, ftlFilePath, rpasConfig);
+            });
+        });
         return null;
     }
 }
