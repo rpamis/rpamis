@@ -2,6 +2,7 @@
 spring:
   application:
     name: ${project.artifactId!}
+<#if dependency??>
 <#if dependency.database.enabled==true>
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
@@ -22,6 +23,7 @@ spring:
         logic-delete-value: 1
         # 逻辑未删除值
         logic-not-delete-value: 0  
+</#if>
 </#if>
   kafka:
     bootstrap-servers: localhost:9092

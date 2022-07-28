@@ -18,6 +18,8 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.benym.rpas.architecture.utils.StringUtils;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +38,18 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
 
     @Override
     public void run(String... args) throws Exception {
+        // 向模板工厂注入当前模板
         TemplateFactory.register(TemplateType.MULTI_MOUDULE, this);
+        // 初始化ftlName->parentDir的map
+        File tempfile = new File(ProjectPath.BUILD_PATH + ProjectPath.BUILD_PROJECT_NAME + ProjectPath.TEMPLATES_PATH);
+        List<File> files = (List<File>) FileUtils.listFiles(tempfile, new String[]{"ftl"}, true);
+        files.forEach(file -> {
+            String absolutePath = file.getAbsolutePath();
+            List<String> split = StrUtil.split(absolutePath, File.separator);
+            if (!split.isEmpty()) {
+                parentDirMap.put(split.get(split.size() - 1), split.get(split.size() - 2));
+            }
+        });
     }
 
     @Override
@@ -123,7 +136,7 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         pathMap.put(ProjectKey.WEB_MOUDULE_CONTROLLER_DIR, webMouduleControllerDir);
         pathMap.put(ProjectKey.WEB_MOUDULE_APPLICAITION_DIR, webMouduleApplicationDir);
         pathMap.put(ProjectKey.WEB_MOUDULE_RESOURCE_DIR, webMouduleResourceDir);
-
+        pathMap.put(ProjectKey.YAML_RESOURCE_PATH, webMouduleResourceDir);
     }
 
     @Override
@@ -139,7 +152,7 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
                 }
             }
         }
-//        ftlMap.add(ProjectKey.YAML_RESOURCE_PATH, ProjectTemplate.APPLICATION_YAML_NAME);
+        ftlMap.add(ProjectKey.YAML_RESOURCE_PATH, ProjectTemplate.APPLICATION_YAML_NAME);
         ftlMap.add(ProjectKey.WEB_APPLICATION_PATH, ProjectTemplate.APPLICATION_JAVA_NAME);
     }
 
@@ -148,18 +161,26 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         // 创建初始文件夹
         pathMap.forEach((key, value) -> FileUtil.mkdir(value));
         // 根据模板生成文件
-        ftlMap.forEach((key, value) -> {
-            List<String> valueList = ftlMap.get(key);
-            valueList.forEach(ftlFileName -> {
-                String[] split = ftlFileName.split("#");
-                String s = pathMap.get(split[0]);
-                String ftlFilePath = "/application/" + ftlFileName;
-                File file = new File(
-                        pathMap.get(split[0]), rpasConfig.getProject().getArtifactId() + StrUtil
-                        .removeSuffix(split[1], ".ftl"));
-                buildService.generate(file, ftlFilePath, rpasConfig);
+        if (!ftlMap.isEmpty()) {
+            ftlMap.forEach((key, value) -> {
+                List<String> valueList = ftlMap.get(key);
+                valueList.forEach(ftlFileName -> {
+                    // 获取模板文件全称
+                    String[] split = ftlFileName.split("#");
+                    // 获取模板文件相对templates文件夹的位置，包括父路径，比如/application/xxx.ftl
+                    String ftlFilePath = File.separator + parentDirMap.get(ftlFileName) + File.separator + ftlFileName;
+                    String mainName = "";
+                    if (parentDirMap.get(ftlFileName).equals("application")) {
+                        mainName = StringUtils.getMainName(rpasConfig.getProject().getArtifactId());
+                    }
+                    // 新建目标文件File，父路径(绝对路径)为Parent，ftl文件去除后缀为child
+                    File file = new File(
+                            pathMap.get(split[0]), mainName + StrUtil
+                            .removeSuffix(split[1], ".ftl"));
+                    buildService.generate(file, ftlFilePath, rpasConfig);
+                });
             });
-        });
-        return null;
+        }
+        return new FileVO("1", "");
     }
 }
