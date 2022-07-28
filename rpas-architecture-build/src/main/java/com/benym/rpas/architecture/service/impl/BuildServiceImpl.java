@@ -45,7 +45,8 @@ public class BuildServiceImpl implements BuildService {
     static {
         try {
             cfg = new Configuration(Configuration.VERSION_2_3_30);
-            File file = new File(ProjectPath.BUILD_PATH + "rpas-architecture-build/src/main/resources/templates");
+            File file = new File(ProjectPath.BUILD_PATH + ProjectPath.BUILD_PROJECT_NAME
+                    + ProjectPath.TEMPLATES_PATH);
             cfg.setDirectoryForTemplateLoading(file);
             cfg.setDefaultEncoding("UTF-8");
         } catch (IOException e) {
@@ -67,16 +68,19 @@ public class BuildServiceImpl implements BuildService {
 
     @Override
     public void generate(File file, String templatesFtl, BaseProjectConfig baseProjectConfig) {
-        if (!file.exists()) {
-            file.mkdirs();
-        }
         try {
+            if (!file.exists()) {
+                if (!file.getParentFile().exists()) {
+                    file.getParentFile().mkdirs();
+                }
+                file.createNewFile();
+            }
             OutputStreamWriter outputStreamWriter  = new OutputStreamWriter(new FileOutputStream(file));
             cfg.getTemplate(templatesFtl,"UTF-8").process(baseProjectConfig, outputStreamWriter);
             outputStreamWriter.flush();
             outputStreamWriter.close();
         } catch (IOException | TemplateException e) {
-            logger.error("文件生成异常{}", JSONUtil.toJsonStr(e.getStackTrace()));
+            logger.error("文件生成异常{}", JSONUtil.toJsonStr(e.getMessage()));
             throw ExceptionFactory.bizException("文件生成异常");
         }
     }
