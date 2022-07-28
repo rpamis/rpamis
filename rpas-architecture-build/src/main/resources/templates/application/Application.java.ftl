@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+<#if dependency??>
 <#if dependency.consul??&&(dependency.consul.enabled==true)>
   import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 </#if >
@@ -12,11 +13,12 @@ import org.springframework.context.annotation.ComponentScan;
 <#if dependency.feign??&&(dependency.feign.enabled==true)>
   @EnableFeignClients
 </#if >
+</#if>
 @SpringBootApplication
-public class ${pathMap.applicationName!}Application {
+public class ${project.packageName!}Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(${pathMap.applicationName!}Application.class, args);
+        SpringApplication.run(${project.packageName!}Application.class, args);
     }
 
 }
