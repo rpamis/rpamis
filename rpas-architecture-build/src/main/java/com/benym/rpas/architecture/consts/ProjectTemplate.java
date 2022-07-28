@@ -8,4 +8,6 @@ public interface ProjectTemplate {
     String APPLICATION_YAML_NAME = "{yamlResourcePath}application.yaml.ftl";
 
     String BOOTSTRAP_YAML_NAME = "{yamlResourcePath}bootstrap.yaml.ftl";
+
+    String APPLICATION_JAVA_NAME = "webApplicationPath#Application.java.ftl";
 }
