@@ -9,16 +9,16 @@ import org.springframework.context.annotation.ComponentScan;
   import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 </#if >
 
-@ComponentScan(basePackages={"${project.packageName!}"})
+//@ComponentScan(basePackages={"${project.packageName!}"})
 <#if dependency.feign??&&(dependency.feign.enabled==true)>
   @EnableFeignClients
 </#if >
 </#if>
 @SpringBootApplication
-public class ${project.packageName!}Application {
+public class ${project.mainName!}Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(${project.packageName!}Application.class, args);
+        SpringApplication.run(${project.mainName!}Application.class, args);
     }
 
 }

@@ -7,9 +7,9 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${dependency.database.host!}:${dependency.database.port!}/${dependency.database.databaseName}?characterEncoding=utf8&rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
-    username: ${dependency.database.userName}
-    password: ${dependency.database.passWord}
+    url: jdbc:mysql://${dependency.database.host!"localhost"}:${dependency.database.port!"3306"}/${dependency.database.databaseName!"db"}?characterEncoding=utf8&rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: ${dependency.database.userName!"root"}
+    password: ${dependency.database.passWord!"root"}
 
   mybatis-plus:
     mapper-locations: classpath:/mapper/*.xml

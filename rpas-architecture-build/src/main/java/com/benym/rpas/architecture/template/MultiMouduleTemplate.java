@@ -65,24 +65,33 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         // 获取基础包的路径
         String packageName = rpasConfig.getProject().getPackageName();
         String packagePath = packageName.replaceAll("\\.", "\\" + File.separator);
-        // 构建出各模块的基础路径
+        // 构建出各模块的基础base路径
+        String apiBasePath =
+                cachePath + apiMoudule + File.separator;
+        String daoBasePath =
+                cachePath + daoMoudule + File.separator;
+        String serviceBasePath =
+                cachePath + serviceMoudule + File.separator;
+        String webBasePath =
+                cachePath + webMoudule + File.separator;
+        // 构建出各模块的基础src路径
         String apiPackagePath =
-                cachePath + apiMoudule + File.separator + ProjectPath.JAVA_PATH
+                apiBasePath + ProjectPath.JAVA_PATH
                         + packagePath + File.separator;
         String daoResourcePath =
-                cachePath + daoMoudule + File.separator + ProjectPath.RESOURCE_PATH;
+                daoBasePath + ProjectPath.RESOURCE_PATH;
         String daoPackagePath =
-                cachePath + daoMoudule + File.separator + ProjectPath.JAVA_PATH
+                daoBasePath + ProjectPath.JAVA_PATH
                         + packagePath + File.separator;
         String servicePackagePath =
-                cachePath + serviceMoudule + File.separator + ProjectPath.JAVA_PATH
+                serviceBasePath + ProjectPath.JAVA_PATH
                         + packagePath + File.separator;
         String webApplicationPath =
-                cachePath + webMoudule + File.separator + ProjectPath.JAVA_PATH;
+                webBasePath + ProjectPath.JAVA_PATH;
         String webResourcePath =
-                cachePath + webMoudule + File.separator + ProjectPath.RESOURCE_PATH;
+                webBasePath + ProjectPath.RESOURCE_PATH;
         String webPackagePath =
-                cachePath + webMoudule + File.separator + ProjectPath.JAVA_PATH
+                webBasePath + ProjectPath.JAVA_PATH
                         + packagePath + File.separator;
         // 构建出各个模块中基础文件夹的路径
         // api
@@ -110,6 +119,11 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         String webMouduleApplicationDir = webApplicationPath;
         String webMouduleResourceDir = webResourcePath;
         // 将所有目录加入map中
+        pathMap.put(ProjectKey.ROOT_BASE_PATH, cachePath);
+        pathMap.put(ProjectKey.API_BASE_PATH, apiBasePath);
+        pathMap.put(ProjectKey.DAO_BASE_PATH, daoBasePath);
+        pathMap.put(ProjectKey.SERVICE_BASE_PATH, serviceBasePath);
+        pathMap.put(ProjectKey.WEB_BASE_PATH, webBasePath);
         pathMap.put(ProjectKey.API_PACKAGE_PATH, apiPackagePath);
         pathMap.put(ProjectKey.DAO_RESOURCE_PATH, daoResourcePath);
         pathMap.put(ProjectKey.DAO_PACKAGE_PATH, daoPackagePath);
@@ -153,7 +167,12 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
             }
         }
         ftlMap.add(ProjectKey.YAML_RESOURCE_PATH, ProjectTemplate.APPLICATION_YAML_NAME);
-        ftlMap.add(ProjectKey.WEB_APPLICATION_PATH, ProjectTemplate.APPLICATION_JAVA_NAME);
+        ftlMap.add(ProjectKey.WEB_PACKAGE_PATH, ProjectTemplate.APPLICATION_JAVA_NAME);
+        ftlMap.add(ProjectKey.ROOT_BASE_PATH, ProjectTemplate.ROOT_POM_NAME);
+        ftlMap.add(ProjectKey.API_BASE_PATH, ProjectTemplate.API_POM_NAME);
+        ftlMap.add(ProjectKey.DAO_BASE_PATH, ProjectTemplate.DAO_POM_NAME);
+        ftlMap.add(ProjectKey.SERVICE_BASE_PATH, ProjectTemplate.SERVICE_POM_NAME);
+        ftlMap.add(ProjectKey.WEB_BASE_PATH, ProjectTemplate.WEB_POM_NAME);
     }
 
     @Override
@@ -172,6 +191,7 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
                     String mainName = "";
                     if (parentDirMap.get(ftlFileName).equals("application")) {
                         mainName = StringUtils.getMainName(rpasConfig.getProject().getArtifactId());
+                        rpasConfig.getProject().setMainName(mainName);
                     }
                     // 新建目标文件File，父路径(绝对路径)为Parent，ftl文件去除后缀为child
                     File file = new File(

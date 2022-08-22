@@ -35,6 +35,9 @@ public class Project {
     @ApiModelProperty("项目描述")
     private String description;
 
+    @ApiModelProperty("主类名(由artifactId自动转化生成)")
+    private String mainName;
+
     public String getGroupId() {
         return groupId;
     }
@@ -97,5 +100,13 @@ public class Project {
 
     public void setPackageName(String packageName) {
         this.packageName = packageName;
+    }
+
+    public String getMainName() {
+        return mainName;
+    }
+
+    public void setMainName(String mainName) {
+        this.mainName = mainName;
     }
 }

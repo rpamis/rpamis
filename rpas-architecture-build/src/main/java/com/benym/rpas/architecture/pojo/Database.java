@@ -17,7 +17,7 @@ public class Database {
 
     private String passWord;
 
-    private Boolean crud;
+    private Boolean crud = false;
 
     public Boolean getEnabled() {
         return enabled;

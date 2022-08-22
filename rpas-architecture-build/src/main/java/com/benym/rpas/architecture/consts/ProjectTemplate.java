@@ -9,5 +9,15 @@ public interface ProjectTemplate {
 
     String BOOTSTRAP_YAML_NAME = "yamlResourcePath#bootstrap.yaml.ftl";
 
-    String APPLICATION_JAVA_NAME = "webApplicationPath#Application.java.ftl";
+    String APPLICATION_JAVA_NAME = "webPackagePath#Application.java.ftl";
+
+    String ROOT_POM_NAME = "rootBasePath#pom.xml.ftl";
+
+    String API_POM_NAME = "apiBasePath#pom.xml.ftl";
+
+    String DAO_POM_NAME = "daoBasePath#pom.xml.ftl";
+
+    String SERVICE_POM_NAME = "serviceBasePath#pom.xml.ftl";
+
+    String WEB_POM_NAME = "webBasePath#pom.xml.ftl";
 }

@@ -5,8 +5,12 @@ package com.benym.rpas.architecture.consts;
  */
 public interface ProjectKey {
 
+    String ROOT_BASE_PATH = "rootBasePath";
+    String API_BASE_PATH = "apiBasePath";
+    String DAO_BASE_PATH = "daoBasePath";
+    String SERVICE_BASE_PATH = "serviceBasePath";
+    String WEB_BASE_PATH = "webBasePath";
     String YAML_RESOURCE_PATH = "yamlResourcePath";
-
     String API_PACKAGE_PATH = "apiPackagePath";
     String DAO_RESOURCE_PATH = "daoResourcePath";
     String DAO_PACKAGE_PATH = "daoPackagePath";
