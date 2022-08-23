@@ -4,32 +4,28 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.json.JSONUtil;
 import com.benym.rpas.architecture.config.BaseProjectConfig;
 import com.benym.rpas.architecture.consts.ProjectPath;
-import com.benym.rpas.architecture.consts.TemplateType;
 import com.benym.rpas.architecture.pojo.FileVO;
 import com.benym.rpas.architecture.service.BuildService;
 import com.benym.rpas.architecture.template.BuildAbstractTemplate;
-import com.benym.rpas.architecture.template.MultiMouduleTemplate;
 import com.benym.rpas.architecture.template.TemplateFactory;
 import com.benym.rpas.common.dto.exception.ExceptionFactory;
-import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * @date 2022/7/20 4:48 下午
@@ -75,8 +71,8 @@ public class BuildServiceImpl implements BuildService {
                 }
                 file.createNewFile();
             }
-            OutputStreamWriter outputStreamWriter  = new OutputStreamWriter(new FileOutputStream(file));
-            cfg.getTemplate(templatesFtl,"UTF-8").process(baseProjectConfig, outputStreamWriter);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file));
+            cfg.getTemplate(templatesFtl, "UTF-8").process(baseProjectConfig, outputStreamWriter);
             outputStreamWriter.flush();
             outputStreamWriter.close();
         } catch (IOException | TemplateException e) {
@@ -92,7 +88,7 @@ public class BuildServiceImpl implements BuildService {
                 .requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
         synchronized (this) {
             try {
-                List<String> list = FileUtil.listFileNames(id);
+                List<String> list = FileUtil.listFileNames(ProjectPath.CACHETEMP_PATH + id);
                 if (list.isEmpty()) {
                     throw ExceptionFactory.bizException();
                 }
@@ -106,7 +102,8 @@ public class BuildServiceImpl implements BuildService {
                 response.setContentType("application/x-download");
                 response.addHeader("Content-Disposition",
                         "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
-                outputStream.write(FileUtil.readBytes(fileName));
+                String filePath = ProjectPath.CACHETEMP_PATH + id + File.separator + fileName;
+                outputStream.write(FileUtil.readBytes(filePath));
                 outputStream.flush();
             } catch (IOException e) {
                 logger.error("打包文件异常{}", JSONUtil.toJsonStr(e.getStackTrace()));

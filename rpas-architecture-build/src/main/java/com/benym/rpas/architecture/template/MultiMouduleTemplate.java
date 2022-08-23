@@ -2,26 +2,21 @@ package com.benym.rpas.architecture.template;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.benym.rpas.architecture.config.BaseProjectConfig;
+import cn.hutool.core.util.ZipUtil;
 import com.benym.rpas.architecture.consts.ProjectKey;
 import com.benym.rpas.architecture.consts.ProjectPath;
 import com.benym.rpas.architecture.consts.ProjectTemplate;
 import com.benym.rpas.architecture.consts.TemplateType;
 import com.benym.rpas.architecture.pojo.FileVO;
-import com.benym.rpas.architecture.pojo.Project;
 import com.benym.rpas.architecture.service.BuildService;
-
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.UUID;
-
 import com.benym.rpas.architecture.utils.StringUtils;
+import com.benym.rpas.common.utils.SnowflakeUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * 多模块项目
@@ -50,6 +45,7 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
                 parentDirMap.put(split.get(split.size() - 1), split.get(split.size() - 2));
             }
         });
+        buildId = String.valueOf(SnowflakeUtils.get().next());
     }
 
     @Override
@@ -61,7 +57,7 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         String webMoudule = artifactId + "-web";
         // 构建生成项目的基础存储路径
         String cachePath =
-                ProjectPath.CACHETEMP_PATH + artifactId + File.separator;
+                ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + File.separator;
         // 获取基础包的路径
         String packageName = rpasConfig.getProject().getPackageName();
         String packagePath = packageName.replaceAll("\\.", "\\" + File.separator);
@@ -201,6 +197,13 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
                 });
             });
         }
-        return new FileVO("1", "");
+        // 打包项目，并删除临时文件目录
+        String artifactId = rpasConfig.getProject().getArtifactId();
+        String genProjectPath =
+                ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + File.separator;
+        String saveZipPath = ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + ".zip";
+        ZipUtil.zip(genProjectPath, saveZipPath);
+        FileUtil.del(genProjectPath);
+        return new FileVO(buildId, saveZipPath);
     }
 }

@@ -22,6 +22,8 @@ public abstract class BuildAbstractTemplate implements CommandLineRunner {
 
     protected Map<String, String> parentDirMap = new HashMap<>(32);
 
+    protected String buildId = "";
+
     protected BaseProjectConfig rpasConfig;
 
     protected abstract void initPath();
