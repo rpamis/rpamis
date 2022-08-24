@@ -4,6 +4,7 @@ import com.benym.rpas.common.dto.enums.StatusCode;
 
 /**
  * 定义抽象异常类
+ * This class is empowered by com.alibaba.cola
  *
  * @Time : 2022/7/7 22:20
  */

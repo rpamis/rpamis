@@ -4,6 +4,7 @@ import com.benym.rpas.common.dto.enums.ResponseCode;
 
 /**
  * 定义业务异常类，固定状态码
+ * This class is empowered by com.alibaba.cola
  *
  * @Time : 2022/7/7 22:37
  */
