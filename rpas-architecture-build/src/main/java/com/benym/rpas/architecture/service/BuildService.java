@@ -15,4 +15,6 @@ public interface BuildService {
 
     void generate(File file, String templatesFtl, BaseProjectConfig baseProjectConfig);
 
+    String zipProject(String artifactId, String buildId);
+
 }

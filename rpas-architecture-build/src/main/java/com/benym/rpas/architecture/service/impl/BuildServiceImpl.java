@@ -1,6 +1,7 @@
 package com.benym.rpas.architecture.service.impl;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.ZipUtil;
 import cn.hutool.json.JSONUtil;
 import com.benym.rpas.architecture.config.BaseProjectConfig;
 import com.benym.rpas.architecture.consts.ProjectPath;
@@ -79,6 +80,16 @@ public class BuildServiceImpl implements BuildService {
             logger.error("文件生成异常{}", JSONUtil.toJsonStr(e.getMessage()));
             throw ExceptionFactory.bizException("文件生成异常");
         }
+    }
+
+    @Override
+    public String zipProject(String artifactId, String buildId) {
+        String genProjectPath =
+                ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + File.separator;
+        String saveZipPath = ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + ".zip";
+        ZipUtil.zip(genProjectPath, saveZipPath);
+        FileUtil.del(genProjectPath);
+        return saveZipPath;
     }
 
     @Override

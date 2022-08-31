@@ -199,11 +199,7 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         }
         // 打包项目，并删除临时文件目录
         String artifactId = rpasConfig.getProject().getArtifactId();
-        String genProjectPath =
-                ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + File.separator;
-        String saveZipPath = ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + ".zip";
-        ZipUtil.zip(genProjectPath, saveZipPath);
-        FileUtil.del(genProjectPath);
+        String saveZipPath = buildService.zipProject(artifactId, buildId);
         return new FileVO(buildId, saveZipPath);
     }
 }
