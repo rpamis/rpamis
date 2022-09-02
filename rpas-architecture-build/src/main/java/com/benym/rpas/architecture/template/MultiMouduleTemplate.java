@@ -2,7 +2,6 @@ package com.benym.rpas.architecture.template;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.ZipUtil;
 import com.benym.rpas.architecture.consts.ProjectKey;
 import com.benym.rpas.architecture.consts.ProjectPath;
 import com.benym.rpas.architecture.consts.ProjectTemplate;
@@ -11,7 +10,6 @@ import com.benym.rpas.architecture.pojo.FileVO;
 import com.benym.rpas.architecture.service.BuildService;
 import com.benym.rpas.architecture.utils.StringUtils;
 import com.benym.rpas.common.utils.SnowflakeUtils;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,16 +33,7 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
     public void run(String... args) throws Exception {
         // 向模板工厂注入当前模板
         TemplateFactory.register(TemplateType.MULTI_MOUDULE, this);
-        // 初始化ftlName->parentDir的map
-        File tempfile = new File(ProjectPath.BUILD_PATH + ProjectPath.BUILD_PROJECT_NAME + ProjectPath.TEMPLATES_PATH);
-        List<File> files = (List<File>) FileUtils.listFiles(tempfile, new String[]{"ftl"}, true);
-        files.forEach(file -> {
-            String absolutePath = file.getAbsolutePath();
-            List<String> split = StrUtil.split(absolutePath, File.separator);
-            if (!split.isEmpty()) {
-                parentDirMap.put(split.get(split.size() - 1), split.get(split.size() - 2));
-            }
-        });
+        buildService.copyFtlToCacheDir(parentDirMap);
         buildId = String.valueOf(SnowflakeUtils.get().next());
     }
 
@@ -180,20 +169,22 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
             ftlMap.forEach((key, value) -> {
                 List<String> valueList = ftlMap.get(key);
                 valueList.forEach(ftlFileName -> {
-                    // 获取模板文件全称
-                    String[] split = ftlFileName.split("#");
-                    // 获取模板文件相对templates文件夹的位置，包括父路径，比如/application/xxx.ftl
-                    String ftlFilePath = File.separator + parentDirMap.get(ftlFileName) + File.separator + ftlFileName;
-                    String mainName = "";
-                    if (parentDirMap.get(ftlFileName).equals("application")) {
-                        mainName = StringUtils.getMainName(rpasConfig.getProject().getArtifactId());
-                        rpasConfig.getProject().setMainName(mainName);
+                    if (ftlFileName.contains("#")) {
+                        // 获取模板文件全称
+                        String[] split = ftlFileName.split("#");
+                        // 获取模板文件相对templates文件夹的位置，包括父路径，比如/application/xxx.ftl
+                        String ftlFilePath = File.separator + parentDirMap.get(ftlFileName) + File.separator + ftlFileName;
+                        String mainName = "";
+                        if (parentDirMap.get(ftlFileName).equals("application")) {
+                            mainName = StringUtils.getMainName(rpasConfig.getProject().getArtifactId());
+                            rpasConfig.getProject().setMainName(mainName);
+                        }
+                        // 新建目标文件File，父路径(绝对路径)为Parent，ftl文件去除后缀为child
+                        File file = new File(
+                                pathMap.get(split[0]), mainName + StrUtil
+                                .removeSuffix(split[1], ".ftl"));
+                        buildService.generate(file, ftlFilePath, rpasConfig);
                     }
-                    // 新建目标文件File，父路径(绝对路径)为Parent，ftl文件去除后缀为child
-                    File file = new File(
-                            pathMap.get(split[0]), mainName + StrUtil
-                            .removeSuffix(split[1], ".ftl"));
-                    buildService.generate(file, ftlFilePath, rpasConfig);
                 });
             });
         }

@@ -13,6 +13,8 @@ public interface ProjectPath {
 
     String CACHETEMP_PATH = BUILD_PATH + "project_cache" + File.separator;
 
+    String COPYTEMPLATES_PATH = CACHETEMP_PATH + "templates" + File.separator;
+
     String SRC_PATH = "src" + File.separator;
 
     String MAIN_PATH = SRC_PATH + "main" + File.separator;

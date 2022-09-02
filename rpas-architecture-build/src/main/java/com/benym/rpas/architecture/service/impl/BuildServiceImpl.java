@@ -1,6 +1,7 @@
 package com.benym.rpas.architecture.service.impl;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.json.JSONUtil;
 import com.benym.rpas.architecture.config.BaseProjectConfig;
@@ -9,23 +10,28 @@ import com.benym.rpas.architecture.pojo.FileVO;
 import com.benym.rpas.architecture.service.BuildService;
 import com.benym.rpas.architecture.template.BuildAbstractTemplate;
 import com.benym.rpas.architecture.template.TemplateFactory;
+import com.benym.rpas.architecture.utils.CfgUtils;
 import com.benym.rpas.common.dto.exception.ExceptionFactory;
-import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -36,20 +42,6 @@ public class BuildServiceImpl implements BuildService {
 
 
     private static final Logger logger = LoggerFactory.getLogger(BuildServiceImpl.class);
-
-    private static Configuration cfg;
-
-    static {
-        try {
-            cfg = new Configuration(Configuration.VERSION_2_3_30);
-            File file = new File(ProjectPath.BUILD_PATH + ProjectPath.BUILD_PROJECT_NAME
-                    + ProjectPath.TEMPLATES_PATH);
-            cfg.setDirectoryForTemplateLoading(file);
-            cfg.setDefaultEncoding("UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public FileVO architectureBuild(BaseProjectConfig baseProjectConfig) {
@@ -73,7 +65,8 @@ public class BuildServiceImpl implements BuildService {
                 file.createNewFile();
             }
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file));
-            cfg.getTemplate(templatesFtl, "UTF-8").process(baseProjectConfig, outputStreamWriter);
+            CfgUtils.getCfg().getTemplate(templatesFtl, "UTF-8")
+                    .process(baseProjectConfig, outputStreamWriter);
             outputStreamWriter.flush();
             outputStreamWriter.close();
         } catch (IOException | TemplateException e) {
@@ -90,6 +83,47 @@ public class BuildServiceImpl implements BuildService {
         ZipUtil.zip(genProjectPath, saveZipPath);
         FileUtil.del(genProjectPath);
         return saveZipPath;
+    }
+
+    @Override
+    public void copyFtlToCacheDir(Map<String, String> parentDirMap) {
+        try {
+            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            Resource[] resources = resolver
+                    .getResources("classpath:templates/**/*.ftl");
+            for (Resource resource : resources) {
+                String filename = resource.getFilename();
+                String path = URLDecoder.decode(resource.getURL().getPath(), "UTF-8");
+                List<String> split = StrUtil.split(path, "/");
+                if (!split.isEmpty()) {
+                    parentDirMap.put(split.get(split.size() - 1), split.get(split.size() - 2));
+                }
+                copy(filename, parentDirMap);
+            }
+            logger.info("copy templates done!");
+        } catch (IOException e) {
+            logger.error("拷贝模版文件异常:{}", e.getMessage());
+            throw ExceptionFactory.bizException("拷贝模板文件异常");
+        }
+    }
+
+    private static void copy(String ftlName, Map<String, String> parentDirMap) {
+        try {
+            String ftlPath = ProjectPath.COPYTEMPLATES_PATH + parentDirMap.get(ftlName)
+                    + File.separator + ftlName;
+            String sourceTemplatesPath = "templates" + File.separator;
+            //检查项目运行时的src下的对应路径
+            File newFile = new File(ftlPath);
+            //读取ftl复制一份到cache路径下
+            ClassPathResource classPathResource = new ClassPathResource
+                    (sourceTemplatesPath + parentDirMap.get(ftlName) + File.separator + ftlName);
+            InputStream ftlStream = classPathResource.getInputStream();
+            byte[] certData = IOUtils.toByteArray(ftlStream);
+            FileUtils.writeByteArrayToFile(newFile, certData);
+        } catch (IOException e) {
+            logger.error("复制ftl文件失败{}", JSONUtil.toJsonStr(e.getMessage()));
+            throw ExceptionFactory.bizException("复制ftl文件失败");
+        }
     }
 
     @Override
