@@ -33,6 +33,7 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
     public void run(String... args) throws Exception {
         // 向模板工厂注入当前模板
         TemplateFactory.register(TemplateType.MULTI_MOUDULE, this);
+        // 初始化ftlName->parentDir的map
         buildService.copyFtlToCacheDir(parentDirMap);
         buildId = String.valueOf(SnowflakeUtils.get().next());
     }
