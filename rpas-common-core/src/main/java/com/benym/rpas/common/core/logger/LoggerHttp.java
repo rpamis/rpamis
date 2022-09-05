@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @date 2022/7/12 7:05 下午
@@ -31,9 +32,12 @@ public class LoggerHttp {
 
     public static void update(RequestLog requestLog, TraceResponseWrapper traceResponseWrapper, long totalTime) throws IOException {
         requestLog.setStatus(traceResponseWrapper.getStatus());
-        if (traceResponseWrapper.getContentType().equals("application/json")) {
-            requestLog.setResponse(JackSonUtils.toMap(
-                    new String(traceResponseWrapper.getContentAsByteArray())));
+        Optional<String> contentType = Optional.ofNullable(traceResponseWrapper.getContentType());
+        if (contentType.isPresent()) {
+            if (contentType.get().equals("application/json")) {
+                requestLog.setResponse(JackSonUtils.toMap(
+                        new String(traceResponseWrapper.getContentAsByteArray())));
+            }
         }
         traceResponseWrapper.copyBodyToResponse();
         requestLog.setResponseHeaders(traceResponseWrapper.getHeaders());
