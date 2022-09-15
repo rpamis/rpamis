@@ -2,6 +2,7 @@ package com.benym.rpas.architecture.pojo;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  * @date 2022/7/20 4:47 下午
@@ -29,6 +30,7 @@ public class Project {
     private String version;
 
     @NotBlank(message = "packageName不能为空")
+    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9-]*$", message = "artifactId仅能以英文字母开头，可包含字母、数字、-线")
     @ApiModelProperty("package")
     private String packageName;
 
