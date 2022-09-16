@@ -30,7 +30,7 @@ public class Project {
     private String version;
 
     @NotBlank(message = "packageName不能为空")
-    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9-]*$", message = "artifactId仅能以英文字母开头，可包含字母、数字、-线")
+    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z]$", message = "artifactId仅能以英文字母开头, 英文字母结尾, 可包含字母、数字、-线")
     @ApiModelProperty("package")
     private String packageName;
 
