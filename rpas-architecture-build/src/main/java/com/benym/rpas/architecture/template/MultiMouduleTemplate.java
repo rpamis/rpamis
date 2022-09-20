@@ -35,11 +35,11 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
         TemplateFactory.register(TemplateType.MULTI_MOUDULE, this);
         // 初始化ftlName->parentDir的map
         buildService.copyFtlToCacheDir(parentDirMap);
-        buildId = String.valueOf(SnowflakeUtils.get().next());
     }
 
     @Override
     protected void initPath() {
+        buildId = String.valueOf(SnowflakeUtils.get().next());
         String artifactId = rpasConfig.getProject().getArtifactId();
         String apiMoudule = artifactId + "-api";
         String daoMoudule = artifactId + "-dao";
