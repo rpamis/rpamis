@@ -35,7 +35,7 @@ public class JackSonUtils {
             });
         } catch (Exception e) {
             logger.error("utils,str转map失败,{}", e.getMessage());
-            throw ExceptionFactory.sysException("JackSonUtils toMap error");
+            throw ExceptionFactory.sysException("JackSonUtils toMap error", e);
         }
     }
 }

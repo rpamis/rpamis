@@ -13,16 +13,16 @@ public class ExceptionFactory {
         return new BizException();
     }
 
-    public static BizException bizException(String detailMessage) {
-        return new BizException(detailMessage);
-    }
-
     public static BizException bizException(String errCode, String errMessage) {
         return new BizException(errCode, errMessage);
     }
 
-    public static BizException bizException(String detailMessage, Throwable e) {
-        return new BizException(detailMessage, e);
+    public static BizException bizException(String errMessage, Throwable e) {
+        return new BizException(errMessage, e);
+    }
+
+    public static BizException bizException(String errCode, String errMessage, Throwable e) {
+        return new BizException(errCode, errMessage, e);
     }
 
     public static BizException bizException(Throwable e) {
@@ -33,8 +33,12 @@ public class ExceptionFactory {
         return new SysException();
     }
 
-    public static SysException sysException(String detailMessage) {
-        return new SysException(detailMessage);
+    public static SysException sysException(Throwable e) {
+        return new SysException(e);
+    }
+
+    public static SysException sysException(String errCode, String errMessage, Throwable e) {
+        return new SysException(errCode, errMessage, e);
     }
 
     public static SysException sysException(String errCode, String errMessage) {

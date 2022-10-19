@@ -70,12 +70,11 @@ public class ExceptionErrorHandler {
         final Trace trace = TraceIdUtils.getTrace();
         String errCode = bizException.getErrCode();
         String message = bizException.getMessage();
-        String detailMessage = bizException.getDetailMessage();
-        logger.error("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, detailMessage);
+        logger.error("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息", trace.getTraceId(), trace.getSpanId(), message, errCode, bizException);
         if (logger.isDebugEnabled()) {
             logger.error(message, bizException);
         }
-        final Response<Object> failResponse = Response.fail(ResponseCode.BIZ_EXCEPTION_CODE, detailMessage);
+        final Response<Object> failResponse = Response.fail(ResponseCode.BIZ_EXCEPTION_CODE, message);
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -84,12 +83,11 @@ public class ExceptionErrorHandler {
         final Trace trace = TraceIdUtils.getTrace();
         String errCode = sysException.getErrCode();
         String message = sysException.getMessage();
-        String detailMessage = sysException.getDetailMessage();
-        logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, detailMessage);
+        logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, sysException);
         if (logger.isDebugEnabled()) {
             logger.error(message, sysException);
         }
-        final Response<Object> failResponse = Response.fail(ResponseCode.SYS_EXCEPTION_CODE, detailMessage);
+        final Response<Object> failResponse = Response.fail(ResponseCode.SYS_EXCEPTION_CODE, message);
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

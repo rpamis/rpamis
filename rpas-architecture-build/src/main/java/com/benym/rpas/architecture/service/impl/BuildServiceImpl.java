@@ -12,6 +12,7 @@ import com.benym.rpas.architecture.template.BuildAbstractTemplate;
 import com.benym.rpas.architecture.template.TemplateFactory;
 import com.benym.rpas.architecture.utils.CfgUtils;
 import com.benym.rpas.common.dto.exception.ExceptionFactory;
+import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -69,9 +70,8 @@ public class BuildServiceImpl implements BuildService {
                     .process(baseProjectConfig, outputStreamWriter);
             outputStreamWriter.flush();
             outputStreamWriter.close();
-        } catch (IOException | TemplateException e) {
-            logger.error("文件生成异常{}", JSONUtil.toJsonStr(e.getMessage()));
-            throw ExceptionFactory.bizException("文件生成异常");
+        } catch (Exception e) {
+            throw ExceptionFactory.bizException("文件生成异常",e);
         }
     }
 
@@ -102,8 +102,7 @@ public class BuildServiceImpl implements BuildService {
             }
             logger.info("copy templates done!");
         } catch (IOException e) {
-            logger.error("拷贝模版文件异常:{}", e.getMessage());
-            throw ExceptionFactory.bizException("拷贝模板文件异常");
+            throw ExceptionFactory.bizException("拷贝模板文件异常", e);
         }
     }
 
@@ -122,7 +121,7 @@ public class BuildServiceImpl implements BuildService {
             FileUtils.writeByteArrayToFile(newFile, certData);
         } catch (IOException e) {
             logger.error("复制ftl文件失败{}", JSONUtil.toJsonStr(e.getMessage()));
-            throw ExceptionFactory.bizException("复制ftl文件失败");
+            throw ExceptionFactory.bizException("复制ftl文件失败", e);
         }
     }
 
@@ -139,8 +138,7 @@ public class BuildServiceImpl implements BuildService {
                 }
                 fileName = list.get(0);
             } catch (Exception e) {
-                logger.error("下载文件不存在{}", JSONUtil.toJsonStr(e.getStackTrace()));
-                throw ExceptionFactory.bizException("下载文件不存在");
+                throw ExceptionFactory.bizException("下载文件不存在", e);
             }
             try (ServletOutputStream outputStream = Objects.requireNonNull(response)
                     .getOutputStream()) {
@@ -151,8 +149,7 @@ public class BuildServiceImpl implements BuildService {
                 outputStream.write(FileUtil.readBytes(filePath));
                 outputStream.flush();
             } catch (IOException e) {
-                logger.error("打包文件异常{}", JSONUtil.toJsonStr(e.getStackTrace()));
-                throw ExceptionFactory.bizException("打包文件异常");
+                throw ExceptionFactory.bizException("打包文件异常", e);
             }
         }
     }

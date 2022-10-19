@@ -16,41 +16,34 @@ public abstract class AbstractException extends RuntimeException {
 
     private String errMessage;
 
-    private String detailMessage;
+    private Throwable throwable;
 
-    public AbstractException() {
-        super();
-    }
-
-    public AbstractException(String detailMessage) {
-        super(detailMessage);
-    }
-
-    public AbstractException(String detailMessage, Throwable throwable) {
-        super(detailMessage, throwable);
-    }
-
-    public AbstractException(String errCode, String errMessage, String detailMessage) {
+    public AbstractException(String errMessage) {
         super(errMessage);
-        this.setErrCode(errCode);
-        this.setErrMessage(errMessage);
-        this.setDetailMessage(detailMessage);
     }
+
+    public AbstractException(String errMessage, Throwable throwable) {
+        super(errMessage, throwable);
+    }
+
 
     public AbstractException(String errCode, String errMessage) {
         this(errCode, errMessage, null);
+    }
+
+    public AbstractException(String errCode, String errMessage, Throwable throwable) {
+        super(errMessage);
+        this.setErrCode(errCode);
+        this.setErrMessage(errMessage);
+        this.setThrowable(throwable);
     }
 
     public AbstractException(StatusCode statusCode) {
         this(statusCode.getCode(), statusCode.getMessage(), null);
     }
 
-    public AbstractException(StatusCode statusCode, String detailMessage) {
-        this(statusCode.getCode(), statusCode.getMessage(), detailMessage);
-    }
-
     public AbstractException(StatusCode statusCode, Throwable throwable) {
-        super(statusCode.getMessage(), throwable);
+        this(statusCode.getCode(), statusCode.getMessage(), throwable);
     }
 
     public String getErrCode() {
@@ -69,11 +62,11 @@ public abstract class AbstractException extends RuntimeException {
         this.errMessage = errMessage;
     }
 
-    public String getDetailMessage() {
-        return detailMessage;
+    public Throwable getThrowable() {
+        return throwable;
     }
 
-    public void setDetailMessage(String detailMessage) {
-        this.detailMessage = detailMessage;
+    public void setThrowable(Throwable throwable) {
+        this.throwable = throwable;
     }
 }

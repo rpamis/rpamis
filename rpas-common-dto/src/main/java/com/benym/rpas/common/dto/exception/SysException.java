@@ -18,16 +18,16 @@ public class SysException extends AbstractException {
         super(DEFAULT_SYS_ERRCODE);
     }
 
-    public SysException(String detailMessage) {
-        super(DEFAULT_SYS_ERRCODE.getCode(), DEFAULT_SYS_ERRCODE.getMessage(), detailMessage);
-    }
-
-    public SysException(String detailMessage, Throwable e) {
-        super(detailMessage, e);
+    public SysException(String errMessage, Throwable e) {
+        super(DEFAULT_SYS_ERRCODE.getCode(), errMessage, e);
     }
 
     public SysException(String errCode, String errMessage) {
         super(errCode, errMessage);
+    }
+
+    public SysException(String errCode, String errMessage, Throwable e) {
+        super(errCode, errMessage, e);
     }
 
     public SysException(Throwable e) {

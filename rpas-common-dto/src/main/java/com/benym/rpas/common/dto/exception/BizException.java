@@ -18,16 +18,16 @@ public class BizException extends AbstractException {
         super(DEAULT_BIZ_ERRCODE);
     }
 
-    public BizException(String detailMessage) {
-        super(DEAULT_BIZ_ERRCODE.getCode(), DEAULT_BIZ_ERRCODE.getMessage(), detailMessage);
-    }
-
-    public BizException(String detailMessage, Throwable e) {
-        super(detailMessage, e);
+    public BizException(String errMessage, Throwable e) {
+        super(DEAULT_BIZ_ERRCODE.getCode(), errMessage, e);
     }
 
     public BizException(String errCode, String errMessage) {
         super(errCode, errMessage);
+    }
+
+    public BizException(String errCode, String errMessage, Throwable e) {
+        super(errCode, errMessage, e);
     }
 
     public BizException(Throwable e) {

@@ -74,11 +74,9 @@ public class TraceFilter implements Filter {
                 logger.info("请求url:{}, 耗时(ms):{}", traceRequestWrapper.getRequestURI(), stopWatch.getTotalTimeMillis());
             }
         } catch (BizException e) {
-            logger.error("traceId Filter bizException, {}", e.getMessage());
-            throw ExceptionFactory.bizException(e.getDetailMessage());
+            throw ExceptionFactory.bizException("traceId Filter bizException",e);
         } catch (SysException e) {
-            logger.error("traceId Filter sysException, {}", e.getMessage());
-            throw ExceptionFactory.sysException(e.getDetailMessage());
+            throw ExceptionFactory.sysException("traceId Filter sysException",e);
         } catch (RpasException e) {
             logger.error("traceId Filter rpasException, {}", e.getMessage());
             throw ExceptionFactory.rpasException(ResponseCode.RPAS_EXCEPTION_CODE, e.getDetailMessage());
