@@ -70,7 +70,7 @@ public class BuildServiceImpl implements BuildService {
                     .process(baseProjectConfig, outputStreamWriter);
             outputStreamWriter.flush();
             outputStreamWriter.close();
-        } catch (Exception e) {
+        } catch (IOException | TemplateException e) {
             throw ExceptionFactory.bizException("文件生成异常",e);
         }
     }
