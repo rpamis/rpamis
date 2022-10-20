@@ -45,8 +45,8 @@ public class ExceptionFactory {
         return new SysException(errCode, errMessage);
     }
 
-    public static SysException sysException(String detailMessage, Throwable e) {
-        return new SysException(detailMessage, e);
+    public static SysException sysException(String errMessage, Throwable e) {
+        return new SysException(errMessage, e);
     }
 
     public static RpasException rpasException() {
