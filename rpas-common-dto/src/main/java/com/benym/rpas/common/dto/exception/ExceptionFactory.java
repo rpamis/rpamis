@@ -13,6 +13,10 @@ public class ExceptionFactory {
         return new BizException();
     }
 
+    public static BizException bizException(String errMessage){
+        return new BizException(errMessage);
+    }
+
     public static BizException bizException(String errCode, String errMessage) {
         return new BizException(errCode, errMessage);
     }
@@ -31,6 +35,10 @@ public class ExceptionFactory {
 
     public static SysException sysException() {
         return new SysException();
+    }
+
+    public static SysException sysException(String errMessage) {
+        return new SysException(errMessage);
     }
 
     public static SysException sysException(Throwable e) {

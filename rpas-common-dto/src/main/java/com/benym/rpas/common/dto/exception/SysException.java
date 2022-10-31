@@ -22,6 +22,10 @@ public class SysException extends AbstractException {
         super(DEFAULT_SYS_ERRCODE.getCode(), errMessage, e);
     }
 
+    public SysException(String errMessage) {
+        super(DEFAULT_SYS_ERRCODE.getCode(), errMessage);
+    }
+
     public SysException(String errCode, String errMessage) {
         super(errCode, errMessage);
     }
