@@ -70,7 +70,7 @@ public class ExceptionErrorHandler {
         final Trace trace = TraceIdUtils.getTrace();
         String errCode = bizException.getErrCode();
         String message = bizException.getMessage();
-        logger.error("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息", trace.getTraceId(), trace.getSpanId(), message, errCode, bizException);
+        logger.error("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, bizException);
         if (logger.isDebugEnabled()) {
             logger.error(message, bizException);
         }
@@ -83,7 +83,7 @@ public class ExceptionErrorHandler {
         final Trace trace = TraceIdUtils.getTrace();
         String errCode = sysException.getErrCode();
         String message = sysException.getMessage();
-        logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, sysException);
+        logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, sysException);
         if (logger.isDebugEnabled()) {
             logger.error(message, sysException);
         }
@@ -108,7 +108,7 @@ public class ExceptionErrorHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response<Object>> handleException(Exception exception) {
         final Trace trace = TraceIdUtils.getTrace();
-        logger.error("请求ID:{}, SpanId:{}, 未知异常:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), exception.getMessage(), exception);
+        logger.error("请求ID:{}, SpanId:{}, 未知异常:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), exception.getMessage(), exception);
         if (logger.isDebugEnabled()) {
             logger.error(exception.getMessage(), exception);
         }
