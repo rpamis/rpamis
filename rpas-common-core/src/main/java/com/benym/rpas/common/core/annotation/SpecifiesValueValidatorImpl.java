@@ -5,6 +5,11 @@ import com.benym.rpas.common.dto.exception.ExceptionFactory;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 特定值校验器实现
@@ -13,16 +18,18 @@ import java.lang.reflect.Method;
  */
 public class SpecifiesValueValidatorImpl implements ConstraintValidator<SpecifiesValueValidator, Object> {
 
-    private String[] strGroup;
-
-    private int[] intGroup;
-
     private Class<?> enumClass;
+
+    private HashSet<String> strSet;
+
+    private Set<Integer> intSet;
 
     @Override
     public void initialize(SpecifiesValueValidator constraintAnnotation) {
-        strGroup = constraintAnnotation.strGroup();
-        intGroup = constraintAnnotation.intGroup();
+        String[] strGroup = constraintAnnotation.strGroup();
+        strSet = new HashSet<>(Arrays.asList(strGroup));
+        int[] intGroup = constraintAnnotation.intGroup();
+        intSet = Arrays.stream(intGroup).boxed().collect(Collectors.toSet());
         enumClass = constraintAnnotation.enumClass();
     }
 
@@ -33,6 +40,7 @@ public class SpecifiesValueValidatorImpl implements ConstraintValidator<Specifie
                 return true;
             }
             if (enumClass.isEnum()) {
+                // 获取传入的枚举class的所有定义的枚举，反射获取code判断是否和入参相同
                 Object[] enumConstants = enumClass.getEnumConstants();
                 for (Object enumConstant : enumConstants) {
                     Method method = enumClass.getDeclaredMethod("getCode");
@@ -41,20 +49,22 @@ public class SpecifiesValueValidatorImpl implements ConstraintValidator<Specifie
                         return true;
                     }
                 }
-            }
-            if (value instanceof String) {
-                for (String str : strGroup) {
-                    if (str.equals(value)) {
-                        return true;
+            } else if (value instanceof String) {
+                if (strSet.contains(value)) {
+                    return true;
+                }
+            } else if (value instanceof Integer) {
+                if (intSet.contains(value)) {
+                    return true;
+                }
+            } else if (value instanceof List) {
+                for (Object v : (List<?>) value) {
+                    String cast = (String) v;
+                    if (!strSet.contains(cast)) {
+                        return false;
                     }
                 }
-            }
-            if (value instanceof Integer) {
-                for (Integer ints : intGroup) {
-                    if (ints == value) {
-                        return true;
-                    }
-                }
+                return true;
             }
         } catch (NoSuchMethodException e) {
             throw ExceptionFactory.bizException("该枚举类没有getCode方法", e);
