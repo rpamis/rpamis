@@ -11,11 +11,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @Time : 2022/7/7 21:56
  */
 public class RpasBeanUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(RpasBeanUtils.class);
 
     /**
      * 享元模式
@@ -109,8 +113,8 @@ public class RpasBeanUtils {
             target = clazz.newInstance();
             copy(source, target);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+            logger.warn("RpasBeanUtils copy exception:{}", e.getMessage());
+            throw new RuntimeException(e);
         }
         return target;
     }
@@ -144,8 +148,8 @@ public class RpasBeanUtils {
             target = clazz.newInstance();
             copyWithConverter(source, target, converter);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+            logger.warn("RpasBeanUtils copy with converter exception:{}", e.getMessage());
+            throw new RuntimeException(e);
         }
         return target;
     }
