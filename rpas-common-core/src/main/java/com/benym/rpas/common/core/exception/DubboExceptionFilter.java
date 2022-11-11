@@ -2,10 +2,7 @@ package com.benym.rpas.common.core.exception;
 
 import cn.hutool.json.JSONUtil;
 import com.benym.rpas.common.dto.enums.ResponseCode;
-import com.benym.rpas.common.dto.exception.AbstractException;
-import com.benym.rpas.common.dto.exception.BizException;
-import com.benym.rpas.common.dto.exception.RpasException;
-import com.benym.rpas.common.dto.exception.SysException;
+import com.benym.rpas.common.dto.exception.*;
 import com.benym.rpas.common.dto.response.Response;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
@@ -67,6 +64,17 @@ public class DubboExceptionFilter implements Filter {
         return result;
     }
 
+    @ExceptionHandler(ValidException.class)
+    public Object handleValidException(ValidException exception) {
+        logger.warn("catch dubbo validExpcetion", exception);
+        Optional<ValidException> opValid = Optional.ofNullable(exception);
+        String errCode = opValid.map(AbstractException::getErrCode)
+                .orElse(ResponseCode.VALID_EXCEPTION_CODE.getCode());
+        String errMessage = opValid.map(AbstractException::getErrMessage)
+                .orElse(ResponseCode.VALID_EXCEPTION_CODE.getMessage());
+        return Response.fail(errCode, errMessage);
+    }
+
     @ExceptionHandler(BizException.class)
     public Object handleBizException(BizException exception) {
         logger.warn("catch dubbo bizExpcetion", exception);
@@ -81,10 +89,10 @@ public class DubboExceptionFilter implements Filter {
     @ExceptionHandler(SysException.class)
     public Object handleSysException(SysException exception) {
         logger.warn("catch dubbo sysExpcetion", exception);
-        Optional<SysException> opBiz = Optional.ofNullable(exception);
-        String errCode = opBiz.map(AbstractException::getErrCode)
+        Optional<SysException> opSys = Optional.ofNullable(exception);
+        String errCode = opSys.map(AbstractException::getErrCode)
                 .orElse(ResponseCode.SYS_EXCEPTION_CODE.getCode());
-        String errMessage = opBiz.map(AbstractException::getErrMessage)
+        String errMessage = opSys.map(AbstractException::getErrMessage)
                 .orElse(ResponseCode.SYS_EXCEPTION_CODE.getMessage());
         return Response.fail(errCode, errMessage);
     }
@@ -92,10 +100,10 @@ public class DubboExceptionFilter implements Filter {
     @ExceptionHandler(RpasException.class)
     public Object handleRpasException(RpasException exception) {
         logger.warn("catch dubbo anyExpcetion", exception);
-        Optional<RpasException> opBiz = Optional.ofNullable(exception);
-        String errCode = opBiz.map(RpasException::getErrCode)
+        Optional<RpasException> opRpas = Optional.ofNullable(exception);
+        String errCode = opRpas.map(RpasException::getErrCode)
                 .orElse(ResponseCode.RPAS_EXCEPTION_CODE.getCode());
-        String errMessage = opBiz.map(RpasException::getErrMessage)
+        String errMessage = opRpas.map(RpasException::getErrMessage)
                 .orElse(ResponseCode.RPAS_EXCEPTION_CODE.getMessage());
         return Response.fail(errCode, errMessage);
     }
@@ -103,9 +111,9 @@ public class DubboExceptionFilter implements Filter {
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception exception) {
         logger.warn("catch dubbo unknown Expcetion", exception);
-        Optional<Exception> opBiz = Optional.ofNullable(exception);
+        Optional<Exception> opExcetion = Optional.ofNullable(exception);
         String errCode = ResponseCode.UNKNOWN_EXCEPTION_CODE.getCode();
-        String errMessage = opBiz.map(Exception::getMessage)
+        String errMessage = opExcetion.map(Exception::getMessage)
                 .orElse(ResponseCode.UNKNOWN_EXCEPTION_CODE.getMessage());
         return Response.fail(errCode, errMessage);
     }
