@@ -6,6 +6,7 @@ import com.benym.rpas.common.dto.enums.Trace;
 import com.benym.rpas.common.dto.exception.BizException;
 import com.benym.rpas.common.dto.exception.RpasException;
 import com.benym.rpas.common.dto.exception.SysException;
+import com.benym.rpas.common.dto.exception.ValidException;
 import com.benym.rpas.common.dto.response.Response;
 import com.benym.rpas.common.utils.TraceIdUtils;
 import org.slf4j.Logger;
@@ -65,6 +66,16 @@ public class ExceptionErrorHandler {
         return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ValidException.class)
+    public ResponseEntity<Response<Object>> handleValidException(ValidException validException) {
+        final Trace trace = TraceIdUtils.getTrace();
+        String errCode = validException.getErrCode();
+        String message = validException.getMessage();
+        logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
+        final Response<Object> failResponse = Response.fail(errCode, message);
+        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(BizException.class)
     public ResponseEntity<Response<Object>> handleBizException(BizException bizException) {
         final Trace trace = TraceIdUtils.getTrace();
@@ -74,7 +85,7 @@ public class ExceptionErrorHandler {
         if (logger.isDebugEnabled()) {
             logger.error(message, bizException);
         }
-        final Response<Object> failResponse = Response.fail(ResponseCode.BIZ_EXCEPTION_CODE, message);
+        final Response<Object> failResponse = Response.fail(errCode, message);
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -87,7 +98,7 @@ public class ExceptionErrorHandler {
         if (logger.isDebugEnabled()) {
             logger.error(message, sysException);
         }
-        final Response<Object> failResponse = Response.fail(ResponseCode.SYS_EXCEPTION_CODE, message);
+        final Response<Object> failResponse = Response.fail(errCode, message);
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -101,7 +112,7 @@ public class ExceptionErrorHandler {
         if (logger.isDebugEnabled()) {
             logger.error(message, rpasException);
         }
-        final Response<Object> failResponse = Response.fail(ResponseCode.RPAS_EXCEPTION_CODE, detailMessage);
+        final Response<Object> failResponse = Response.fail(errCode, detailMessage);
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

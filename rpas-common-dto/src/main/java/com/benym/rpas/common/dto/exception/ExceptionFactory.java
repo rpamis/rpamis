@@ -2,12 +2,36 @@ package com.benym.rpas.common.dto.exception;
 
 import com.benym.rpas.common.dto.enums.StatusCode;
 
+import java.lang.reflect.Constructor;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * 异常工厂
  *
  * @Time : 2022/7/7 22:46
  */
 public class ExceptionFactory {
+
+    private static final ConcurrentHashMap<String, AbstractException> exceptionCache = new ConcurrentHashMap<>();
+
+    public static <T extends AbstractException> AbstractException getException(Class<T> cls, String message) {
+        Class<?>[] parameterTypes = {String.class};
+        Constructor<T> constructor;
+        T t;
+        try {
+            AbstractException abstractException = exceptionCache.get(cls.toString());
+            if (abstractException != null) {
+                return abstractException;
+            }
+            constructor = cls.getConstructor(parameterTypes);
+            Object[] parameters = new Object[]{message};
+            t = constructor.newInstance(parameters);
+            exceptionCache.putIfAbsent(cls.toString(), t);
+        } catch (Exception e) {
+            throw sysException("获取cache exception异常", e);
+        }
+        return t;
+    }
 
     public static BizException bizException() {
         return new BizException();
@@ -75,5 +99,17 @@ public class ExceptionFactory {
 
     public static RpasException rpasException(StatusCode statusCode, String detailMessage) {
         return new RpasException(statusCode, detailMessage);
+    }
+
+    public static ValidException validException(String errMessage) {
+        return new ValidException(errMessage);
+    }
+
+    public static ValidException validException(String errCode, String errMessage) {
+        return new ValidException(errCode, errMessage);
+    }
+
+    public static ValidException validException(StatusCode statusCode) {
+        return new ValidException(statusCode);
     }
 }
