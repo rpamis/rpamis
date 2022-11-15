@@ -2,6 +2,7 @@ package com.benym.rpas.common.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.benym.rpas.common.dto.response.PageResponse;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
 import org.slf4j.Logger;
@@ -36,7 +38,7 @@ public class RpasBeanUtils {
      * @param targetClass 目标类
      * @return BeanCopier
      */
-    private static <S,T> BeanCopier getBeanCopierWithNoConverter(Class<S> sourceClass, Class<T> targetClass) {
+    private static <S, T> BeanCopier getBeanCopierWithNoConverter(Class<S> sourceClass, Class<T> targetClass) {
         StringBuffer beanKey = new StringBuffer();
         beanKey.append(sourceClass.getName());
         beanKey.append(targetClass.getName());
@@ -45,8 +47,8 @@ public class RpasBeanUtils {
         if (!bencopierMap.containsKey(beanKeyStr)) {
             synchronized (RpasBeanUtils.class) {
                 if (!bencopierMap.containsKey(beanKeyStr)) {
-                    beanCopier = BeanCopier.create(sourceClass,targetClass,false);
-                    bencopierMap.put(beanKeyStr,beanCopier);
+                    beanCopier = BeanCopier.create(sourceClass, targetClass, false);
+                    bencopierMap.put(beanKeyStr, beanCopier);
                 } else {
                     beanCopier = bencopierMap.get(beanKeyStr);
                 }
@@ -64,18 +66,18 @@ public class RpasBeanUtils {
      * @param targetClass 目标类
      * @return BeanCopier
      */
-    private static <S,T> BeanCopier getBeanCopierWithConverter(Class<S> sourceClass, Class<T> targetClass, Converter converter) {
+    private static <S, T> BeanCopier getBeanCopierWithConverter(Class<S> sourceClass, Class<T> targetClass, Converter converter) {
         StringBuffer beanKey = new StringBuffer();
-        beanKey.append(sourceClass.getName());
-        beanKey.append(targetClass.getName());
+        beanKey.append(sourceClass);
+        beanKey.append(targetClass);
         beanKey.append(converter.toString());
         BeanCopier beanCopier;
         String beanKeyStr = beanKey.toString();
         if (!bencopierMap.containsKey(beanKeyStr)) {
             synchronized (RpasBeanUtils.class) {
                 if (!bencopierMap.containsKey(beanKeyStr)) {
-                    beanCopier = BeanCopier.create(sourceClass,targetClass, true);
-                    bencopierMap.put(beanKeyStr,beanCopier);
+                    beanCopier = BeanCopier.create(sourceClass, targetClass, true);
+                    bencopierMap.put(beanKeyStr, beanCopier);
                 } else {
                     beanCopier = bencopierMap.get(beanKeyStr);
                 }
@@ -101,7 +103,7 @@ public class RpasBeanUtils {
      * 拷贝source对象属性到target class中，不使用converter，名字和类型不严格匹配时将不拷贝
      *
      * @param source 源对象
-     * @param clazz 目标类
+     * @param clazz  目标类
      * @return copy后的对象
      */
     public static <T> T copy(Object source, Class<T> clazz) {
@@ -122,8 +124,8 @@ public class RpasBeanUtils {
     /**
      * 拷贝source对象属性到target中，使用自定义converter，拷贝规则严格符合converter规则
      *
-     * @param source 源对象
-     * @param target 目标对象
+     * @param source    源对象
+     * @param target    目标对象
      * @param converter 自定义converter
      */
     public static void copyWithConverter(Object source, Object target, Converter converter) {
@@ -134,8 +136,8 @@ public class RpasBeanUtils {
     /**
      * 拷贝source对象属性到target class中，使用自定义converter，拷贝规则严格符合converter规则
      *
-     * @param source 源对象
-     * @param clazz 目标类
+     * @param source    源对象
+     * @param clazz     目标类
      * @param converter 自定义converter
      * @return copy后的对象
      */
@@ -158,7 +160,7 @@ public class RpasBeanUtils {
      * 拷贝源list对象到新class list
      *
      * @param sources 源对象List
-     * @param clazz 目标类
+     * @param clazz   目标类
      * @return 拷贝后的新class list
      */
     public static <T> List<T> copyToList(List<?> sources, Class<T> clazz) {
@@ -178,8 +180,8 @@ public class RpasBeanUtils {
     /**
      * 拷贝源list对象到新class list，使用自定义converter
      *
-     * @param sources 源对象List
-     * @param clazz 目标类
+     * @param sources   源对象List
+     * @param clazz     目标类
      * @param converter 自定义converter
      * @return 拷贝后的新class list
      */
@@ -216,7 +218,7 @@ public class RpasBeanUtils {
      * 将PageResponse对象，转化内部class
      *
      * @param sourcePageResponse 源PageResponse
-     * @param clazz 目标class
+     * @param clazz              目标class
      * @return 将PageResponse<class>
      */
     public static <T> PageResponse<T> toPageResponse(PageResponse<?> sourcePageResponse, Class<T> clazz) {
@@ -233,11 +235,11 @@ public class RpasBeanUtils {
     /**
      * 将page对象转化为PageResponse, function converter形式
      *
-     * @param page mybatisPlus page对象
+     * @param page              mybatisPlus page对象
      * @param functionConverter functionConverter
      * @return PageResponse
      */
-    public static <S,T> PageResponse<T> toPageResponse(Page<S> page, Function<S,T> functionConverter) {
+    public static <S, T> PageResponse<T> toPageResponse(Page<S> page, Function<S, T> functionConverter) {
         PageResponse<T> pageResponse = new PageResponse<>();
         pageResponse.setPageIndex((int) page.getCurrent());
         pageResponse.setPageSize((int) page.getSize());
@@ -257,10 +259,10 @@ public class RpasBeanUtils {
      * 将PageResponse对象 转换不同内部class, function converter形式
      *
      * @param sourcePageResponse PageResponse对象
-     * @param functionConverter functionConverter
+     * @param functionConverter  functionConverter
      * @return PageResponse
      */
-    public static <S,T> PageResponse<T> toPageResponse(PageResponse<S> sourcePageResponse, Function<S,T> functionConverter) {
+    public static <S, T> PageResponse<T> toPageResponse(PageResponse<S> sourcePageResponse, Function<S, T> functionConverter) {
         PageResponse<T> pageResponse = new PageResponse<>();
         pageResponse.setPageIndex(sourcePageResponse.getPageIndex());
         pageResponse.setPageSize(sourcePageResponse.getPageSize());
