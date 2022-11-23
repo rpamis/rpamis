@@ -220,13 +220,13 @@ public class RpasBeanUtils {
      * @param clazz              目标class
      * @return 将PageResponse<class>
      */
-    public static <T> PageResponse<T> toPageResponse(PageResponse<?> sourcePageResponse, Class<T> clazz) {
+    public static <S,T> PageResponse<T> toPageResponse(PageResponse<S> sourcePageResponse, Class<T> clazz) {
         if (sourcePageResponse == null) {
             return null;
         }
         PageResponse<T> pageResponse = copy(sourcePageResponse, PageResponse.class);
-        if (!pageResponse.getList().isEmpty()) {
-            pageResponse.setList(RpasBeanUtils.copyToList(pageResponse.getList(), clazz));
+        if (!sourcePageResponse.getList().isEmpty()) {
+            pageResponse.setList(RpasBeanUtils.copyToList(sourcePageResponse.getList(), clazz));
         }
         return pageResponse;
     }
