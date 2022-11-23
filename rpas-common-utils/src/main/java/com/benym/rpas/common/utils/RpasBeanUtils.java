@@ -2,19 +2,18 @@ package com.benym.rpas.common.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.benym.rpas.common.dto.response.PageResponse;
+import net.sf.cglib.beans.BeanCopier;
+import net.sf.cglib.core.Converter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.ConcurrentReferenceHashMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import net.sf.cglib.beans.BeanCopier;
-import net.sf.cglib.core.Converter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @Time : 2022/7/7 21:56
@@ -26,7 +25,7 @@ public class RpasBeanUtils {
     /**
      * 享元模式
      */
-    private static final Map<String, BeanCopier> bencopierMap = new ConcurrentHashMap<>();
+    private static final Map<String, BeanCopier> bencopierMap = new ConcurrentReferenceHashMap<>();
 
     public RpasBeanUtils() {
     }
@@ -40,8 +39,8 @@ public class RpasBeanUtils {
      */
     private static <S, T> BeanCopier getBeanCopierWithNoConverter(Class<S> sourceClass, Class<T> targetClass) {
         StringBuffer beanKey = new StringBuffer();
-        beanKey.append(sourceClass.getName());
-        beanKey.append(targetClass.getName());
+        beanKey.append(sourceClass);
+        beanKey.append(targetClass);
         BeanCopier beanCopier;
         String beanKeyStr = beanKey.toString();
         if (!bencopierMap.containsKey(beanKeyStr)) {
