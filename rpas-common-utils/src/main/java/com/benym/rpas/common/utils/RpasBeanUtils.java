@@ -37,7 +37,7 @@ public class RpasBeanUtils {
      * @param targetClass 目标类
      * @return BeanCopier
      */
-    private static <S, T> BeanCopier getBeanCopierWithNoConverter(Class<S> sourceClass, Class<T> targetClass) {
+    private static <S, T> BeanCopier getBeanCopier(Class<S> sourceClass, Class<T> targetClass) {
         StringBuffer beanKey = new StringBuffer();
         beanKey.append(sourceClass);
         beanKey.append(targetClass);
@@ -65,7 +65,7 @@ public class RpasBeanUtils {
      * @param targetClass 目标类
      * @return BeanCopier
      */
-    private static <S, T> BeanCopier getBeanCopierWithConverter(Class<S> sourceClass, Class<T> targetClass, Converter converter) {
+    private static <S, T> BeanCopier getBeanCopier(Class<S> sourceClass, Class<T> targetClass, Converter converter) {
         StringBuffer beanKey = new StringBuffer();
         beanKey.append(sourceClass);
         beanKey.append(targetClass);
@@ -94,7 +94,7 @@ public class RpasBeanUtils {
      * @param target 目标对象
      */
     public static void copy(Object source, Object target) {
-        BeanCopier beanCopier = getBeanCopierWithNoConverter(source.getClass(), target.getClass());
+        BeanCopier beanCopier = getBeanCopier(source.getClass(), target.getClass());
         beanCopier.copy(source, target, null);
     }
 
@@ -127,8 +127,8 @@ public class RpasBeanUtils {
      * @param target    目标对象
      * @param converter 自定义converter
      */
-    public static void copyWithConverter(Object source, Object target, Converter converter) {
-        BeanCopier beanCopier = getBeanCopierWithConverter(source.getClass(), target.getClass(), converter);
+    public static void copy(Object source, Object target, Converter converter) {
+        BeanCopier beanCopier = getBeanCopier(source.getClass(), target.getClass(), converter);
         beanCopier.copy(source, target, converter);
     }
 
@@ -140,14 +140,14 @@ public class RpasBeanUtils {
      * @param converter 自定义converter
      * @return copy后的对象
      */
-    public static <T> T copyWithConverter(Object source, Class<T> clazz, Converter converter) {
+    public static <T> T copy(Object source, Class<T> clazz, Converter converter) {
         if (source == null) {
             return null;
         }
         T target;
         try {
             target = clazz.newInstance();
-            copyWithConverter(source, target, converter);
+            copy(source, target, converter);
         } catch (Exception e) {
             logger.warn("RpasBeanUtils copy with converter exception:{}", e.getMessage());
             throw new RuntimeException(e);
@@ -191,7 +191,7 @@ public class RpasBeanUtils {
         List<T> targets = new ArrayList<>(sources.size());
         if (!sources.isEmpty()) {
             sources.forEach(source -> {
-                T clone = copyWithConverter(source, clazz, converter);
+                T clone = copy(source, clazz, converter);
                 targets.add(clone);
             });
         }

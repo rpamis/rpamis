@@ -29,11 +29,11 @@ public class RpasBeanUtilsUsageTest {
         // 通过converter拷贝，无返回值
         entitySource = init();
         EntityTargetDiff entityTargetDiff = new EntityTargetDiff();
-        RpasBeanUtils.copyWithConverter(entitySource, entityTargetDiff, new DiffConverter());
+        RpasBeanUtils.copy(entitySource, entityTargetDiff, new DiffConverter());
 
         // 通过converter、target class拷贝，返回target
         entitySource = init();
-        RpasBeanUtils.copyWithConverter(entitySource, EntityTargetDiff.class, new DiffConverter());
+        EntityTargetDiff copy1 = RpasBeanUtils.copy(entitySource, EntityTargetDiff.class, new DiffConverter());
 
         // 通过target class拷贝，返回List<target>
         List<EntitySource> list = initList();
@@ -56,7 +56,7 @@ public class RpasBeanUtilsUsageTest {
 
         // 通过target class拷贝，返回PageResponse<target>，function converter形式
         PageResponse<EntityTargetDiff> pageResponse = RpasBeanUtils.toPageResponse(entitySourcePageResponse,
-                source -> RpasBeanUtils.copyWithConverter(source, EntityTargetDiff.class, new DiffConverter()));
+                source -> RpasBeanUtils.copy(source, EntityTargetDiff.class, new DiffConverter()));
 
     }
 
