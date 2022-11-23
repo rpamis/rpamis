@@ -14,6 +14,7 @@
         <module>rpas-common-core</module>
         <module>rpas-architecture-build</module>
         <module>rpas-common-utils</module>
+        <module>rpas-usage-test</module>
     </modules>
 
     <properties>
