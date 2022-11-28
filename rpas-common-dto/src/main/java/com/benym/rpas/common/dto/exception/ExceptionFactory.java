@@ -3,7 +3,6 @@ package com.benym.rpas.common.dto.exception;
 import com.benym.rpas.common.dto.enums.StatusCode;
 
 import java.lang.reflect.Constructor;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 异常工厂
@@ -12,21 +11,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ExceptionFactory {
 
-    private static final ConcurrentHashMap<String, AbstractException> exceptionCache = new ConcurrentHashMap<>();
-
     public static <T extends AbstractException> AbstractException getException(Class<T> cls, String message) {
         Class<?>[] parameterTypes = {String.class};
         Constructor<T> constructor;
         T t;
         try {
-            AbstractException abstractException = exceptionCache.get(cls.toString());
-            if (abstractException != null) {
-                return abstractException;
-            }
             constructor = cls.getConstructor(parameterTypes);
             Object[] parameters = new Object[]{message};
             t = constructor.newInstance(parameters);
-            exceptionCache.putIfAbsent(cls.toString(), t);
         } catch (Exception e) {
             throw sysException("获取cache exception异常", e);
         }
