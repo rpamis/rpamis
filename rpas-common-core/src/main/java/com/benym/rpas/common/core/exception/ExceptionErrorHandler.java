@@ -73,7 +73,7 @@ public class ExceptionErrorHandler {
         String message = validException.getMessage();
         logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
         final Response<Object> failResponse = Response.fail(errCode, message);
-        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(failResponse, HttpStatus.OK);
     }
 
     @ExceptionHandler(BizException.class)
