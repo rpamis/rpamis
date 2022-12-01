@@ -28,9 +28,10 @@ import java.lang.reflect.Field;
 public final class MethodAccessor {
     private static final Logger logger = LoggerFactory.getLogger(MethodAccessor.class);
 
+    private static final MethodHandles.Lookup lookup = MethodHandles.lookup();
+
     private static <T> MethodHandle initMethodHandles(T target, String fieldName) {
         try {
-            MethodHandles.Lookup lookup = MethodHandles.lookup();
             Field field = target.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             return lookup.unreflectSetter(field);
