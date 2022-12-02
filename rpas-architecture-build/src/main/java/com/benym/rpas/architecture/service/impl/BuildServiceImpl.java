@@ -12,7 +12,6 @@ import com.benym.rpas.architecture.template.BuildAbstractTemplate;
 import com.benym.rpas.architecture.template.TemplateFactory;
 import com.benym.rpas.architecture.utils.CfgUtils;
 import com.benym.rpas.common.dto.exception.ExceptionFactory;
-import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;

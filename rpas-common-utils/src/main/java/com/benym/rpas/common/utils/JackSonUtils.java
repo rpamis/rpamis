@@ -1,7 +1,5 @@
 package com.benym.rpas.common.utils;
 
-import com.benym.rpas.common.dto.exception.ExceptionFactory;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -35,7 +33,7 @@ public class JackSonUtils {
             });
         } catch (Exception e) {
             logger.error("utils,str转map失败,{}", e.getMessage());
-            throw ExceptionFactory.sysException("JackSonUtils toMap error", e);
+            throw new RuntimeException("JackSonUtils toMap error", e);
         }
     }
 }
