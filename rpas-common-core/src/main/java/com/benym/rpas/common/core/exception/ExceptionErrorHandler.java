@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Objects;
 
 /**
+ * SpringBoot使用时请采用
+ * <p/>@ComponentScan({"你的启动类基础package路径","com.benym.rpas.*"})
+ * 非SpringBoot项目请采用XML文件方式
+ * <p/><context:component-scan base-package="你的启动类基础package路径, com.benym.rpas.*"/>
  * 全局异常捕获，目前主要捕获spring的Validated和javax的Valid注解，和自定义异常类，全局异常类
  * 处理顺序从上至下，被上层异常处理过的不会再被之后的异常处理
  * 适用于以Controller作为入口的接口异常捕获
