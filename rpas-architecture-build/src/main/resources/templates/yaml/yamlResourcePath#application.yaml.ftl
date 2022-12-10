@@ -9,20 +9,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${dependency.database.host!"localhost"}:${dependency.database.port!"3306"}/${dependency.database.databaseName!"db"}?characterEncoding=utf8&rewriteBatchedStatements=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: ${dependency.database.userName!"root"}
-    password: ${dependency.database.passWord!"root"}
-
-  mybatis-plus:
-    mapper-locations: classpath:/mapper/*.xml
-    configuration:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    global-config:
-      db-config:
-        # 全局删除字段名
-        logic-delete-field: deleted
-        # 逻辑已删除值
-        logic-delete-value: 1
-        # 逻辑未删除值
-        logic-not-delete-value: 0  
+    password: ${dependency.database.passWord!"root"} 
 </#if>
 </#if>
   kafka:
@@ -63,6 +50,21 @@ spring:
         poll:
           interval:
             ms: 500000
+
+<#if dependency.database.enabled==true>
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 全局删除字段名
+      logic-delete-field: deleted
+      # 逻辑已删除值
+      logic-delete-value: 1
+      # 逻辑未删除值
+      logic-not-delete-value: 0
+</#if>
 
 logging:
   level:

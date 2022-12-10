@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -64,7 +65,7 @@ public class BuildServiceImpl implements BuildService {
                 }
                 file.createNewFile();
             }
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
             CfgUtils.getCfg().getTemplate(templatesFtl, "UTF-8")
                     .process(baseProjectConfig, outputStreamWriter);
             outputStreamWriter.flush();
