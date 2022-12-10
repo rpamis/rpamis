@@ -86,46 +86,6 @@ public class BuildServiceImpl implements BuildService {
     }
 
     @Override
-    public void copyFtlToCacheDir(Map<String, String> parentDirMap) {
-        try {
-            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            Resource[] resources = resolver
-                    .getResources("classpath:templates/**/*.ftl");
-            for (Resource resource : resources) {
-                String filename = resource.getFilename();
-                String path = URLDecoder.decode(resource.getURL().getPath(), "UTF-8");
-                List<String> split = StrUtil.split(path, "/");
-                if (!split.isEmpty()) {
-                    parentDirMap.put(split.get(split.size() - 1), split.get(split.size() - 2));
-                }
-                copy(filename, parentDirMap);
-            }
-            logger.info("copy templates done!");
-        } catch (IOException e) {
-            throw ExceptionFactory.bizException("拷贝模板文件异常", e);
-        }
-    }
-
-    private static void copy(String ftlName, Map<String, String> parentDirMap) {
-        try {
-            String ftlPath = ProjectPath.COPYTEMPLATES_PATH + parentDirMap.get(ftlName)
-                    + File.separator + ftlName;
-            String sourceTemplatesPath = "templates" + File.separator;
-            //检查项目运行时的src下的对应路径
-            File newFile = new File(ftlPath);
-            //读取ftl复制一份到cache路径下
-            ClassPathResource classPathResource = new ClassPathResource
-                    (sourceTemplatesPath + parentDirMap.get(ftlName) + File.separator + ftlName);
-            InputStream ftlStream = classPathResource.getInputStream();
-            byte[] certData = IOUtils.toByteArray(ftlStream);
-            FileUtils.writeByteArrayToFile(newFile, certData);
-        } catch (IOException e) {
-            logger.error("复制ftl文件失败{}", JSONUtil.toJsonStr(e.getMessage()));
-            throw ExceptionFactory.bizException("复制ftl文件失败", e);
-        }
-    }
-
-    @Override
     public void download(String id) {
         String fileName;
         HttpServletResponse response = ((ServletRequestAttributes) Objects

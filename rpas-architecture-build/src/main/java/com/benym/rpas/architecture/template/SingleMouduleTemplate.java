@@ -1,6 +1,5 @@
 package com.benym.rpas.architecture.template;
 
-import com.benym.rpas.architecture.config.BaseProjectConfig;
 import com.benym.rpas.architecture.consts.TemplateType;
 import com.benym.rpas.architecture.pojo.FileVO;
 import org.springframework.stereotype.Component;
@@ -13,11 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class SingleMouduleTemplate extends BuildAbstractTemplate {
 
-
-
     @Override
-    public void run(String... args) throws Exception {
-        TemplateFactory.register(TemplateType.SINGLE_MOUDULE, this);
+    protected String getTemplateType() {
+        return TemplateType.SINGLE_MOUDULE.getCode();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.benym.rpas.architecture.utils;
 
-import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import com.benym.rpas.architecture.consts.ProjectPath;
 import freemarker.template.Configuration;
 

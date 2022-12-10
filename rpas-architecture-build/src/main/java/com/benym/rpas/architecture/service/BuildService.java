@@ -19,6 +19,4 @@ public interface BuildService {
 
     String zipProject(String artifactId, String buildId);
 
-    void copyFtlToCacheDir(Map<String, String> parentDirMap) throws IOException;
-
 }

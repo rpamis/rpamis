@@ -2,15 +2,14 @@ package com.benym.rpas.architecture.template;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import com.benym.rpas.architecture.config.InitConfig;
 import com.benym.rpas.architecture.consts.ProjectKey;
 import com.benym.rpas.architecture.consts.ProjectPath;
 import com.benym.rpas.architecture.consts.ProjectTemplate;
 import com.benym.rpas.architecture.consts.TemplateType;
 import com.benym.rpas.architecture.pojo.FileVO;
-import com.benym.rpas.architecture.service.BuildService;
 import com.benym.rpas.architecture.utils.StringUtils;
 import com.benym.rpas.common.utils.SnowflakeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -24,17 +23,9 @@ import java.util.List;
 @Component
 public class MultiMouduleTemplate extends BuildAbstractTemplate {
 
-
-    @Autowired
-    private BuildService buildService;
-
-
     @Override
-    public void run(String... args) throws Exception {
-        // 向模板工厂注入当前模板
-        TemplateFactory.register(TemplateType.MULTI_MOUDULE, this);
-        // 初始化ftlName->parentDir的map
-        buildService.copyFtlToCacheDir(parentDirMap);
+    protected String getTemplateType() {
+        return TemplateType.MULTI_MOUDULE.getCode();
     }
 
     @Override
@@ -174,9 +165,9 @@ public class MultiMouduleTemplate extends BuildAbstractTemplate {
                         // 获取模板文件全称
                         String[] split = ftlFileName.split("#");
                         // 获取模板文件相对templates文件夹的位置，包括父路径，比如/application/xxx.ftl
-                        String ftlFilePath = File.separator + parentDirMap.get(ftlFileName) + File.separator + ftlFileName;
+                        String ftlFilePath = File.separator + InitConfig.parentDirMap.get(ftlFileName) + File.separator + ftlFileName;
                         String mainName = "";
-                        if (parentDirMap.get(ftlFileName).equals("application")) {
+                        if (InitConfig.parentDirMap.get(ftlFileName).equals("application")) {
                             mainName = StringUtils.getMainName(rpasConfig.getProject().getArtifactId());
                             rpasConfig.getProject().setMainName(mainName);
                         }
