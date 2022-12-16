@@ -45,11 +45,11 @@ public final class MethodAccessor {
 
     private static final Logger logger = LoggerFactory.getLogger(MethodAccessor.class);
 
-    private static final MethodHandles.Lookup lookup = MethodHandles.lookup();
+    private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
 
-    private static final MethodType methodType = MethodType.methodType(void.class, String.class);
+    private static final MethodType METHOD_TYPE = MethodType.methodType(void.class, String.class);
 
-    private static final ConcurrentHashMap<String, Function<String, AbstractException>> cacheFunction = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Function<String, AbstractException>> CACHE_FUNCTION = new ConcurrentHashMap<>();
 
     /**
      * 方法句柄是一个有类型的，可以直接执行的指向底层方法、构造器、field等的引用
@@ -65,12 +65,12 @@ public final class MethodAccessor {
      */
     public static <T extends AbstractException> AbstractException getException(Class<T> cls, String message) {
         try {
-            Function<String, AbstractException> function = cacheFunction.get(cls.toString());
+            Function<String, AbstractException> function = CACHE_FUNCTION.get(cls.toString());
             if (function != null) {
                 return applyMessage(function, message);
             }
             function = MethodAccessor.createConstruct(cls);
-            cacheFunction.putIfAbsent(cls.toString(), function);
+            CACHE_FUNCTION.putIfAbsent(cls.toString(), function);
             return applyMessage(function, message);
         } catch (Throwable throwable) {
             throw new RuntimeException("获取cache exception异常", throwable);
@@ -88,9 +88,9 @@ public final class MethodAccessor {
     @SuppressWarnings("unchecked")
     public static <T> Function<String, AbstractException> createConstruct(Class<T> cls) {
         try {
-            MethodHandle methodHandle = lookup.findConstructor(cls, methodType);
+            MethodHandle methodHandle = LOOKUP.findConstructor(cls, METHOD_TYPE);
             CallSite site = LambdaMetafactory.metafactory(
-                    lookup,
+                    LOOKUP,
                     "apply",
                     MethodType.methodType(Function.class),
                     methodHandle.type().generic(),

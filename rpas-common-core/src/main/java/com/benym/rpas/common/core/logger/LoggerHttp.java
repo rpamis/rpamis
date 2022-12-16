@@ -33,11 +33,9 @@ public class LoggerHttp {
     public static void update(RequestLog requestLog, TraceResponseWrapper traceResponseWrapper, long totalTime) throws IOException {
         requestLog.setStatus(traceResponseWrapper.getStatus());
         Optional<String> contentType = Optional.ofNullable(traceResponseWrapper.getContentType());
-        if (contentType.isPresent()) {
-            if (contentType.get().equals("application/json")) {
-                requestLog.setResponse(JackSonUtils.toMap(
-                        new String(traceResponseWrapper.getContentAsByteArray())));
-            }
+        if (contentType.isPresent() && "application/json".equals(contentType.get())) {
+            requestLog.setResponse(JackSonUtils.toMap(
+                    new String(traceResponseWrapper.getContentAsByteArray())));
         }
         traceResponseWrapper.copyBodyToResponse();
         requestLog.setResponseHeaders(traceResponseWrapper.getHeaders());

@@ -62,8 +62,6 @@ public class TraceFilter implements Filter {
             chain.doFilter(traceRequestWrapper, traceResponseWrapper);
             // doFilter之后表示当前请求结束，下一次属于另外一个Span
             MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtils.get().next()));
-            // 请求完成之后同步清理traceId
-            TraceIdUtils.clearTrace();
             stopWatch.stop();
             if (traceLogActivate) {
                 // 更新出参信息
@@ -73,16 +71,11 @@ public class TraceFilter implements Filter {
             } else {
                 logger.info("请求url:{}, 耗时(ms):{}", traceRequestWrapper.getRequestURI(), stopWatch.getTotalTimeMillis());
             }
-        } catch (BizException e) {
-            throw ExceptionFactory.bizException("traceId Filter bizException",e);
-        } catch (SysException e) {
-            throw ExceptionFactory.sysException("traceId Filter sysException",e);
-        } catch (RpasException e) {
-            logger.error("traceId Filter rpasException, {}", e.getMessage());
-            throw ExceptionFactory.rpasException(ResponseCode.RPAS_EXCEPTION_CODE, e.getDetailMessage());
         } catch (Exception e) {
-            logger.error("traceId Filter unkonwn exception, {}", e.getMessage());
-            throw new RuntimeException(e);
+            throw ExceptionFactory.sysException("traceId Filter unkonwn exception", e);
+        } finally {
+            // 请求完成之后同步清理traceId
+            TraceIdUtils.clearTrace();
         }
     }
 }
