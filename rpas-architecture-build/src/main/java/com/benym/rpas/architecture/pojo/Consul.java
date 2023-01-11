@@ -1,6 +1,7 @@
 package com.benym.rpas.architecture.pojo;
 
 /**
+ * @author benym
  * @date 2022/7/26 7:03 下午
  */
 public class Consul {

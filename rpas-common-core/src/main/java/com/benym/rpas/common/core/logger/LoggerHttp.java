@@ -6,14 +6,20 @@ import com.benym.rpas.common.dto.request.RequestLog;
 import com.benym.rpas.common.utils.JackSonUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
 /**
+ * @author benym
  * @date 2022/7/12 7:05 下午
  */
 public class LoggerHttp {
+
+    private LoggerHttp() {
+        // 空构造
+    }
 
     public static RequestLog init(TraceRequestWrapper traceRequestWrapper) {
         RequestLog requestLog = new RequestLog();
@@ -30,7 +36,7 @@ public class LoggerHttp {
         return requestLog;
     }
 
-    public static void update(RequestLog requestLog, TraceResponseWrapper traceResponseWrapper, long totalTime) throws IOException {
+    public static void update(@NotNull RequestLog requestLog, TraceResponseWrapper traceResponseWrapper, long totalTime) throws IOException {
         requestLog.setStatus(traceResponseWrapper.getStatus());
         Optional<String> contentType = Optional.ofNullable(traceResponseWrapper.getContentType());
         if (contentType.isPresent() && "application/json".equals(contentType.get())) {

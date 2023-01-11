@@ -40,7 +40,8 @@ import java.util.Objects;
  * <p/>
  * 强调http code规范，弱化业务code属性，业务code属性理论上属于后端开发需要观测，前端仅需根据http code做出对应处理
  *
- * @Time : 2022/7/7 22:04
+ * @author benym
+ * @date  2022/7/7 22:04
  */
 @RestControllerAdvice
 public class ExceptionErrorHandler {
@@ -51,7 +52,7 @@ public class ExceptionErrorHandler {
     public ResponseEntity<Response<Object>> handleBindException(MethodArgumentNotValidException validException) {
         final Trace trace = TraceIdUtils.getTrace();
         String validateMessage = Objects.requireNonNull(validException.getBindingResult().getFieldError()).getDefaultMessage();
-        logger.error("请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
+        logger.warn("请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
         if (logger.isDebugEnabled()) {
             logger.debug(validException.getMessage(), validException);
         }
@@ -62,7 +63,7 @@ public class ExceptionErrorHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Response<Object>> handleNotReadException(HttpMessageNotReadableException notReadableException) {
         final Trace trace = TraceIdUtils.getTrace();
-        logger.error("请求Id:{}, SpanId:{}, 错误码:{}, 错误信息:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(),
+        logger.warn("请求Id:{}, SpanId:{}, 错误码:{}, 错误信息:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(),
                 ResponseCode.READ_JSON_ERROR.getCode(), ResponseCode.READ_JSON_ERROR.getMessage(), notReadableException.getMessage());
         if (logger.isDebugEnabled()) {
             logger.debug(notReadableException.getMessage(), notReadableException);
@@ -75,7 +76,7 @@ public class ExceptionErrorHandler {
     public ResponseEntity<Response<Object>> handleParameterException(MissingServletRequestParameterException misException) {
         final Trace trace = TraceIdUtils.getTrace();
         String missParams = String.format("%s参数, 类型%s缺失", misException.getParameterName(),misException.getParameterType());
-        logger.error("请求Id:{} ,SpanId:{} ,详细信息:{}",trace.getTraceId(), trace.getSpanId(), missParams);
+        logger.warn("请求Id:{} ,SpanId:{} ,详细信息:{}",trace.getTraceId(), trace.getSpanId(), missParams);
         if (logger.isDebugEnabled()) {
             logger.debug(misException.getMessage(), misException);
         }
@@ -88,7 +89,7 @@ public class ExceptionErrorHandler {
         final Trace trace = TraceIdUtils.getTrace();
         String errCode = validException.getErrCode();
         String message = validException.getMessage();
-        logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
+        logger.warn("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
         final Response<Object> failResponse = Response.fail(errCode, message);
         return new ResponseEntity<>(failResponse, HttpStatus.OK);
     }
@@ -98,7 +99,7 @@ public class ExceptionErrorHandler {
         final Trace trace = TraceIdUtils.getTrace();
         String errCode = bizException.getErrCode();
         String message = bizException.getMessage();
-        logger.error("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, bizException);
+        logger.warn("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, bizException);
         if (logger.isDebugEnabled()) {
             logger.debug(message, bizException);
         }

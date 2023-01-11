@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 /**
  * starter项目
  *
+ * @author benym
  * @date 2022/7/21 10:37 上午
  */
 @Component
-public class StarterTemplate extends BuildAbstractTemplate {
+public class StarterTemplate extends AbstractBuildTemplate {
 
     @Override
     protected String getTemplateType() {

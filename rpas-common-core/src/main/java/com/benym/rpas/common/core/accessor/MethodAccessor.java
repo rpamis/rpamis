@@ -13,6 +13,8 @@ import java.util.function.Function;
  * MethodHandle在各类开源框架中大量使用，如Mybatis等
  * 为什么使用MethodHandle
  * MethodHandle性能压测如何
+ *
+ * @author benym
  * @link {<a href="https://www.optaplanner.org/blog/2018/01/09/JavaReflectionButMuchFaster.html">...</a>}
  * <p/>
  * 对于类外进行私有变量的访问的场景
@@ -72,8 +74,8 @@ public final class MethodAccessor {
             function = MethodAccessor.createConstruct(cls);
             CACHE_FUNCTION.putIfAbsent(cls.toString(), function);
             return applyMessage(function, message);
-        } catch (Throwable throwable) {
-            throw new RuntimeException("获取cache exception异常", throwable);
+        } catch (Throwable e) {
+            throw ExceptionFactory.sysException("获取cache exception异常", e);
         }
     }
 
@@ -97,9 +99,8 @@ public final class MethodAccessor {
                     methodHandle,
                     methodHandle.type());
             return (Function<String, AbstractException>) site.getTarget().invokeExact();
-        } catch (Throwable throwable) {
-            logger.warn("LambdaMetafactory create construct异常:", throwable);
-            throw new RuntimeException(throwable);
+        } catch (Throwable e) {
+            throw ExceptionFactory.sysException("LambdaMetafactory create construct异常:", e);
         }
     }
 
@@ -113,9 +114,12 @@ public final class MethodAccessor {
     public static AbstractException applyMessage(Function<String, AbstractException> function, String message) {
         try {
             return function.apply(message);
-        } catch (Throwable throwable) {
-            logger.warn("LambdaMetafactory function apply异常:", throwable);
-            throw new RuntimeException(throwable);
+        } catch (Exception e) {
+            throw ExceptionFactory.sysException("LambdaMetafactory function apply异常:", e);
         }
+    }
+
+    private MethodAccessor() {
+        throw new IllegalStateException("常量类，禁止实例化");
     }
 }

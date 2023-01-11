@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 /**
  * 单体架构项目
  *
+ * @author benym
  * @date 2022/7/21 10:39 上午
  */
 @Component
-public class SingleMouduleTemplate extends BuildAbstractTemplate {
+public class SingleMouduleTemplate extends AbstractBuildTemplate {
 
     @Override
     protected String getTemplateType() {

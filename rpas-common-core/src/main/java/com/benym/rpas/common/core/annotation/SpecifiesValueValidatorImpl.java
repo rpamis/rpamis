@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 /**
  * 特定值校验器实现
  *
- * @Time:2022/10/31 19:37
+ * @author benym
+ * @date 2022/10/31 19:37
  */
 public class SpecifiesValueValidatorImpl implements ConstraintValidator<SpecifiesValueValidator, Object> {
 
@@ -67,9 +68,9 @@ public class SpecifiesValueValidatorImpl implements ConstraintValidator<Specifie
                 return true;
             }
         } catch (NoSuchMethodException e) {
-            throw ExceptionFactory.bizException("该枚举类没有getCode方法", e);
+            throw ExceptionFactory.sysException("该枚举类没有getCode方法", e);
         } catch (Exception e) {
-            throw ExceptionFactory.bizException("特定值校验器异常", e);
+            throw ExceptionFactory.sysException("特定值校验器异常", e);
         }
         return false;
     }

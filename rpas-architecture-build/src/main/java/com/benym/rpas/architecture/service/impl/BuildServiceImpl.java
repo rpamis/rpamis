@@ -1,26 +1,19 @@
 package com.benym.rpas.architecture.service.impl;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
-import cn.hutool.json.JSONUtil;
 import com.benym.rpas.architecture.config.BaseProjectConfig;
 import com.benym.rpas.architecture.consts.ProjectPath;
 import com.benym.rpas.architecture.pojo.FileVO;
 import com.benym.rpas.architecture.service.BuildService;
-import com.benym.rpas.architecture.template.BuildAbstractTemplate;
+import com.benym.rpas.architecture.template.AbstractBuildTemplate;
 import com.benym.rpas.architecture.template.TemplateFactory;
 import com.benym.rpas.architecture.utils.CfgUtils;
 import com.benym.rpas.common.dto.exception.ExceptionFactory;
 import freemarker.template.TemplateException;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -28,14 +21,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
+ * @author benym
  * @date 2022/7/20 4:48 下午
  */
 @Service
@@ -44,14 +36,16 @@ public class BuildServiceImpl implements BuildService {
 
     private static final Logger logger = LoggerFactory.getLogger(BuildServiceImpl.class);
 
+    @Autowired
+    private TemplateFactory templateFactory;
+
     @Override
     public FileVO architectureBuild(BaseProjectConfig baseProjectConfig) {
-        BuildAbstractTemplate template;
+        AbstractBuildTemplate template;
         try {
-            template = TemplateFactory.getTemplate(baseProjectConfig.getTemplateType());
+            template = templateFactory.getTemplate(baseProjectConfig.getTemplateType());
         } catch (Exception e) {
-            logger.error("获取模板异常{}", JSONUtil.toJsonStr(e.getStackTrace()));
-            throw ExceptionFactory.bizException("获取模板异常", e.getMessage());
+            throw ExceptionFactory.bizException("获取模板异常", e);
         }
         return template.createProject(baseProjectConfig);
     }
@@ -71,7 +65,7 @@ public class BuildServiceImpl implements BuildService {
             outputStreamWriter.flush();
             outputStreamWriter.close();
         } catch (IOException | TemplateException e) {
-            throw ExceptionFactory.bizException("文件生成异常",e);
+            throw ExceptionFactory.bizException("文件生成异常", e);
         }
     }
 

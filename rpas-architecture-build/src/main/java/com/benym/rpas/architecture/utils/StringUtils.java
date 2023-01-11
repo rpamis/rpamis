@@ -4,7 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @Time : 2022/7/28 21:53
+ * @author benym
+ * @date 2022/7/28 21:53
  */
 public class StringUtils {
 
@@ -40,5 +41,9 @@ public class StringUtils {
         char[] cs=str.toCharArray();
         cs[0]-=32;
         return String.valueOf(cs);
+    }
+
+    private StringUtils() {
+        throw new IllegalStateException("工具类，禁止实例化");
     }
 }

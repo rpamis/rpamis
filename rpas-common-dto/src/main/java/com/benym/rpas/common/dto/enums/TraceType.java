@@ -1,12 +1,19 @@
 package com.benym.rpas.common.dto.enums;
 
 /**
+ * @author benym
  * @date 2022/7/8 4:18 下午
  */
 public enum TraceType {
 
+    /**
+     * rpas默认实现
+     */
     RPAS("rpas","rpas默认实现"),
-    SKYWALK("skywalking","skywaling实现");
+    /**
+     * skywalking实现
+     */
+    SKYWALK("skywalking","skywalking实现");
 
     private String type;
     private String desc;

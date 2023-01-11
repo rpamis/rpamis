@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Filter内异常，交给全局异常处理
  *
- * @Time : 2022/8/23 12:39
+ * @author benym
+ * @date 2022/8/23 12:39
  */
 @RestController
 public class ExceptionController {

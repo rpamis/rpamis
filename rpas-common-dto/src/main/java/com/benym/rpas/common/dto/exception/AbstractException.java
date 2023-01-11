@@ -6,7 +6,8 @@ import com.benym.rpas.common.dto.enums.StatusCode;
  * 定义抽象异常类
  * This class is empowered by com.alibaba.cola
  *
- * @Time : 2022/7/7 22:20
+ * @author benym
+ * @date 2022/7/7 22:20
  */
 public abstract class AbstractException extends RuntimeException {
 
@@ -18,31 +19,31 @@ public abstract class AbstractException extends RuntimeException {
 
     private Throwable throwable;
 
-    public AbstractException(String errMessage) {
+    protected AbstractException(String errMessage) {
         super(errMessage);
     }
 
-    public AbstractException(String errMessage, Throwable throwable) {
+    protected AbstractException(String errMessage, Throwable throwable) {
         super(errMessage, throwable);
     }
 
 
-    public AbstractException(String errCode, String errMessage) {
+    protected AbstractException(String errCode, String errMessage) {
         this(errCode, errMessage, null);
     }
 
-    public AbstractException(String errCode, String errMessage, Throwable throwable) {
+    protected AbstractException(String errCode, String errMessage, Throwable throwable) {
         super(errMessage);
-        this.setErrCode(errCode);
-        this.setErrMessage(errMessage);
-        this.setThrowable(throwable);
+        this.errCode = errCode;
+        this.errMessage = errMessage;
+        this.throwable = throwable;
     }
 
-    public AbstractException(StatusCode statusCode) {
+    protected AbstractException(StatusCode statusCode) {
         this(statusCode.getCode(), statusCode.getMessage(), null);
     }
 
-    public AbstractException(StatusCode statusCode, Throwable throwable) {
+    protected AbstractException(StatusCode statusCode, Throwable throwable) {
         this(statusCode.getCode(), statusCode.getMessage(), throwable);
     }
 
@@ -50,23 +51,11 @@ public abstract class AbstractException extends RuntimeException {
         return errCode;
     }
 
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
-    }
-
     public String getErrMessage() {
         return errMessage;
     }
 
-    public void setErrMessage(String errMessage) {
-        this.errMessage = errMessage;
-    }
-
     public Throwable getThrowable() {
         return throwable;
-    }
-
-    public void setThrowable(Throwable throwable) {
-        this.throwable = throwable;
     }
 }

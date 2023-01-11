@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 /**
+ * @author benym
  * @date 2022/7/8 4:04 下午
  */
 @Component
@@ -25,7 +26,8 @@ public class TraceIdUtils {
     @Value("${trace.type:rpas}")
     private static String traceType;
 
-    public TraceIdUtils() {
+    private TraceIdUtils() {
+        throw new IllegalStateException("工具类，禁止实例化");
     }
 
     public static Trace getTrace() {
@@ -76,7 +78,6 @@ public class TraceIdUtils {
     }
 
     public static void clearTrace() {
-        CURRENT_TRACE.set(null);
         CURRENT_TRACE.remove();
     }
 }

@@ -5,7 +5,8 @@ import com.benym.rpas.common.dto.enums.StatusCode;
 import java.io.Serializable;
 
 /**
- * @Time : 2022/7/6 21:17
+ * @author benym
+ * @date 2022/7/6 21:17
  */
 public class Response<T> implements Serializable {
 

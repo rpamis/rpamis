@@ -20,7 +20,8 @@ import java.util.Optional;
  * 当自定义异常处理中出现问题
  * 会被dubbo本身的com.alibaba.dubbo.rpc.filter.ExceptionFilter捕获进行异常兜底和日志打印
  *
- * @date: 2022/11/3 16:31
+ * @author benym
+ * @date 2022/11/3 16:31
  */
 @Activate(group = {CommonConstants.PROVIDER})
 public class DubboExceptionFilter implements Filter {
@@ -42,8 +43,9 @@ public class DubboExceptionFilter implements Filter {
      */
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
+        String params = JSONUtil.toJsonStr(invocation.getArguments());
         logger.warn("Global dubbo exception filter, interface:{}, methodName:{}, params:{}",
-                invoker.getInterface(), invocation.getMethodName(), JSONUtil.toJsonStr(invocation.getArguments()));
+                invoker.getInterface(), invocation.getMethodName(), params);
         Result result = invoker.invoke(invocation);
         if (result.hasException()) {
             try {
@@ -88,7 +90,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(SysException.class)
     public Object handleSysException(SysException exception) {
-        logger.warn("catch dubbo sysExpcetion", exception);
+        logger.error("catch dubbo sysExpcetion", exception);
         Optional<SysException> opSys = Optional.ofNullable(exception);
         String errCode = opSys.map(AbstractException::getErrCode)
                 .orElse(ResponseCode.SYS_EXCEPTION_CODE.getCode());
@@ -99,7 +101,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(RpasException.class)
     public Object handleRpasException(RpasException exception) {
-        logger.warn("catch dubbo anyExpcetion", exception);
+        logger.error("catch dubbo anyExpcetion", exception);
         Optional<RpasException> opRpas = Optional.ofNullable(exception);
         String errCode = opRpas.map(RpasException::getErrCode)
                 .orElse(ResponseCode.RPAS_EXCEPTION_CODE.getCode());
@@ -110,7 +112,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception exception) {
-        logger.warn("catch dubbo unknown Expcetion", exception);
+        logger.error("catch dubbo unknown Expcetion", exception);
         Optional<Exception> opExcetion = Optional.ofNullable(exception);
         String errCode = ResponseCode.UNKNOWN_EXCEPTION_CODE.getCode();
         String errMessage = opExcetion.map(Exception::getMessage)

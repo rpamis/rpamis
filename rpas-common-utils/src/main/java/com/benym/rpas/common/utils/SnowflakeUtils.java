@@ -3,9 +3,14 @@ package com.benym.rpas.common.utils;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
 
 /**
- * @Time : 2022/7/10 21:16
+ * @author benym
+ * @date 2022/7/10 21:16
  */
 public class SnowflakeUtils {
+
+    private SnowflakeUtils() {
+        throw new IllegalStateException("工具类，禁止实例化");
+    }
 
     private static volatile SnowflakeGenerator snowflakeGenerator;
 

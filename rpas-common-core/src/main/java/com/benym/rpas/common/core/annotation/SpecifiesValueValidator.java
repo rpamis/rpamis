@@ -10,7 +10,8 @@ import static java.lang.annotation.ElementType.*;
  * 特定值校验器注解
  * 支持特定值int、str、枚举校验
  *
- * @Time: 2022/10/31 18:55
+ * @author benym
+ * @date 2022/10/31 18:55
  */
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Documented

@@ -2,12 +2,8 @@ package com.benym.rpas.common.core.trace;
 
 import cn.hutool.json.JSONUtil;
 import com.benym.rpas.common.core.logger.LoggerHttp;
-import com.benym.rpas.common.dto.enums.ResponseCode;
 import com.benym.rpas.common.dto.enums.Trace;
-import com.benym.rpas.common.dto.exception.BizException;
 import com.benym.rpas.common.dto.exception.ExceptionFactory;
-import com.benym.rpas.common.dto.exception.RpasException;
-import com.benym.rpas.common.dto.exception.SysException;
 import com.benym.rpas.common.dto.request.RequestLog;
 import com.benym.rpas.common.utils.SnowflakeUtils;
 import com.benym.rpas.common.utils.TraceIdUtils;
@@ -26,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Time : 2022/7/7 22:01
+ * @author benym
+ * @date 2022/7/7 22:01
  */
 @Order(1)
 @WebFilter(filterName = "traceFilter", urlPatterns = {"/*"})
@@ -40,6 +37,7 @@ public class TraceFilter implements Filter {
     private boolean traceLogActivate;
 
     public TraceFilter() {
+        // 空实例化
     }
 
     @Override
@@ -65,9 +63,11 @@ public class TraceFilter implements Filter {
             stopWatch.stop();
             if (traceLogActivate) {
                 // 更新出参信息
+                assert requestLog != null;
                 LoggerHttp.update(requestLog, traceResponseWrapper, stopWatch.getTotalTimeMillis());
                 // 打印请求日志，包括入参、出参
-                logger.info(JSONUtil.toJsonStr(requestLog));
+                String requests = JSONUtil.toJsonStr(requestLog);
+                logger.info(requests);
             } else {
                 logger.info("请求url:{}, 耗时(ms):{}", traceRequestWrapper.getRequestURI(), stopWatch.getTotalTimeMillis());
             }

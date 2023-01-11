@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * This class is empowered by com.alibaba.cola
  *
+ * @author benym
  * @date 2022/7/7 7:53 下午
  */
 public class PageResponse<T> {

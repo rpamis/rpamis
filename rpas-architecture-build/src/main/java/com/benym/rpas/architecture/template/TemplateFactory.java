@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  * 策略模式+工厂模式
  * 模板工厂
  *
+ * @author benym
  * @date 2022/7/21 10:53 上午
  */
 @Component
@@ -27,19 +28,19 @@ public class TemplateFactory implements InitializingBean, ApplicationContextAwar
     @Autowired
     private ApplicationContext applicationContext;
 
-    private static Map<String, BuildAbstractTemplate> templateMap = new HashMap<>();
+    private Map<String, AbstractBuildTemplate> templateMap;
 
-    public static BuildAbstractTemplate getTemplate(TemplateType templateType) {
+    public AbstractBuildTemplate getTemplate(TemplateType templateType) {
         return templateMap.get(templateType.getCode());
     }
 
     @Override
     public void afterPropertiesSet() {
-        Map<String, BuildAbstractTemplate> beansOfType = applicationContext.getBeansOfType(BuildAbstractTemplate.class);
-        templateMap = Optional.ofNullable(beansOfType)
+        Map<String, AbstractBuildTemplate> beansOfType = applicationContext.getBeansOfType(AbstractBuildTemplate.class);
+        templateMap = Optional.of(beansOfType)
                 .map(beansOfTypeMap -> beansOfTypeMap.values().stream()
                         .filter(template -> !StringUtils.isEmpty(template.getTemplateType()))
-                        .collect(Collectors.toMap(BuildAbstractTemplate::getTemplateType, Function.identity())))
+                        .collect(Collectors.toMap(AbstractBuildTemplate::getTemplateType, Function.identity())))
                 .orElse(new HashMap<>(8));
     }
 

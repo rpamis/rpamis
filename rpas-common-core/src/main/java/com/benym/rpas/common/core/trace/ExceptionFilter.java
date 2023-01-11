@@ -11,7 +11,8 @@ import java.io.IOException;
  * filter异常处理器，转发filter内的异常到ExceptionController
  * filter在controller之前处理，全局异常需要转发filter异常到controller，再由controller抛出
  *
- * @Time : 2022/8/23 14:00
+ * @author benym
+ * @date 2022/8/23 14:00
  */
 @Order(Integer.MIN_VALUE)
 @WebFilter(filterName = "exceptionFilter", urlPatterns = {"/*"})

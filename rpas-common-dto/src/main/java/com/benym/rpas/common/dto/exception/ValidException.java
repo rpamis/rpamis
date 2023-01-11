@@ -6,7 +6,8 @@ import com.benym.rpas.common.dto.enums.StatusCode;
 /**
  * 校验异常类，固定状态码，不打印堆栈信息
  *
- * @Time: 2022/11/11 20:36
+ * @author benym
+ * @date 2022/11/11 20:36
  */
 public class ValidException extends AbstractException {
 

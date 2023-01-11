@@ -1,5 +1,7 @@
 package com.benym.rpas.common.core.trace;
 
+import com.benym.rpas.common.dto.exception.ExceptionFactory;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 /**
  * 继承HttpServletRequestWrapper，提供修改Header的方法，加入traceId在请求头
  *
+ * @author benym
  * @date 2022/7/8 4:52 下午
  */
 public class TraceRequestWrapper extends HttpServletRequestWrapper {
@@ -47,8 +50,7 @@ public class TraceRequestWrapper extends HttpServletRequestWrapper {
                 data.append(line);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            throw ExceptionFactory.sysException("Trace Rquest Wrapper error: ", e);
         }
         this.postData = data.toString().getBytes(StandardCharsets.UTF_8);
     }

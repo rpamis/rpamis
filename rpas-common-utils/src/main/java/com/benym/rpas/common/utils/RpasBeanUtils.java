@@ -1,6 +1,7 @@
 package com.benym.rpas.common.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.benym.rpas.common.dto.exception.ExceptionFactory;
 import com.benym.rpas.common.dto.response.PageResponse;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
@@ -16,7 +17,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * @Time : 2022/7/7 21:56
+ * @author benym
+ * @date 2022/7/7 21:56
  */
 public class RpasBeanUtils {
 
@@ -25,9 +27,10 @@ public class RpasBeanUtils {
     /**
      * 享元模式
      */
-    private static final Map<String, BeanCopier> bencopierMap = new ConcurrentReferenceHashMap<>();
+    private static final Map<String, BeanCopier> BENCOPIER_MAP = new ConcurrentReferenceHashMap<>();
 
-    public RpasBeanUtils() {
+    private RpasBeanUtils() {
+        throw new IllegalStateException("工具类，禁止实例化");
     }
 
     /**
@@ -43,17 +46,17 @@ public class RpasBeanUtils {
         beanKey.append(targetClass);
         BeanCopier beanCopier;
         String beanKeyStr = beanKey.toString();
-        if (!bencopierMap.containsKey(beanKeyStr)) {
+        if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
             synchronized (RpasBeanUtils.class) {
-                if (!bencopierMap.containsKey(beanKeyStr)) {
+                if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
                     beanCopier = BeanCopier.create(sourceClass, targetClass, false);
-                    bencopierMap.put(beanKeyStr, beanCopier);
+                    BENCOPIER_MAP.put(beanKeyStr, beanCopier);
                 } else {
-                    beanCopier = bencopierMap.get(beanKeyStr);
+                    beanCopier = BENCOPIER_MAP.get(beanKeyStr);
                 }
             }
         } else {
-            beanCopier = bencopierMap.get(beanKeyStr);
+            beanCopier = BENCOPIER_MAP.get(beanKeyStr);
         }
         return beanCopier;
     }
@@ -72,17 +75,17 @@ public class RpasBeanUtils {
         beanKey.append(converter.toString());
         BeanCopier beanCopier;
         String beanKeyStr = beanKey.toString();
-        if (!bencopierMap.containsKey(beanKeyStr)) {
+        if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
             synchronized (RpasBeanUtils.class) {
-                if (!bencopierMap.containsKey(beanKeyStr)) {
+                if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
                     beanCopier = BeanCopier.create(sourceClass, targetClass, true);
-                    bencopierMap.put(beanKeyStr, beanCopier);
+                    BENCOPIER_MAP.put(beanKeyStr, beanCopier);
                 } else {
-                    beanCopier = bencopierMap.get(beanKeyStr);
+                    beanCopier = BENCOPIER_MAP.get(beanKeyStr);
                 }
             }
         } else {
-            beanCopier = bencopierMap.get(beanKeyStr);
+            beanCopier = BENCOPIER_MAP.get(beanKeyStr);
         }
         return beanCopier;
     }
@@ -114,8 +117,7 @@ public class RpasBeanUtils {
             target = clazz.newInstance();
             copy(source, target);
         } catch (Exception e) {
-            logger.warn("RpasBeanUtils copy exception:{}", e.getMessage());
-            throw new RuntimeException(e);
+            throw ExceptionFactory.sysException("RpasBeanUtils copy exception:", e);
         }
         return target;
     }
@@ -149,8 +151,7 @@ public class RpasBeanUtils {
             target = clazz.newInstance();
             copy(source, target, converter);
         } catch (Exception e) {
-            logger.warn("RpasBeanUtils copy with converter exception:{}", e.getMessage());
-            throw new RuntimeException(e);
+            throw ExceptionFactory.sysException("RpasBeanUtils copy with converter exception:", e);
         }
         return target;
     }
@@ -220,7 +221,7 @@ public class RpasBeanUtils {
      * @param clazz              目标class
      * @return 将PageResponse<class>
      */
-    public static <S,T> PageResponse<T> toPageResponse(PageResponse<S> sourcePageResponse, Class<T> clazz) {
+    public static <S, T> PageResponse<T> toPageResponse(PageResponse<S> sourcePageResponse, Class<T> clazz) {
         if (sourcePageResponse == null) {
             return null;
         }

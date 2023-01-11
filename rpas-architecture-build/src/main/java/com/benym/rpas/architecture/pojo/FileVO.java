@@ -1,6 +1,7 @@
 package com.benym.rpas.architecture.pojo;
 
 /**
+ * @author benym
  * @date 2022/7/20 4:59 下午
  */
 public class FileVO {
@@ -28,5 +29,13 @@ public class FileVO {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    @Override
+    public String toString() {
+        return "FileVO{" +
+                "id='" + id + '\'' +
+                ", filePath='" + filePath + '\'' +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.benym.rpas.common.utils;
 
+import com.benym.rpas.common.dto.exception.ExceptionFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -8,9 +9,14 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * @Time : 2022/8/23 10:40
+ * @author benym
+ * @date 2022/8/23 10:40
  */
 public class JackSonUtils {
+
+    private JackSonUtils() {
+        throw new IllegalStateException("工具类，禁止实例化");
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(JackSonUtils.class);
 
@@ -32,8 +38,7 @@ public class JackSonUtils {
             return getObjectMapper().readValue(str, new TypeReference<Map<Object, Object>>() {
             });
         } catch (Exception e) {
-            logger.error("utils,str转map失败,{}", e.getMessage());
-            throw new RuntimeException("JackSonUtils toMap error", e);
+            throw ExceptionFactory.sysException("JackSonUtils str toMap error", e);
         }
     }
 }

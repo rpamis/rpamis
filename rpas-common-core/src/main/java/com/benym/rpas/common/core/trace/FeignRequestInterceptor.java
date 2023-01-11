@@ -10,7 +10,8 @@ import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Time : 2022/7/10 22:00
+ * @author benym
+ * @date 2022/7/10 22:00
  */
 @Configuration
 public class FeignRequestInterceptor implements RequestInterceptor {

@@ -3,6 +3,7 @@ package com.benym.rpas.usage.test.utils.entity;
 import java.io.Serializable;
 
 /**
+ * @author benym
  * @date 2022/11/23 20:54
  */
 public class EntityTarget implements Serializable {

@@ -5,7 +5,8 @@ import com.benym.rpas.common.dto.enums.StatusCode;
 /**
  * 自定义异常类，接受任意状态码
  *
- * @Time : 2022/7/6 21:39
+ * @author benym
+ * @date 2022/7/6 21:39
  */
 public class RpasException extends RuntimeException {
 
@@ -23,9 +24,9 @@ public class RpasException extends RuntimeException {
 
     public RpasException(String errCode, String errMessage, String detailMessage) {
         super(errMessage);
-        this.setErrCode(errCode);
-        this.setErrMessage(errMessage);
-        this.setDetailMessage(detailMessage);
+        this.errCode = errCode;
+        this.errMessage = errMessage;
+        this.detailMessage = detailMessage;
     }
 
     public RpasException(String errCode, String errMessage) {
@@ -44,23 +45,12 @@ public class RpasException extends RuntimeException {
         return errCode;
     }
 
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
-    }
-
     public String getErrMessage() {
         return errMessage;
-    }
-
-    public void setErrMessage(String errMessage) {
-        this.errMessage = errMessage;
     }
 
     public String getDetailMessage() {
         return detailMessage;
     }
 
-    public void setDetailMessage(String detailMessage) {
-        this.detailMessage = detailMessage;
-    }
 }

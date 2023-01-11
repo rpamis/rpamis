@@ -7,7 +7,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @Time : 2022/9/2 10:25
+ * @author benym
+ * @date 2022/9/2 10:25
  */
 public class CfgUtils {
 
@@ -29,5 +30,9 @@ public class CfgUtils {
             }
         }
         return cfg;
+    }
+
+    private CfgUtils() {
+        throw new IllegalStateException("工具类，禁止实例化");
     }
 }

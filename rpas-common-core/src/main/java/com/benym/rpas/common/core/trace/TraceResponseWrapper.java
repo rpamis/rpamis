@@ -3,7 +3,6 @@ package com.benym.rpas.common.core.trace;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +10,7 @@ import java.util.Map;
 /**
  * 继承ContentCachingResponseWrapper,方便获取Response
  *
+ * @author benym
  * @date 2022/7/12 7:28 下午
  */
 public class TraceResponseWrapper extends ContentCachingResponseWrapper {

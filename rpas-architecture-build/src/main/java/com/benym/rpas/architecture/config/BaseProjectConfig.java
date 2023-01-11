@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 /**
  * @date 2022/7/20 5:01 下午
+ * @author benym
  */
 public class BaseProjectConfig implements Serializable {
 

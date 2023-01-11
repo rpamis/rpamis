@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author benym
+ */
 @Component
 public class BaseMetaObjectHandler implements MetaObjectHandler {
 

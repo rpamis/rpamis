@@ -1,7 +1,8 @@
 package com.benym.rpas.common.dto.enums;
 
 /**
- * @Time : 2022/7/6 21:02
+ * @author benym
+ * @date 2022/7/6 21:02
  */
 public interface StatusCode {
 

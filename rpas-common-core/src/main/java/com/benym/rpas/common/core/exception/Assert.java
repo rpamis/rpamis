@@ -15,11 +15,13 @@ import java.util.Map;
  * 包装自定义异常，用于业务上减少if判断后手动从ExceptionFactory抛异常的情况
  * 适配class动态推断
  *
- * @Time: 2022/11/11 20:35
+ * @author benym
+ * @date 2022/11/11 20:35
  */
 public abstract class Assert {
 
-    public Assert() {
+    private Assert() {
+        throw new IllegalStateException("抽象类，禁止实例化");
     }
 
     public static void state(boolean expression, String message) {
@@ -131,7 +133,7 @@ public abstract class Assert {
             Object[] var2 = array;
             int var3 = array.length;
 
-            for(int var4 = 0; var4 < var3; ++var4) {
+            for (int var4 = 0; var4 < var3; ++var4) {
                 Object element = var2[var4];
                 if (element == null) {
                     throw ExceptionFactory.bizException(message);
@@ -147,7 +149,7 @@ public abstract class Assert {
             Object[] var2 = array;
             int var3 = array.length;
 
-            for(int var4 = 0; var4 < var3; ++var4) {
+            for (int var4 = 0; var4 < var3; ++var4) {
                 Object element = var2[var4];
                 if (element == null) {
                     throw exception;

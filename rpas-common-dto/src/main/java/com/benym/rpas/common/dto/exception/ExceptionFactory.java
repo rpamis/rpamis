@@ -5,9 +5,14 @@ import com.benym.rpas.common.dto.enums.StatusCode;
 /**
  * 异常工厂
  *
- * @Time : 2022/7/7 22:46
+ * @author benym
+ * @date 2022/7/7 22:46
  */
 public class ExceptionFactory {
+
+    private ExceptionFactory() {
+        throw new IllegalStateException("工厂类，禁止实例化");
+    }
 
     public static BizException bizException() {
         return new BizException();

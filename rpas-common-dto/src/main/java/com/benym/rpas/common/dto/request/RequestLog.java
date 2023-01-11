@@ -1,6 +1,7 @@
 package com.benym.rpas.common.dto.request;
 
 /**
+ * @author benym
  * @date 2022/7/12 6:49 下午
  */
 public class RequestLog {
@@ -51,20 +52,7 @@ public class RequestLog {
     private Long totalTime;
 
     public RequestLog() {
-    }
-
-    public RequestLog(String requestUrl, String remoteAddr, Object requestHeaders,
-            String method, Object requestParams, Integer status, Object responseHeaders,
-            Object response, Long totalTime) {
-        this.requestUrl = requestUrl;
-        this.remoteAddr = remoteAddr;
-        this.requestHeaders = requestHeaders;
-        this.method = method;
-        this.requestParams = requestParams;
-        this.status = status;
-        this.responseHeaders = responseHeaders;
-        this.response = response;
-        this.totalTime = totalTime;
+        // 空实例化
     }
 
     public String getRequestUrl() {

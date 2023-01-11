@@ -25,6 +25,7 @@ import java.util.Map;
 
 /**
  * @date 2022/12/10 23:18
+ * @author benym
  */
 @Configuration
 public class InitConfig implements CommandLineRunner {

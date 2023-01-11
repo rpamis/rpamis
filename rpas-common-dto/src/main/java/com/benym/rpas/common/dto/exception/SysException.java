@@ -6,7 +6,8 @@ import com.benym.rpas.common.dto.enums.ResponseCode;
  * 定义系统异常类，固定状态码
  * This class is empowered by com.alibaba.cola
  *
- * @Time : 2022/7/7 22:42
+ * @author benym
+ * @date 2022/7/7 22:42
  */
 public class SysException extends AbstractException {
 
