@@ -19,6 +19,10 @@ public enum ResponseCode implements StatusCode {
      */
     BIZ_EXCEPTION_CODE("BizException", "业务异常"),
     /**
+     * 业务异常-无堆栈
+     */
+    BIZ_NOSTACK_EXCEPTION("BizNoStackException","业务异常-无堆栈"),
+    /**
      * 系统异常
      */
     SYS_EXCEPTION_CODE("SysException", "系统异常"),

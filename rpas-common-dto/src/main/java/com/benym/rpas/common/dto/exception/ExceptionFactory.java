@@ -38,6 +38,18 @@ public class ExceptionFactory {
         return new BizException(e);
     }
 
+    public static BizNoStackException bizNoStackException(String errMessage) {
+        return new BizNoStackException(errMessage);
+    }
+
+    public static BizNoStackException bizNoStackException(String errCode, String errMessage) {
+        return new BizNoStackException(errCode, errMessage);
+    }
+
+    public static BizNoStackException bizNoStackException(StatusCode statusCode) {
+        return new BizNoStackException(statusCode);
+    }
+
     public static SysException sysException() {
         return new SysException();
     }

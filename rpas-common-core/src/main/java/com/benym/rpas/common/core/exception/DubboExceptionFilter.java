@@ -88,6 +88,17 @@ public class DubboExceptionFilter implements Filter {
         return Response.fail(errCode, errMessage);
     }
 
+    @ExceptionHandler(BizNoStackException.class)
+    public Object handleBizNoStackException(BizNoStackException exception) {
+        logger.warn("catch dubbo bizNoStackException", exception);
+        Optional<BizNoStackException> opValid = Optional.ofNullable(exception);
+        String errCode = opValid.map(AbstractException::getErrCode)
+                .orElse(ResponseCode.VALID_EXCEPTION_CODE.getCode());
+        String errMessage = opValid.map(AbstractException::getErrMessage)
+                .orElse(ResponseCode.VALID_EXCEPTION_CODE.getMessage());
+        return Response.fail(errCode, errMessage);
+    }
+
     @ExceptionHandler(SysException.class)
     public Object handleSysException(SysException exception) {
         logger.error("catch dubbo sysExpcetion", exception);
