@@ -5,8 +5,6 @@ import com.benym.rpas.common.dto.exception.ExceptionFactory;
 import com.benym.rpas.common.dto.response.PageResponse;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.ConcurrentReferenceHashMap;
 
 import java.util.ArrayList;
@@ -21,8 +19,6 @@ import java.util.stream.Collectors;
  * @date 2022/7/7 21:56
  */
 public class RpasBeanUtils {
-
-    private static final Logger logger = LoggerFactory.getLogger(RpasBeanUtils.class);
 
     /**
      * 享元模式

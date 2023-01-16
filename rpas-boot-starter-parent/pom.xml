@@ -65,8 +65,9 @@
         <swagger.version>2.6.1</swagger.version>
         <!-- 自研组件 -->
         <rpas-common-dto.version>1.0.0</rpas-common-dto.version>
-        <rpas-common-core.version>1.0.0</rpas-common-core.version>
+        <rpas-common-exception.version>1.0.0</rpas-common-exception.version>
         <rpas-common-utils.version>1.0.0</rpas-common-utils.version>
+        <rpas-common-trace.version>1.0.0</rpas-common-trace.version>
 
     </properties>
 
@@ -289,13 +290,18 @@
             </dependency>
             <dependency>
                 <groupId>com.benym.rpas</groupId>
-                <artifactId>rpas-common-core</artifactId>
-                <version>${rpas-common-core.version}</version>
+                <artifactId>rpas-common-exception</artifactId>
+                <version>${rpas-common-exception.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.benym.rpas</groupId>
                 <artifactId>rpas-common-utils</artifactId>
                 <version>${rpas-common-utils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.benym.rpas</groupId>
+                <artifactId>rpas-common-trace</artifactId>
+                <version>${rpas-common-trace.version}</version>
             </dependency>
 
         </dependencies>

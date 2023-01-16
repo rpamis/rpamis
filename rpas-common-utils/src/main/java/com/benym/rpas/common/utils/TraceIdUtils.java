@@ -26,10 +26,6 @@ public class TraceIdUtils {
     @Value("${trace.type:rpas}")
     private static String traceType;
 
-    private TraceIdUtils() {
-        throw new IllegalStateException("工具类，禁止实例化");
-    }
-
     public static Trace getTrace() {
         String traceId;
         String spanId;

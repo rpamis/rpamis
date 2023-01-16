@@ -11,7 +11,8 @@
     <modules>
         <module>rpas-boot-starter-parent</module>
         <module>rpas-common-dto</module>
-        <module>rpas-common-core</module>
+        <module>rpas-common-exception</module>
+        <module>rpas-common-trace</module>
         <module>rpas-architecture-build</module>
         <module>rpas-common-utils</module>
         <module>rpas-usage-test</module>

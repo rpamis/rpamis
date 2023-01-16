@@ -57,7 +57,12 @@
         </dependency>
         <dependency>
             <groupId>com.benym.rpas</groupId>
-            <artifactId>rpas-common-core</artifactId>
+            <artifactId>rpas-common-exception</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.benym.rpas</groupId>
+            <artifactId>rpas-common-trace</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
