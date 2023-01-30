@@ -9,6 +9,8 @@ import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.ExceptionHandlerMethodResolver;
 
@@ -24,6 +26,7 @@ import java.util.Optional;
  * @date 2022/11/3 16:31
  */
 @Activate(group = {CommonConstants.PROVIDER})
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class DubboExceptionFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(DubboExceptionFilter.class);

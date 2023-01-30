@@ -8,6 +8,8 @@ import com.benym.rpas.common.dto.response.Response;
 import com.benym.rpas.common.utils.TraceIdUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -41,6 +43,7 @@ import java.util.Objects;
  * @date  2022/7/7 22:04
  */
 @RestControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class ExceptionErrorHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionErrorHandler.class);
