@@ -9,7 +9,7 @@ import com.benym.rpamis.architecture.service.BuildService;
 import com.benym.rpamis.architecture.template.AbstractBuildTemplate;
 import com.benym.rpamis.architecture.template.TemplateFactory;
 import com.benym.rpamis.architecture.utils.CfgUtils;
-import com.benym.rpas.common.dto.exception.ExceptionFactory;
+import com.benym.rpamis.common.dto.exception.ExceptionFactory;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

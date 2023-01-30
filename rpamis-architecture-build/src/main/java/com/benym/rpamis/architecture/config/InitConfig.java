@@ -3,7 +3,7 @@ package com.benym.rpamis.architecture.config;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.benym.rpamis.architecture.consts.ProjectPath;
-import com.benym.rpas.common.dto.exception.ExceptionFactory;
+import com.benym.rpamis.common.dto.exception.ExceptionFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

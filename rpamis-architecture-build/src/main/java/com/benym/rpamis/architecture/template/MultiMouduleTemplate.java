@@ -9,7 +9,7 @@ import com.benym.rpamis.architecture.consts.ProjectTemplate;
 import com.benym.rpamis.architecture.consts.TemplateType;
 import com.benym.rpamis.architecture.pojo.FileVO;
 import com.benym.rpamis.architecture.utils.StringUtils;
-import com.benym.rpas.common.utils.SnowflakeUtils;
+import com.benym.rpamis.common.utils.SnowflakeUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
