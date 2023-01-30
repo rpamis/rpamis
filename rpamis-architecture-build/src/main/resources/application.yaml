@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: rpamis-architecture-build
+  datasource:
+    url: jdbc:mysql://localhost:3306/db?characterEncoding=utf-8
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+server:
+  port: 8180
+  servlet:
+    context-path: /rpamis-architecture-build

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: rpamis-architecture-build
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        enabled: false
+        format: yaml
+        acl-token: ""
+        data-key: "property"
+        watch:
+          delay: 1000
+          enabled: false

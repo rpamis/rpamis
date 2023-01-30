@@ -4,18 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.benym.rpas</groupId>
-    <artifactId>rpas</artifactId>
+    <groupId>com.benym.rpamis</groupId>
+    <artifactId>rpamis</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>rpas-boot-starter-parent</module>
-        <module>rpas-common-dto</module>
-        <module>rpas-common-exception</module>
-        <module>rpas-common-trace</module>
-        <module>rpas-architecture-build</module>
-        <module>rpas-common-utils</module>
-        <module>rpas-usage-test</module>
+        <module>rpamis-boot-starter-parent</module>
+        <module>rpamis-common-dto</module>
+        <module>rpamis-common-exception</module>
+        <module>rpamis-common-trace</module>
+        <module>rpamis-architecture-build</module>
+        <module>rpamis-common-utils</module>
+        <module>rpamis-usage-test</module>
     </modules>
 
     <properties>
