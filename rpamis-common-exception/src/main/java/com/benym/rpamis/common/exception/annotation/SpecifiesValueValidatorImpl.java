@@ -34,6 +34,13 @@ public class SpecifiesValueValidatorImpl implements ConstraintValidator<Specifie
         enumClass = constraintAnnotation.enumClass();
     }
 
+    /**
+     * 此时value为被注解的字段类型
+     *
+     * @param value   object to validate
+     * @param context context in which the constraint is evaluated
+     * @return boolean
+     */
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         try {
