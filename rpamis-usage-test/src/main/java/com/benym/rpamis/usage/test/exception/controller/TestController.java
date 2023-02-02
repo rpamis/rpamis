@@ -1,8 +1,10 @@
 package com.benym.rpamis.usage.test.exception.controller;
 
-import com.benym.rpamis.usage.test.exception.User;
-import com.benym.rpamis.usage.test.exception.UserSpValid;
+import com.benym.rpamis.usage.test.exception.*;
+import com.benym.rpamis.usage.test.exception.enums.PhoneBrandEnums;
 import com.benym.rpamis.usage.test.exception.interfaces.ValidatedAction;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.groups.Default;
+import java.util.EnumSet;
+import java.util.List;
 
 /**
  * @author benym
@@ -35,6 +39,52 @@ public class TestController {
     @PostMapping("/validateSp")
     public String test3(@Validated @RequestBody UserSpValid user) {
         System.out.println(1);
+        return "success";
+    }
+
+    @PostMapping("/validateAll")
+    public String test4(@Validated @RequestBody UserAll user) {
+        System.out.println(1);
+        return "success";
+    }
+
+    @PostMapping("/validateAllNoValid")
+    public String test5(@RequestBody UserAllNoValid user) {
+        if (StringUtils.isEmpty(user.getUserName())) {
+            return "用户名不能为空";
+        }
+        if (user.getAge() < 1 || user.getAge() > 150) {
+            return "年龄必须在1-150区间";
+        }
+        if (CollectionUtils.isEmpty(user.getInterest())) {
+            return "用户的兴趣不能为空";
+        }
+        List<Friend> friends = user.getFriends();
+        for (int i = 0; i < friends.size(); i++) {
+            Friend friend = friends.get(i);
+            if (!CollectionUtils.isEmpty(friends)) {
+                String userName = friend.getUserName();
+                if (StringUtils.isEmpty(userName)) {
+                    return "朋友的用户名不能为空";
+                }
+                if (!StringUtils.isEmpty(friend.getAge())) {
+                    if (friend.getAge() < 1 || friend.getAge() > 150) {
+                        return "朋友的年龄必须在1-150区间";
+                    }
+                }
+            }
+        }
+        String phoneBrand = user.getPhoneBrand();
+        boolean inEnums = false;
+        for (PhoneBrandEnums phoneBrandEnums : PhoneBrandEnums.values()) {
+            if (phoneBrandEnums.getCode().equals(user.getPhoneBrand())) {
+                inEnums = true;
+                break;
+            }
+        }
+        if (!inEnums) {
+            return "手机品牌需符合枚举";
+        }
         return "success";
     }
 }
