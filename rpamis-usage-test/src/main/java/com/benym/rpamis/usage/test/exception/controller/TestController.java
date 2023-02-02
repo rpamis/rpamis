@@ -1,6 +1,7 @@
 package com.benym.rpamis.usage.test.exception.controller;
 
 import com.benym.rpamis.usage.test.exception.User;
+import com.benym.rpamis.usage.test.exception.UserSpValid;
 import com.benym.rpamis.usage.test.exception.interfaces.ValidatedAction;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,12 @@ public class TestController {
 
     @PostMapping("/validateDelete")
     public String test2(@Validated({ValidatedAction.Delete.class, Default.class}) @RequestBody User user) {
+        System.out.println(1);
+        return "success";
+    }
+
+    @PostMapping("/validateSp")
+    public String test3(@Validated @RequestBody UserSpValid user) {
         System.out.println(1);
         return "success";
     }

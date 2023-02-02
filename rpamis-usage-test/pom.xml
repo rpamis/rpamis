@@ -39,6 +39,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.benym.rpamis</groupId>
+            <artifactId>rpamis-common-exception</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>
