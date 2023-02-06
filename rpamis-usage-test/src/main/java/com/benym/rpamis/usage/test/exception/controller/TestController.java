@@ -1,8 +1,11 @@
 package com.benym.rpamis.usage.test.exception.controller;
 
+import com.benym.rpamis.common.dto.response.Response;
 import com.benym.rpamis.usage.test.exception.*;
 import com.benym.rpamis.usage.test.exception.enums.PhoneBrandEnums;
 import com.benym.rpamis.usage.test.exception.interfaces.ValidatedAction;
+import com.benym.rpamis.usage.test.exception.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +26,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+
+    @Autowired
+    private TestService testService;
 
     @PostMapping("/validate")
     public String test(@Validated({ValidatedAction.Insert.class, Default.class}) @RequestBody User user) {
@@ -86,5 +92,17 @@ public class TestController {
             return "手机品牌需符合枚举";
         }
         return "success";
+    }
+
+    @PostMapping("/getUser")
+    public Response<User> test6(@RequestBody User user) {
+        User user1 = testService.getUser(user.getId());
+        return Response.success(user1);
+    }
+
+    @PostMapping("/getUserWrap")
+    public Response<User> test7(@RequestBody User user) {
+        Response<User> userWrap = testService.getUserWrap(user.getId());
+        return userWrap;
     }
 }
