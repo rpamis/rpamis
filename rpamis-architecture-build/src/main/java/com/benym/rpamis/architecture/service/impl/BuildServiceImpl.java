@@ -88,7 +88,7 @@ public class BuildServiceImpl implements BuildService {
             try {
                 List<String> list = FileUtil.listFileNames(ProjectPath.CACHETEMP_PATH + id);
                 if (list.isEmpty()) {
-                    throw ExceptionFactory.bizException();
+                    throw ExceptionFactory.bizNoStackException("CACHE list为空");
                 }
                 fileName = list.get(0);
             } catch (Exception e) {

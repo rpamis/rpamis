@@ -17,8 +17,6 @@ public abstract class AbstractException extends RuntimeException {
 
     private String errMessage;
 
-    private Throwable throwable;
-
     protected AbstractException(String errMessage) {
         super(errMessage);
     }
@@ -27,35 +25,39 @@ public abstract class AbstractException extends RuntimeException {
         super(errMessage, throwable);
     }
 
-
     protected AbstractException(String errCode, String errMessage) {
-        this(errCode, errMessage, null);
+        super(errMessage);
+        this.setErrCode(errCode);
+        this.setErrMessage(errMessage);
     }
 
     protected AbstractException(String errCode, String errMessage, Throwable throwable) {
-        super(errMessage);
-        this.errCode = errCode;
-        this.errMessage = errMessage;
-        this.throwable = throwable;
+        super(errMessage, throwable);
+        this.setErrCode(errCode);
+        this.setErrMessage(errMessage);
     }
 
     protected AbstractException(StatusCode statusCode) {
-        this(statusCode.getCode(), statusCode.getMessage(), null);
+        this(statusCode.getCode(), statusCode.getMessage());
     }
 
     protected AbstractException(StatusCode statusCode, Throwable throwable) {
-        this(statusCode.getCode(), statusCode.getMessage(), throwable);
+        super(statusCode.getMessage(), throwable);
     }
 
     public String getErrCode() {
         return errCode;
     }
 
+    public void setErrCode(String errCode) {
+        this.errCode = errCode;
+    }
+
     public String getErrMessage() {
         return errMessage;
     }
 
-    public Throwable getThrowable() {
-        return throwable;
+    public void setErrMessage(String errMessage) {
+        this.errMessage = errMessage;
     }
 }

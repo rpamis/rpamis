@@ -26,7 +26,7 @@ public abstract class Assert {
 
     public static void state(boolean expression, String message) {
         if (!expression) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -39,7 +39,7 @@ public abstract class Assert {
 
     public static void isTrue(boolean expression, String message) {
         if (!expression) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -52,7 +52,7 @@ public abstract class Assert {
 
     public static void isNull(Object object, String message) {
         if (object != null) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -65,7 +65,7 @@ public abstract class Assert {
 
     public static void notNull(Object object, String message) {
         if (object == null) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -78,7 +78,7 @@ public abstract class Assert {
 
     public static void hasLength(String text, String message) {
         if (!StringUtils.hasLength(text)) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -91,7 +91,7 @@ public abstract class Assert {
 
     public static void hasText(String text, String message) {
         if (!StringUtils.hasText(text)) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -104,7 +104,7 @@ public abstract class Assert {
 
     public static void doesNotContain(String textToSearch, String substring, String message) {
         if (StringUtils.hasLength(textToSearch) && StringUtils.hasLength(substring) && textToSearch.contains(substring)) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -117,7 +117,7 @@ public abstract class Assert {
 
     public static void notEmpty(Object[] array, String message) {
         if (ObjectUtils.isEmpty(array)) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -136,7 +136,7 @@ public abstract class Assert {
             for (int var4 = 0; var4 < var3; ++var4) {
                 Object element = var2[var4];
                 if (element == null) {
-                    throw ExceptionFactory.bizException(message);
+                    throw ExceptionFactory.validException(message);
                 }
             }
         }
@@ -161,7 +161,7 @@ public abstract class Assert {
 
     public static void notEmpty(Collection<?> collection, String message) {
         if (CollectionUtils.isEmpty(collection)) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -174,7 +174,7 @@ public abstract class Assert {
 
     public static void notEmpty(Map<?, ?> map, String message) {
         if (CollectionUtils.isEmpty(map)) {
-            throw ExceptionFactory.bizException(message);
+            throw ExceptionFactory.validException(message);
         }
     }
 
@@ -226,7 +226,7 @@ public abstract class Assert {
             result = result + "Object of class [" + className + "] must be an instance of " + type;
         }
 
-        throw ExceptionFactory.bizException(result);
+        throw ExceptionFactory.validException(result);
     }
 
     private static void assignableCheckFailed(Class<?> superType, Class<?> subType, String msg) {
@@ -245,7 +245,7 @@ public abstract class Assert {
             result = result + subType + " is not assignable to " + superType;
         }
 
-        throw ExceptionFactory.bizException(result);
+        throw ExceptionFactory.validException(result);
     }
 
     private static boolean endsWithSeparator(String msg) {

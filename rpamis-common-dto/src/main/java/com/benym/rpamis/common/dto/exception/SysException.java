@@ -1,6 +1,7 @@
 package com.benym.rpamis.common.dto.exception;
 
 import com.benym.rpamis.common.dto.enums.ResponseCode;
+import com.benym.rpamis.common.dto.enums.StatusCode;
 
 /**
  * 定义系统异常类，固定状态码
@@ -15,20 +16,12 @@ public class SysException extends AbstractException {
 
     private static final ResponseCode DEFAULT_SYS_ERRCODE = ResponseCode.SYS_EXCEPTION_CODE;
 
-    public SysException() {
-        super(DEFAULT_SYS_ERRCODE);
-    }
-
     public SysException(String errMessage, Throwable e) {
         super(DEFAULT_SYS_ERRCODE.getCode(), errMessage, e);
     }
 
-    public SysException(String errMessage) {
-        super(DEFAULT_SYS_ERRCODE.getCode(), errMessage);
-    }
-
-    public SysException(String errCode, String errMessage) {
-        super(errCode, errMessage);
+    public SysException(StatusCode statusCode, Throwable e) {
+        super(statusCode.getCode(), statusCode.getMessage(), e);
     }
 
     public SysException(String errCode, String errMessage, Throwable e) {

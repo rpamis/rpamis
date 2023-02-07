@@ -17,9 +17,6 @@ public class BizNoStackException extends AbstractException implements Serializab
 
     private static final ResponseCode DEAULT_BIZ_ERRCODE = ResponseCode.BIZ_NOSTACK_EXCEPTION;
 
-    public BizNoStackException() {
-        super(DEAULT_BIZ_ERRCODE);
-    }
 
     public BizNoStackException(String errMessage) {
         super(DEAULT_BIZ_ERRCODE.getCode(), errMessage);

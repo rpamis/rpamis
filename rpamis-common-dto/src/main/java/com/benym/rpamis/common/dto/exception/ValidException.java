@@ -15,10 +15,6 @@ public class ValidException extends AbstractException {
 
     private static final ResponseCode DEFAULT_VALID_ERRCODE = ResponseCode.VALID_EXCEPTION_CODE;
 
-    public ValidException() {
-        super(DEFAULT_VALID_ERRCODE);
-    }
-
     public ValidException(String errMessage) {
         super(DEFAULT_VALID_ERRCODE.getCode(), errMessage);
     }

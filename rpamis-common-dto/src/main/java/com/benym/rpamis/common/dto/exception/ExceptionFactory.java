@@ -14,28 +14,16 @@ public class ExceptionFactory {
         throw new IllegalStateException("工厂类，禁止实例化");
     }
 
-    public static BizException bizException() {
-        return new BizException();
-    }
-
-    public static BizException bizException(String errMessage) {
-        return new BizException(errMessage);
-    }
-
-    public static BizException bizException(String errCode, String errMessage) {
-        return new BizException(errCode, errMessage);
-    }
-
     public static BizException bizException(String errMessage, Throwable e) {
         return new BizException(errMessage, e);
     }
 
-    public static BizException bizException(String errCode, String errMessage, Throwable e) {
-        return new BizException(errCode, errMessage, e);
-    }
-
     public static BizException bizException(Throwable e) {
         return new BizException(e);
+    }
+
+    public static BizException bizException(StatusCode statusCode, Throwable e) {
+        return new BizException(statusCode, e);
     }
 
     public static BizNoStackException bizNoStackException(String errMessage) {
@@ -50,28 +38,16 @@ public class ExceptionFactory {
         return new BizNoStackException(statusCode);
     }
 
-    public static SysException sysException() {
-        return new SysException();
-    }
-
-    public static SysException sysException(String errMessage) {
-        return new SysException(errMessage);
+    public static SysException sysException(String errMessage, Throwable e) {
+        return new SysException(errMessage, e);
     }
 
     public static SysException sysException(Throwable e) {
         return new SysException(e);
     }
 
-    public static SysException sysException(String errCode, String errMessage, Throwable e) {
-        return new SysException(errCode, errMessage, e);
-    }
-
-    public static SysException sysException(String errCode, String errMessage) {
-        return new SysException(errCode, errMessage);
-    }
-
-    public static SysException sysException(String errMessage, Throwable e) {
-        return new SysException(errMessage, e);
+    public static SysException sysException(StatusCode statusCode, Throwable e) {
+        return new SysException(statusCode, e);
     }
 
     public static RpasException rpasException() {

@@ -1,6 +1,7 @@
 package com.benym.rpamis.common.dto.exception;
 
 import com.benym.rpamis.common.dto.enums.ResponseCode;
+import com.benym.rpamis.common.dto.enums.StatusCode;
 
 /**
  * 定义业务异常类，固定状态码
@@ -15,20 +16,12 @@ public class BizException extends AbstractException {
 
     private static final ResponseCode DEAULT_BIZ_ERRCODE = ResponseCode.BIZ_EXCEPTION_CODE;
 
-    public BizException() {
-        super(DEAULT_BIZ_ERRCODE);
-    }
-
-    public BizException(String errMessage) {
-        super(DEAULT_BIZ_ERRCODE.getCode(), errMessage);
-    }
-
     public BizException(String errMessage, Throwable e) {
         super(DEAULT_BIZ_ERRCODE.getCode(), errMessage, e);
     }
 
-    public BizException(String errCode, String errMessage) {
-        super(errCode, errMessage);
+    public BizException(StatusCode statusCode, Throwable e) {
+        super(statusCode.getCode(), statusCode.getMessage(), e);
     }
 
     public BizException(String errCode, String errMessage, Throwable e) {
