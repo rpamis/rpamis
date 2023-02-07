@@ -11,4 +11,8 @@ public interface TestDao {
     User getUserById(String id);
 
     Response<User> getUserByIdWrap(String id);
+
+    int insert(User user);
+
+    int update(User user);
 }

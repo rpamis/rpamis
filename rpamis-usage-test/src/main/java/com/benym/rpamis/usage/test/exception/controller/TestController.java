@@ -105,4 +105,10 @@ public class TestController {
         Response<User> userWrap = testService.getUserWrap(user.getId());
         return userWrap;
     }
+
+    @PostMapping("/save")
+    public Response<Boolean> test8(@RequestBody User user) {
+        Response<Boolean> result = testService.saveOrUpdate(user);
+        return result;
+    }
 }

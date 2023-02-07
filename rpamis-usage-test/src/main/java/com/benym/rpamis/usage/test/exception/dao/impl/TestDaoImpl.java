@@ -44,4 +44,14 @@ public class TestDaoImpl implements TestDao {
         }
         return Response.success(userByUserId);
     }
+
+    @Override
+    public int insert(User user) {
+        return userMapper.insert(user);
+    }
+
+    @Override
+    public int update(User user) {
+        return userMapper.update(user);
+    }
 }

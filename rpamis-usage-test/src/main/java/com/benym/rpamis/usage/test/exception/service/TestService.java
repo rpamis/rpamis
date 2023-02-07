@@ -11,4 +11,6 @@ public interface TestService {
     User getUser(String id);
 
     Response<User> getUserWrap(String id);
+
+    Response<Boolean> saveOrUpdate(User user);
 }

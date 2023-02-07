@@ -12,4 +12,8 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
 
     User getUserByUserId(@Param("id") String id);
+
+    int insert(User user);
+
+    int update(User user);
 }
