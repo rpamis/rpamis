@@ -89,7 +89,7 @@ public class ExceptionErrorHandler {
         final Trace trace = TraceIdUtils.getTrace();
         String errCode = validException.getErrCode();
         String message = validException.getMessage();
-        logger.warn("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
+        logger.warn("请求Id:{}, SpanId:{}, 参数校验异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
         final Response<Object> failResponse = Response.fail(errCode, message);
         return new ResponseEntity<>(failResponse, HttpStatus.OK);
     }
