@@ -13,4 +13,6 @@ public interface TestService {
     Response<User> getUserWrap(String id);
 
     Response<Boolean> saveOrUpdate(User user);
+
+    Boolean saveOrUpdateWithException(User user);
 }

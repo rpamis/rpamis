@@ -1,6 +1,7 @@
 package com.benym.rpamis.usage.test.exception.dao.impl;
 
 import com.benym.rpamis.common.dto.enums.ResponseCode;
+import com.benym.rpamis.common.dto.exception.SysException;
 import com.benym.rpamis.common.dto.response.Response;
 import com.benym.rpamis.usage.test.exception.User;
 import com.benym.rpamis.usage.test.exception.dao.TestDao;
@@ -53,5 +54,23 @@ public class TestDaoImpl implements TestDao {
     @Override
     public int update(User user) {
         return userMapper.update(user);
+    }
+
+    @Override
+    public int insertWithException(User user) {
+        try {
+            return userMapper.insert(user);
+        } catch (Exception e) {
+            throw new SysException("新增用户异常", e);
+        }
+    }
+
+    @Override
+    public int updateWithException(User user) {
+        try {
+            return userMapper.update(user);
+        } catch (Exception e) {
+            throw new SysException("更新用户异常", e);
+        }
     }
 }

@@ -14,5 +14,10 @@ public interface TestDao {
 
     int insert(User user);
 
+    int insertWithException(User user);
+
     int update(User user);
+
+
+    int updateWithException(User user);
 }

@@ -1,5 +1,6 @@
 package com.benym.rpamis.usage.test.exception.controller;
 
+import com.benym.rpamis.common.dto.enums.ResponseCode;
 import com.benym.rpamis.common.dto.response.Response;
 import com.benym.rpamis.usage.test.exception.*;
 import com.benym.rpamis.usage.test.exception.enums.PhoneBrandEnums;
@@ -110,5 +111,11 @@ public class TestController {
     public Response<Boolean> test8(@RequestBody User user) {
         Response<Boolean> result = testService.saveOrUpdate(user);
         return result;
+    }
+
+    @PostMapping("/saveWithException")
+    public Response<Boolean> test9(@RequestBody User user) {
+        Boolean result = testService.saveOrUpdateWithException(user);
+        return Response.success(result);
     }
 }

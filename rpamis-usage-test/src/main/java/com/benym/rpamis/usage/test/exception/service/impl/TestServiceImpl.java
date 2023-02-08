@@ -71,4 +71,15 @@ public class TestServiceImpl implements TestService {
             }
         }
     }
+
+    @Override
+    public Boolean saveOrUpdateWithException(User user) {
+        if (StringUtils.isEmpty(user.getId())) {
+            int insertReuslt = testDao.insertWithException(user);
+            return insertReuslt > 0;
+        } else {
+            int updateReuslt = testDao.updateWithException(user);
+            return updateReuslt > 0;
+        }
+    }
 }
