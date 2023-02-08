@@ -1,1 +1,1 @@
-DubboExceptionFilter=com.benym.rpas.common.core.exception.DubboExceptionFilter
+DubboExceptionFilter=com.benym.rpamis.common.core.exception.DubboExceptionFilter

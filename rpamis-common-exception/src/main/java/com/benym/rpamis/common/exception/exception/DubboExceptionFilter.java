@@ -1,9 +1,11 @@
-package com.benym.rpas.common.exception.exception;
+package com.benym.rpamis.common.exception.exception;
 
 import cn.hutool.json.JSONUtil;
-import com.benym.rpas.common.dto.enums.ResponseCode;
-import com.benym.rpas.common.dto.exception.*;
-import com.benym.rpas.common.dto.response.Response;
+import com.benym.rpamis.common.dto.enums.ResponseCode;
+import com.benym.rpamis.common.dto.enums.Trace;
+import com.benym.rpamis.common.dto.exception.*;
+import com.benym.rpamis.common.dto.response.Response;
+import com.benym.rpamis.common.utils.TraceIdUtils;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
@@ -21,6 +23,9 @@ import java.util.Optional;
  * 全局dubbo异常处理，统一返回体，避免consumer端try catch手动处理rpc异常
  * 当自定义异常处理中出现问题
  * 会被dubbo本身的com.alibaba.dubbo.rpc.filter.ExceptionFilter捕获进行异常兜底和日志打印
+ * 使用时需要在resource目录下新建META-INFO/dubbo/com.alibaba.dubbo.rpc.Filter，并在文件中填写DubboExceptionFilter(可自定义名字)
+ * DubboExceptionFilter=com.benym.rpamis.common.core.exception.DubboExceptionFilter
+ * 同时配置dubbo-providers.xml <dubbo:provider filter="DubboExceptionFilter"/>
  *
  * @author benym
  * @date 2022/11/3 16:31
@@ -47,7 +52,7 @@ public class DubboExceptionFilter implements Filter {
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
         String params = JSONUtil.toJsonStr(invocation.getArguments());
-        logger.warn("Global dubbo exception filter, interface:{}, methodName:{}, params:{}",
+        logger.info("Global dubbo exception filter, interface:{}, methodName:{}, params:{}",
                 invoker.getInterface(), invocation.getMethodName(), params);
         Result result = invoker.invoke(invocation);
         if (result.hasException()) {
@@ -71,7 +76,9 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(ValidException.class)
     public Object handleValidException(ValidException exception) {
-        logger.warn("catch dubbo validExpcetion", exception);
+        final Trace trace = TraceIdUtils.getTrace();
+        logger.warn("catch dubbo validExpcetion, requestId:{}, spanId:{}, exception is:",
+                trace.getTraceId(), trace.getSpanId(), exception);
         Optional<ValidException> opValid = Optional.ofNullable(exception);
         String errCode = opValid.map(AbstractException::getErrCode)
                 .orElse(ResponseCode.VALID_EXCEPTION_CODE.getCode());
@@ -82,7 +89,9 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(BizException.class)
     public Object handleBizException(BizException exception) {
-        logger.warn("catch dubbo bizExpcetion", exception);
+        final Trace trace = TraceIdUtils.getTrace();
+        logger.warn("catch dubbo bizExpcetion, requestId:{}, spanId:{}, exception is:",
+                trace.getTraceId(), trace.getSpanId(), exception);
         Optional<BizException> opBiz = Optional.ofNullable(exception);
         String errCode = opBiz.map(AbstractException::getErrCode)
                 .orElse(ResponseCode.BIZ_EXCEPTION_CODE.getCode());
@@ -93,7 +102,9 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(BizNoStackException.class)
     public Object handleBizNoStackException(BizNoStackException exception) {
-        logger.warn("catch dubbo bizNoStackException", exception);
+        final Trace trace = TraceIdUtils.getTrace();
+        logger.warn("catch dubbo bizNoStackException, requestId:{}, spanId:{}, exception is:",
+                trace.getTraceId(), trace.getSpanId(), exception);
         Optional<BizNoStackException> opValid = Optional.ofNullable(exception);
         String errCode = opValid.map(AbstractException::getErrCode)
                 .orElse(ResponseCode.VALID_EXCEPTION_CODE.getCode());
@@ -104,7 +115,9 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(SysException.class)
     public Object handleSysException(SysException exception) {
-        logger.error("catch dubbo sysExpcetion", exception);
+        final Trace trace = TraceIdUtils.getTrace();
+        logger.error("catch dubbo sysExpcetion, requestId:{}, spanId:{}, exception is:",
+                trace.getTraceId(), trace.getSpanId(), exception);
         Optional<SysException> opSys = Optional.ofNullable(exception);
         String errCode = opSys.map(AbstractException::getErrCode)
                 .orElse(ResponseCode.SYS_EXCEPTION_CODE.getCode());
@@ -115,7 +128,9 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(RpasException.class)
     public Object handleRpasException(RpasException exception) {
-        logger.error("catch dubbo anyExpcetion", exception);
+        final Trace trace = TraceIdUtils.getTrace();
+        logger.error("catch dubbo rpasExpcetion, requestId:{}, spanId:{}, exception is:",
+                trace.getTraceId(), trace.getSpanId(), exception);
         Optional<RpasException> opRpas = Optional.ofNullable(exception);
         String errCode = opRpas.map(RpasException::getErrCode)
                 .orElse(ResponseCode.RPAS_EXCEPTION_CODE.getCode());
@@ -126,7 +141,9 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception exception) {
-        logger.error("catch dubbo unknown Expcetion", exception);
+        final Trace trace = TraceIdUtils.getTrace();
+        logger.error("catch dubbo unknown Expcetion, requestId:{}, spanId:{}, exception is:",
+                trace.getTraceId(), trace.getSpanId(), exception);
         Optional<Exception> opExcetion = Optional.ofNullable(exception);
         String errCode = ResponseCode.UNKNOWN_EXCEPTION_CODE.getCode();
         String errMessage = opExcetion.map(Exception::getMessage)
