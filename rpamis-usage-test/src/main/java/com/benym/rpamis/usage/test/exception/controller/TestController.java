@@ -1,6 +1,7 @@
 package com.benym.rpamis.usage.test.exception.controller;
 
 import com.benym.rpamis.common.dto.enums.ResponseCode;
+import com.benym.rpamis.common.dto.exception.ExceptionFactory;
 import com.benym.rpamis.common.dto.response.Response;
 import com.benym.rpamis.usage.test.exception.*;
 import com.benym.rpamis.usage.test.exception.enums.PhoneBrandEnums;
@@ -10,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.groups.Default;
@@ -117,5 +115,15 @@ public class TestController {
     public Response<Boolean> test9(@RequestBody User user) {
         Boolean result = testService.saveOrUpdateWithException(user);
         return Response.success(result);
+    }
+
+    @GetMapping("/testException")
+    public Boolean test10(){
+        try {
+            testService.testException();
+            return true;
+        } catch (Exception e) {
+            throw ExceptionFactory.bizException("外层异常测试",e);
+        }
     }
 }

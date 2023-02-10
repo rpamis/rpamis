@@ -15,4 +15,6 @@ public interface TestService {
     Response<Boolean> saveOrUpdate(User user);
 
     Boolean saveOrUpdateWithException(User user);
+
+    void testException();
 }

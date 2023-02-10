@@ -1,6 +1,7 @@
 package com.benym.rpamis.usage.test.exception.service.impl;
 
 import com.benym.rpamis.common.dto.enums.ResponseCode;
+import com.benym.rpamis.common.dto.exception.ExceptionFactory;
 import com.benym.rpamis.common.dto.response.Response;
 import com.benym.rpamis.usage.test.exception.User;
 import com.benym.rpamis.usage.test.exception.dao.TestDao;
@@ -81,5 +82,10 @@ public class TestServiceImpl implements TestService {
             int updateReuslt = testDao.updateWithException(user);
             return updateReuslt > 0;
         }
+    }
+
+    @Override
+    public void testException() {
+        throw ExceptionFactory.bizNoStackException("这是一段错误测试");
     }
 }
