@@ -70,7 +70,7 @@ public final class MethodAccessor {
             function = MethodAccessor.createConstruct(cls);
             CACHE_FUNCTION.putIfAbsent(cls.toString(), function);
             return applyMessage(function, message);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             throw ExceptionFactory.sysException("获取cache exception异常", e);
         }
     }
