@@ -5,14 +5,13 @@ import com.benym.rpamis.common.dto.enums.ResponseCode;
 import com.benym.rpamis.common.dto.enums.Trace;
 import com.benym.rpamis.common.dto.exception.*;
 import com.benym.rpamis.common.dto.response.Response;
+import com.benym.rpamis.common.exception.autoconfigure.ExceptionProperties;
 import com.benym.rpamis.common.utils.TraceIdUtils;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.ExceptionHandlerMethodResolver;
 
@@ -31,10 +30,15 @@ import java.util.Optional;
  * @date 2022/11/3 16:31
  */
 @Activate(group = {CommonConstants.PROVIDER})
-@Order(Ordered.HIGHEST_PRECEDENCE)
 public class DubboExceptionFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(DubboExceptionFilter.class);
+
+    private ExceptionProperties exceptionProperties;
+
+    public void setExceptionAutoConfiguration(ExceptionProperties exceptionProperties) {
+        this.exceptionProperties = exceptionProperties;
+    }
 
     /**
      * 全局dubbo异常处理，注意受检异常问题，dubbo可能会将其他的异常包成RuntimeException
@@ -51,9 +55,10 @@ public class DubboExceptionFilter implements Filter {
      */
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
+        final Trace trace = TraceIdUtils.getTrace();
         String params = JSONUtil.toJsonStr(invocation.getArguments());
-        logger.info("Global dubbo exception filter, interface:{}, methodName:{}, params:{}",
-                invoker.getInterface(), invocation.getMethodName(), params);
+        logger.info("Global dubbo exception filter, requestId:{}, spanId:{}, interface:{}, methodName:{}, params:{}",
+                trace.getTraceId(), trace.getSpanId(), invoker.getInterface(), invocation.getMethodName(), params);
         Result result = invoker.invoke(invocation);
         if (result.hasException()) {
             try {
@@ -65,9 +70,13 @@ public class DubboExceptionFilter implements Filter {
                 // 找到具体的异常处理类，执行对应处理，这里即返回RemoteResult
                 assert method != null;
                 Object value = method.invoke(this, exception);
+                // 是否开启返回体包装，未开启或无property注入则直接返回
+                if (exceptionProperties != null && !exceptionProperties.getRpcPack()) {
+                    return result;
+                }
                 result.setValue(value);
                 return result;
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 logger.error("Dubbo exception filter error, Casued by ", e);
             }
         }

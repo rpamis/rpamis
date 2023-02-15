@@ -8,6 +8,7 @@ import com.benym.rpamis.common.dto.response.Response;
 import com.benym.rpamis.common.utils.TraceIdUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ import java.util.Objects;
  * 强调http code规范，弱化业务code属性，业务code属性理论上属于后端开发需要观测，前端仅需根据http code做出对应处理
  *
  * @author benym
- * @date  2022/7/7 22:04
+ * @date 2022/7/7 22:04
  */
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -75,8 +76,8 @@ public class ExceptionErrorHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<Response<Object>> handleParameterException(MissingServletRequestParameterException misException) {
         final Trace trace = TraceIdUtils.getTrace();
-        String missParams = String.format("%s参数, 类型%s缺失", misException.getParameterName(),misException.getParameterType());
-        logger.warn("请求Id:{} ,SpanId:{} ,详细信息:{}",trace.getTraceId(), trace.getSpanId(), missParams);
+        String missParams = String.format("%s参数, 类型%s缺失", misException.getParameterName(), misException.getParameterType());
+        logger.warn("请求Id:{} ,SpanId:{} ,详细信息:{}", trace.getTraceId(), trace.getSpanId(), missParams);
         if (logger.isDebugEnabled()) {
             logger.debug(misException.getMessage(), misException);
         }
@@ -90,6 +91,9 @@ public class ExceptionErrorHandler {
         String errCode = validException.getErrCode();
         String message = validException.getMessage();
         logger.warn("请求Id:{}, SpanId:{}, 参数校验异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
+        if (logger.isDebugEnabled()) {
+            logger.debug(message, validException);
+        }
         final Response<Object> failResponse = Response.fail(errCode, message);
         return new ResponseEntity<>(failResponse, HttpStatus.OK);
     }
@@ -113,6 +117,9 @@ public class ExceptionErrorHandler {
         String errCode = bizNoStackException.getErrCode();
         String message = bizNoStackException.getMessage();
         logger.warn("请求Id:{}, SpanId:{}, 业务异常(无堆栈):{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
+        if (logger.isDebugEnabled()) {
+            logger.debug(message, bizNoStackException);
+        }
         final Response<Object> failResponse = Response.fail(errCode, message);
         return new ResponseEntity<>(failResponse, HttpStatus.OK);
     }
@@ -123,9 +130,6 @@ public class ExceptionErrorHandler {
         String errCode = sysException.getErrCode();
         String message = sysException.getMessage();
         logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, sysException);
-        if (logger.isDebugEnabled()) {
-            logger.debug(message, sysException);
-        }
         final Response<Object> failResponse = Response.fail(errCode, message);
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -145,12 +149,10 @@ public class ExceptionErrorHandler {
     }
 
     @ExceptionHandler(Exception.class)
+    @ConditionalOnExpression("${rpamis.exception.all-exception:true}")
     public ResponseEntity<Response<Object>> handleException(Exception exception) {
         final Trace trace = TraceIdUtils.getTrace();
         logger.error("请求ID:{}, SpanId:{}, 未知异常:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), exception.getMessage(), exception);
-        if (logger.isDebugEnabled()) {
-            logger.debug(exception.getMessage(), exception);
-        }
         final Response<Object> failResponse = Response.fail(ResponseCode.UNKNOWN_EXCEPTION_CODE, exception.getMessage());
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
