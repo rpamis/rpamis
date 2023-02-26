@@ -104,9 +104,6 @@ public class ExceptionErrorHandler {
         String errCode = bizException.getErrCode();
         String message = bizException.getMessage();
         logger.warn("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, bizException);
-        if (logger.isDebugEnabled()) {
-            logger.debug(message, bizException);
-        }
         final Response<Object> failResponse = Response.fail(errCode, message);
         return new ResponseEntity<>(failResponse, HttpStatus.OK);
     }
@@ -146,14 +143,5 @@ public class ExceptionErrorHandler {
         }
         final Response<Object> failResponse = Response.fail(errCode, detailMessage);
         return new ResponseEntity<>(failResponse, HttpStatus.OK);
-    }
-
-    @ExceptionHandler(Exception.class)
-    @ConditionalOnExpression("${rpamis.exception.all-exception:true}")
-    public ResponseEntity<Response<Object>> handleException(Exception exception) {
-        final Trace trace = TraceIdUtils.getTrace();
-        logger.error("请求ID:{}, SpanId:{}, 未知异常:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), exception.getMessage(), exception);
-        final Response<Object> failResponse = Response.fail(ResponseCode.UNKNOWN_EXCEPTION_CODE, exception.getMessage());
-        return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

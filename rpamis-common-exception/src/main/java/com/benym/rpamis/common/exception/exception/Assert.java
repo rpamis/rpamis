@@ -1,8 +1,7 @@
 package com.benym.rpamis.common.exception.exception;
 
+import com.benym.rpamis.common.dto.exception.*;
 import com.benym.rpamis.common.exception.accessor.MethodAccessor;
-import com.benym.rpamis.common.dto.exception.AbstractException;
-import com.benym.rpamis.common.dto.exception.ExceptionFactory;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -24,6 +23,12 @@ public abstract class Assert {
         throw new IllegalStateException("抽象类，禁止实例化");
     }
 
+    private static <T> void preCheck(Class<T> cls) {
+        if (cls == BizException.class || cls == SysException.class || cls == RpasException.class) {
+            throw new IllegalArgumentException(cls + "为不支持的推断类");
+        }
+    }
+
     public static void state(boolean expression, String message) {
         if (!expression) {
             throw ExceptionFactory.validException(message);
@@ -31,6 +36,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void state(boolean expression, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (!expression) {
             throw exception;
@@ -44,6 +50,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void isTrue(boolean expression, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (!expression) {
             throw exception;
@@ -57,6 +64,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void isNull(Object object, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (object != null) {
             throw exception;
@@ -70,6 +78,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void notNull(Object object, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (object == null) {
             throw exception;
@@ -83,6 +92,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void hasLength(String text, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (!StringUtils.hasLength(text)) {
             throw exception;
@@ -96,6 +106,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void hasText(String text, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (!StringUtils.hasText(text)) {
             throw exception;
@@ -109,6 +120,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void doesNotContain(String textToSearch, String substring, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (StringUtils.hasLength(textToSearch) && StringUtils.hasLength(substring) && textToSearch.contains(substring)) {
             throw exception;
@@ -122,6 +134,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void notEmpty(Object[] array, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (ObjectUtils.isEmpty(array)) {
             throw exception;
@@ -130,27 +143,19 @@ public abstract class Assert {
 
     public static void noNullElements(Object[] array, String message) {
         if (array != null) {
-            Object[] var2 = array;
-            int var3 = array.length;
-
-            for (int var4 = 0; var4 < var3; ++var4) {
-                Object element = var2[var4];
+            for (Object element : array) {
                 if (element == null) {
                     throw ExceptionFactory.validException(message);
                 }
             }
         }
-
     }
 
     public static <T extends AbstractException> void noNullElements(Object[] array, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (array != null) {
-            Object[] var2 = array;
-            int var3 = array.length;
-
-            for (int var4 = 0; var4 < var3; ++var4) {
-                Object element = var2[var4];
+            for (Object element : array) {
                 if (element == null) {
                     throw exception;
                 }
@@ -166,6 +171,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void notEmpty(Collection<?> collection, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (CollectionUtils.isEmpty(collection)) {
             throw exception;
@@ -179,6 +185,7 @@ public abstract class Assert {
     }
 
     public static <T extends AbstractException> void notEmpty(Map<?, ?> map, String message, Class<T> cls) {
+        preCheck(cls);
         AbstractException exception = MethodAccessor.getException(cls, message);
         if (CollectionUtils.isEmpty(map)) {
             throw exception;

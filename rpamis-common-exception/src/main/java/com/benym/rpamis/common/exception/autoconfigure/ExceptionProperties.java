@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * @author benym
  * @date 2023/2/15 21:40
  */
-@Configuration
 @ConfigurationProperties(ExceptionProperties.PREFIX)
 public class ExceptionProperties {
 
@@ -31,7 +30,7 @@ public class ExceptionProperties {
     /**
      * 是否开启Exception.class捕获
      */
-    private Boolean allException = true;
+    private Boolean includeExceptionClass = true;
 
     public String getEnable() {
         return enable;
@@ -49,11 +48,11 @@ public class ExceptionProperties {
         this.rpcPack = rpcPack;
     }
 
-    public Boolean getAllException() {
-        return allException;
+    public Boolean getIncludeExceptionClass() {
+        return includeExceptionClass;
     }
 
-    public void setAllException(Boolean allException) {
-        this.allException = allException;
+    public void setIncludeExceptionClass(Boolean includeExceptionClass) {
+        this.includeExceptionClass = includeExceptionClass;
     }
 }
