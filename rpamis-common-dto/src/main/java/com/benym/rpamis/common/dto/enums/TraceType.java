@@ -7,9 +7,9 @@ package com.benym.rpamis.common.dto.enums;
 public enum TraceType {
 
     /**
-     * rpas默认实现
+     * rpamis默认实现
      */
-    RPAS("rpas","rpas默认实现"),
+    RPAMIS("rpamis","rpamis默认实现"),
     /**
      * skywalking实现
      */

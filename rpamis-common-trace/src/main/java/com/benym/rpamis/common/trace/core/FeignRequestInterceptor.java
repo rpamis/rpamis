@@ -7,6 +7,7 @@ import feign.RequestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -18,6 +19,9 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(FeignRequestInterceptor.class);
 
+    @Autowired
+    private TraceIdUtils traceIdUtils;
+
     /**
      * 为远程调用增加traceId
      */
@@ -28,7 +32,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         if (traceId != null) {
             requestTemplate.header(Trace.TRACE_ID, traceId);
         } else {
-            requestTemplate.header(Trace.TRACE_ID, TraceIdUtils.getTrace().getTraceId());
+            requestTemplate.header(Trace.TRACE_ID, traceIdUtils.getTrace().getTraceId());
         }
     }
 }

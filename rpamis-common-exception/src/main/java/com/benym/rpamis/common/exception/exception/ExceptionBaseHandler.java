@@ -6,12 +6,15 @@ import com.benym.rpamis.common.dto.response.Response;
 import com.benym.rpamis.common.utils.TraceIdUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.annotation.Resource;
 
 /**
  * 全局异常Exception.class捕获，独立出文件用于yml控制
@@ -27,9 +30,12 @@ public class ExceptionBaseHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionBaseHandler.class);
 
+    @Resource
+    private TraceIdUtils traceIdUtils;
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response<Object>> handleException(Exception exception) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         logger.error("请求ID:{}, SpanId:{}, 未知异常:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), exception.getMessage(), exception);
         final Response<Object> failResponse = Response.fail(ResponseCode.UNKNOWN_EXCEPTION_CODE, exception.getMessage());
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);

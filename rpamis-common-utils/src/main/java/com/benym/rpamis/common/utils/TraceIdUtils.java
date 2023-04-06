@@ -23,10 +23,10 @@ public class TraceIdUtils {
 
     public static final ThreadLocal<Trace> CURRENT_TRACE = new NamedThreadLocal<>("Trace-ThreadLocal");
 
-    @Value("${trace.type:rpas}")
-    private static String traceType;
+    @Value("${trace.type:rpamis}")
+    private String traceType;
 
-    public static Trace getTrace() {
+    public Trace getTrace() {
         String traceId;
         String spanId;
         Trace trace = CURRENT_TRACE.get();

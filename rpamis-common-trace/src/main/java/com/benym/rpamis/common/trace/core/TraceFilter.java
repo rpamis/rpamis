@@ -10,6 +10,7 @@ import com.benym.rpamis.common.utils.TraceIdUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,9 @@ public class TraceFilter implements Filter {
     @Value("${trace.log.activate:true}")
     private boolean traceLogActivate;
 
+    @Autowired
+    private TraceIdUtils traceIdUtils;
+
     public TraceFilter() {
         // 空实例化
     }
@@ -45,7 +49,7 @@ public class TraceFilter implements Filter {
             throws IOException, ServletException {
         StopWatch stopWatch = new StopWatch("Http Trace");
         stopWatch.start();
-        Trace trace = TraceIdUtils.getTrace();
+        Trace trace = traceIdUtils.getTrace();
         TraceRequestWrapper traceRequestWrapper;
         RequestLog requestLog = null;
         TraceResponseWrapper traceResponseWrapper = new TraceResponseWrapper((HttpServletResponse) response);

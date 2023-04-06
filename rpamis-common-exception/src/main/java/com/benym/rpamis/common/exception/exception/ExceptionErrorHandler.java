@@ -19,6 +19,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
@@ -49,9 +50,12 @@ public class ExceptionErrorHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionErrorHandler.class);
 
+    @Resource
+    private TraceIdUtils traceIdUtils;
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Response<Object>> handleBindException(MethodArgumentNotValidException validException) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         String validateMessage = Objects.requireNonNull(validException.getBindingResult().getFieldError()).getDefaultMessage();
         logger.warn("请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
         if (logger.isDebugEnabled()) {
@@ -63,7 +67,7 @@ public class ExceptionErrorHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Response<Object>> handleNotReadException(HttpMessageNotReadableException notReadableException) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         logger.warn("请求Id:{}, SpanId:{}, 错误码:{}, 错误信息:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(),
                 ResponseCode.READ_JSON_ERROR.getCode(), ResponseCode.READ_JSON_ERROR.getMessage(), notReadableException.getMessage());
         if (logger.isDebugEnabled()) {
@@ -75,7 +79,7 @@ public class ExceptionErrorHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<Response<Object>> handleParameterException(MissingServletRequestParameterException misException) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         String missParams = String.format("%s参数, 类型%s缺失", misException.getParameterName(), misException.getParameterType());
         logger.warn("请求Id:{} ,SpanId:{} ,详细信息:{}", trace.getTraceId(), trace.getSpanId(), missParams);
         if (logger.isDebugEnabled()) {
@@ -87,7 +91,7 @@ public class ExceptionErrorHandler {
 
     @ExceptionHandler(ValidException.class)
     public ResponseEntity<Response<Object>> handleValidException(ValidException validException) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         String errCode = validException.getErrCode();
         String message = validException.getMessage();
         logger.warn("请求Id:{}, SpanId:{}, 参数校验异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
@@ -100,7 +104,7 @@ public class ExceptionErrorHandler {
 
     @ExceptionHandler(BizException.class)
     public ResponseEntity<Response<Object>> handleBizException(BizException bizException) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         String errCode = bizException.getErrCode();
         String message = bizException.getMessage();
         logger.warn("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, bizException);
@@ -110,7 +114,7 @@ public class ExceptionErrorHandler {
 
     @ExceptionHandler(BizNoStackException.class)
     public ResponseEntity<Response<Object>> handleBizNoStackException(BizNoStackException bizNoStackException) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         String errCode = bizNoStackException.getErrCode();
         String message = bizNoStackException.getMessage();
         logger.warn("请求Id:{}, SpanId:{}, 业务异常(无堆栈):{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
@@ -123,7 +127,7 @@ public class ExceptionErrorHandler {
 
     @ExceptionHandler(SysException.class)
     public ResponseEntity<Response<Object>> handleSysException(SysException sysException) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         String errCode = sysException.getErrCode();
         String message = sysException.getMessage();
         logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, sysException);
@@ -133,7 +137,7 @@ public class ExceptionErrorHandler {
 
     @ExceptionHandler(RpasException.class)
     public ResponseEntity<Response<Object>> handleRpasException(RpasException rpasException) {
-        final Trace trace = TraceIdUtils.getTrace();
+        final Trace trace = traceIdUtils.getTrace();
         String errCode = rpasException.getErrCode();
         String message = rpasException.getMessage();
         String detailMessage = rpasException.getDetailMessage();
