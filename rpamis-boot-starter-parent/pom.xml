@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.benym.rpamis</groupId>
+    <groupId>cn.rpamis</groupId>
     <artifactId>rpamis-boot-starter-parent</artifactId>
     <version>1.0.0.RELEASE</version>
     <packaging>pom</packaging>
@@ -284,22 +284,22 @@
 
             <!-- 自研组件 -->
             <dependency>
-                <groupId>com.benym.rpamis</groupId>
+                <groupId>cn.rpamis</groupId>
                 <artifactId>rpamis-common-dto</artifactId>
                 <version>${rpamis-common-dto.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.benym.rpamis</groupId>
+                <groupId>cn.rpamis</groupId>
                 <artifactId>rpamis-common-exception</artifactId>
                 <version>${rpamis-common-exception.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.benym.rpamis</groupId>
+                <groupId>cn.rpamis</groupId>
                 <artifactId>rpamis-common-utils</artifactId>
                 <version>${rpamis-common-utils.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.benym.rpamis</groupId>
+                <groupId>cn.rpamis</groupId>
                 <artifactId>rpamis-common-trace</artifactId>
                 <version>${rpamis-common-trace.version}</version>
             </dependency>
