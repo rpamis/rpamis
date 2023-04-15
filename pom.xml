@@ -15,7 +15,6 @@
         <module>rpamis-common-trace</module>
         <module>rpamis-architecture-build</module>
         <module>rpamis-common-utils</module>
-        <module>rpamis-usage-test</module>
     </modules>
 
     <properties>
