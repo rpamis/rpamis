@@ -12,11 +12,15 @@ import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.ExceptionHandlerMethodResolver;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
+
+import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER;
+import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
 
 /**
  * 全局dubbo异常处理，统一返回体，避免consumer端try catch手动处理rpc异常
@@ -29,7 +33,7 @@ import java.util.Optional;
  * @author benym
  * @date 2022/11/3 16:31
  */
-@Activate(group = {CommonConstants.PROVIDER})
+@Activate(group = {PROVIDER, CONSUMER}, order = Ordered.HIGHEST_PRECEDENCE)
 public class DubboExceptionFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(DubboExceptionFilter.class);
