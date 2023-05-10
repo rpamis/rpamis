@@ -3,12 +3,12 @@ package cn.rpamis.architecture.service.impl;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.rpamis.architecture.config.BaseProjectConfig;
+import cn.rpamis.architecture.consts.ProjectPath;
 import cn.rpamis.architecture.pojo.FileVO;
 import cn.rpamis.architecture.service.BuildService;
 import cn.rpamis.architecture.template.AbstractBuildTemplate;
 import cn.rpamis.architecture.template.TemplateFactory;
 import cn.rpamis.architecture.utils.CfgUtils;
-import cn.rpamis.architecture.consts.ProjectPath;
 import cn.rpamis.common.dto.exception.ExceptionFactory;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
@@ -20,12 +20,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author benym
@@ -42,15 +44,6 @@ public class BuildServiceImpl implements BuildService {
 
     @Override
     public FileVO architectureBuild(BaseProjectConfig baseProjectConfig) {
-        CompletableFuture<Object> exceptionally = CompletableFuture.supplyAsync(() -> {
-            System.out.println(11111);
-            throw ExceptionFactory.bizNoStackException("测试异步异常");
-        }).exceptionally(ex -> {
-            throw ExceptionFactory.bizException("123131231231231", ex);
-        });
-        if (exceptionally.isCompletedExceptionally()) {
-            throw ExceptionFactory.bizNoStackException("测试异步异常21313123");
-        }
         AbstractBuildTemplate template;
         try {
             template = templateFactory.getTemplate(baseProjectConfig.getTemplateType());
