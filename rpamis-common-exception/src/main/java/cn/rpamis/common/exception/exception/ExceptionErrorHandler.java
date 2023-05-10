@@ -13,13 +13,18 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.annotation.Resource;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * SpringBoot使用时请采用
@@ -52,13 +57,38 @@ public class ExceptionErrorHandler {
     @Resource
     private TraceIdUtils traceIdUtils;
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Response<Object>> handleBindException(MethodArgumentNotValidException validException) {
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<Response<Object>> handleBindException(BindException bindException) {
         final Trace trace = traceIdUtils.getTrace();
-        String validateMessage = Objects.requireNonNull(validException.getBindingResult().getFieldError()).getDefaultMessage();
-        logger.warn("请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
+        String validateMessage = Objects.requireNonNull(bindException.getBindingResult().getFieldError()).getDefaultMessage();
+        logger.warn("[BindException], 请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
         if (logger.isDebugEnabled()) {
-            logger.debug(validException.getMessage(), validException);
+            logger.debug(validateMessage, bindException);
+        }
+        final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR, validateMessage);
+        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Response<Object>> handleConsException(ConstraintViolationException constraintViolationException) {
+        final Trace trace = traceIdUtils.getTrace();
+        Set<ConstraintViolation<?>> constraintViolations = constraintViolationException.getConstraintViolations();
+        String validateMessage = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(";"));
+        logger.warn("[ConstraintViolationException], 请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
+        if (logger.isDebugEnabled()) {
+            logger.debug(validateMessage, constraintViolationException);
+        }
+        final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR, validateMessage);
+        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Response<Object>> handleBindException(MethodArgumentNotValidException methodArgumentNotValidException) {
+        final Trace trace = traceIdUtils.getTrace();
+        String validateMessage = Objects.requireNonNull(methodArgumentNotValidException.getBindingResult().getFieldError()).getDefaultMessage();
+        logger.warn("[MethodArgumentNotValidException], 请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
+        if (logger.isDebugEnabled()) {
+            logger.debug(methodArgumentNotValidException.getMessage(), methodArgumentNotValidException);
         }
         final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR, validateMessage);
         return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);

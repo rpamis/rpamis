@@ -78,13 +78,14 @@ public class DubboExceptionFilter implements Filter {
                 // 从@ExceptionHandler注解方法中找到value为exception方法的特定对象
                 Method method = resolver.resolveMethod(exception);
                 // 找到具体的异常处理类，执行对应处理，这里即返回RemoteResult
-                assert method != null;
-                Object value = method.invoke(this, exception);
-                // 是否开启返回体包装，未开启或无property注入则直接返回
-                if (exceptionProperties != null && !exceptionProperties.getRpcPack()) {
-                    return result;
+                if (method != null) {
+                    Object value = method.invoke(this, exception);
+                    // 是否开启返回体包装，未开启或无property注入则直接返回
+                    if (exceptionProperties != null && !exceptionProperties.getRpcPack()) {
+                        return result;
+                    }
+                    result.setValue(value);
                 }
-                result.setValue(value);
                 return result;
             } catch (Exception e) {
                 logger.error("Dubbo exception filter error, Casued by ", e);

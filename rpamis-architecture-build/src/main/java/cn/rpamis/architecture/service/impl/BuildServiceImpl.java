@@ -25,6 +25,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author benym
@@ -41,6 +42,15 @@ public class BuildServiceImpl implements BuildService {
 
     @Override
     public FileVO architectureBuild(BaseProjectConfig baseProjectConfig) {
+        CompletableFuture<Object> exceptionally = CompletableFuture.supplyAsync(() -> {
+            System.out.println(11111);
+            throw ExceptionFactory.bizNoStackException("测试异步异常");
+        }).exceptionally(ex -> {
+            throw ExceptionFactory.bizException("123131231231231", ex);
+        });
+        if (exceptionally.isCompletedExceptionally()) {
+            throw ExceptionFactory.bizNoStackException("测试异步异常21313123");
+        }
         AbstractBuildTemplate template;
         try {
             template = templateFactory.getTemplate(baseProjectConfig.getTemplateType());
