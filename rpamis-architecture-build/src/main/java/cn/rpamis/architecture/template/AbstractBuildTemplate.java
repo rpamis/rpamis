@@ -53,10 +53,20 @@ public abstract class AbstractBuildTemplate {
      */
     protected abstract FileVO create();
 
+    /**
+     * 清空map信息
+     */
+    private void clear(){
+        ftlMap.clear();
+        pathMap.clear();
+    }
+
     public final FileVO createProject(BaseProjectConfig baseProjectConfig) {
         rpasConfig = baseProjectConfig;
         initPath();
         resolve();
-        return create();
+        FileVO fileVO = create();
+        clear();
+        return fileVO;
     }
 }
