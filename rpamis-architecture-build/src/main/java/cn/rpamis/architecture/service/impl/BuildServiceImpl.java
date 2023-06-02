@@ -10,6 +10,7 @@ import cn.rpamis.architecture.template.AbstractBuildTemplate;
 import cn.rpamis.architecture.template.TemplateFactory;
 import cn.rpamis.architecture.utils.CfgUtils;
 import cn.rpamis.common.dto.exception.ExceptionFactory;
+import cn.rpamis.common.utils.FileUtils;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +78,7 @@ public class BuildServiceImpl implements BuildService {
         String genProjectPath =
                 ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + File.separator;
         String saveZipPath = ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + ".zip";
+        FileUtils.generateGitKeepFiles(genProjectPath);
         ZipUtil.zip(genProjectPath, saveZipPath);
         FileUtil.del(genProjectPath);
         return saveZipPath;
