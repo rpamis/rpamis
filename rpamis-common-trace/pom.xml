@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>cn.rpamis</groupId>
+        <groupId>com.rpamis</groupId>
         <artifactId>rpamis-boot-starter-parent</artifactId>
         <version>1.0.0.RELEASE</version>
         <relativePath/>
@@ -23,7 +23,7 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>cn.rpamis</groupId>
+            <groupId>com.rpamis</groupId>
             <artifactId>rpamis-common-utils</artifactId>
             <version>${rpamis-common-utils.version}</version>
         </dependency>

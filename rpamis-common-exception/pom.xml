@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>cn.rpamis</groupId>
+        <groupId>com.rpamis</groupId>
         <artifactId>rpamis-boot-starter-parent</artifactId>
         <version>1.0.0.RELEASE</version>
         <relativePath/>
@@ -23,12 +23,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.rpamis</groupId>
+            <groupId>com.rpamis</groupId>
             <artifactId>rpamis-common-dto</artifactId>
             <version>${rpamis-common-dto.version}</version>
         </dependency>
         <dependency>
-            <groupId>cn.rpamis</groupId>
+            <groupId>com.rpamis</groupId>
             <artifactId>rpamis-common-utils</artifactId>
             <version>${rpamis-common-utils.version}</version>
         </dependency>

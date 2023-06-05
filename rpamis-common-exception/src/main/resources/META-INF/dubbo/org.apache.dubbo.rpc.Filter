@@ -1,1 +1,1 @@
-DubboExceptionFilter=cn.rpamis.common.exception.exception.DubboExceptionFilter
+DubboExceptionFilter=com.rpamis.common.exception.exception.DubboExceptionFilter

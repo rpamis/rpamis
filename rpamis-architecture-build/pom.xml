@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cn.rpamis</groupId>
+        <groupId>com.rpamis</groupId>
         <artifactId>rpamis-boot-starter-parent</artifactId>
         <version>1.0.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
@@ -56,12 +56,12 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
-            <groupId>cn.rpamis</groupId>
+            <groupId>com.rpamis</groupId>
             <artifactId>rpamis-common-exception</artifactId>
             <version>${rpamis-common-exception.version}</version>
         </dependency>
         <dependency>
-            <groupId>cn.rpamis</groupId>
+            <groupId>com.rpamis</groupId>
             <artifactId>rpamis-common-trace</artifactId>
             <version>${rpamis-common-trace.version}</version>
         </dependency>
