@@ -3,6 +3,8 @@ package cn.rpamis.architecture.consts;
 import java.io.File;
 
 /**
+ * 项目生成路径
+ *
  * @date 2022/7/25 10:40 上午
  * @author benym
  */

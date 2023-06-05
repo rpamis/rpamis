@@ -1,10 +1,12 @@
 package cn.rpamis.common.dto.enums;
 
 /**
+ * Trace类型枚举
+ *
  * @author benym
  * @date 2022/7/8 4:18 下午
  */
-public enum TraceType {
+public enum TraceTypeEnum {
 
     /**
      * rpamis默认实现
@@ -18,7 +20,7 @@ public enum TraceType {
     private String type;
     private String desc;
 
-    TraceType(String type, String desc) {
+    TraceTypeEnum(String type, String desc) {
         this.type = type;
         this.desc = desc;
     }

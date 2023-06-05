@@ -10,11 +10,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 起始Controller
+ *
  * @author benym
  * @date 2022/7/20 4:47 下午
  */
 @RestController
-@RequestMapping("/rpas")
+@RequestMapping("/rpamis")
 public class ArchitectureBuildController {
 
     @Autowired

@@ -24,7 +24,7 @@ public abstract class Assert {
     }
 
     private static <T> void preCheck(Class<T> cls) {
-        if (cls == BizException.class || cls == SysException.class || cls == RpasException.class) {
+        if (cls == BizException.class || cls == SysException.class || cls == RpamisException.class) {
             throw new IllegalArgumentException(cls + "为不支持的推断类");
         }
     }

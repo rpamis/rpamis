@@ -50,24 +50,24 @@ public class ExceptionFactory {
         return new SysException(statusCode, e);
     }
 
-    public static RpasException rpasException() {
-        return new RpasException();
+    public static RpamisException rpamisException() {
+        return new RpamisException();
     }
 
-    public static RpasException rpasException(String errCode, String errMessage, String detailMessage) {
-        return new RpasException(errCode, errMessage, detailMessage);
+    public static RpamisException rpamisException(String errCode, String errMessage, String detailMessage) {
+        return new RpamisException(errCode, errMessage, detailMessage);
     }
 
-    public static RpasException rpasException(String errCode, String errMessage) {
-        return new RpasException(errCode, errMessage);
+    public static RpamisException rpamisException(String errCode, String errMessage) {
+        return new RpamisException(errCode, errMessage);
     }
 
-    public static RpasException rpasException(StatusCode statusCode) {
-        return new RpasException(statusCode);
+    public static RpamisException rpamisException(StatusCode statusCode) {
+        return new RpamisException(statusCode);
     }
 
-    public static RpasException rpasException(StatusCode statusCode, String detailMessage) {
-        return new RpasException(statusCode, detailMessage);
+    public static RpamisException rpamisException(StatusCode statusCode, String detailMessage) {
+        return new RpamisException(statusCode, detailMessage);
     }
 
     public static ValidException validException(String errMessage) {

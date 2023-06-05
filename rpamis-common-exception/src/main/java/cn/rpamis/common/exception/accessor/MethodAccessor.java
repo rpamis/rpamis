@@ -13,6 +13,7 @@ import java.util.function.Function;
  * MethodHandle性能压测如何
  *
  * @author benym
+ * @date: 2022/12/1 14:30
  * @link {<a href="https://www.optaplanner.org/blog/2018/01/09/JavaReflectionButMuchFaster.html">...</a>}
  * <p/>
  * 对于类外进行私有变量的访问的场景
@@ -39,7 +40,6 @@ import java.util.function.Function;
  * MhExceptionBenchMark.MhExceptioTest.mhLamda    avgt   10  2589.443 ± 204.428  ns/op
  * MhExceptionBenchMark.MhExceptioTest.mhNoLamda  avgt   10  2664.148 ± 217.869  ns/op
  * MhExceptionBenchMark.MhExceptioTest.reflet     avgt   10  2710.181 ± 304.747  ns/op
- * @date: 2022/12/1 14:30
  */
 public final class MethodAccessor {
 

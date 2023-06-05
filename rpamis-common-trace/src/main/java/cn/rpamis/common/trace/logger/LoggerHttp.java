@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * Http日志实体
+ *
  * @author benym
  * @date 2022/7/12 7:05 下午
  */

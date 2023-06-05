@@ -1,7 +1,7 @@
 package cn.rpamis.common.utils;
 
 import cn.rpamis.common.dto.enums.Trace;
-import cn.rpamis.common.dto.enums.TraceType;
+import cn.rpamis.common.dto.enums.TraceTypeEnum;
 import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 /**
+ * TraceId工具类
+ *
  * @author benym
  * @date 2022/7/8 4:04 下午
  */
@@ -33,7 +35,7 @@ public class TraceIdUtils {
         try {
             if (trace == null) {
                 trace = new Trace();
-                if (TraceType.SKYWALK.getType().equals(traceType)) {
+                if (TraceTypeEnum.SKYWALK.getType().equals(traceType)) {
                     traceId = TraceContext.traceId();
                     spanId = String.valueOf(TraceContext.spanId());
                 } else {

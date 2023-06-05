@@ -5,6 +5,8 @@ import cn.rpamis.common.dto.enums.StatusCode;
 import java.io.Serializable;
 
 /**
+ * 统一返回体
+ *
  * @author benym
  * @date 2022/7/6 21:17
  */
@@ -12,16 +14,28 @@ public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 错误代码
+     */
     private String errCode;
 
+    /**
+     * 错误消息
+     */
     private String errMessage;
 
+    /**
+     * 详细信息
+     */
     private String detailMessage;
 
+    /**
+     * 数据
+     */
     private T data;
 
     public Response() {
-
+        //
     }
 
     public Response(String errCode, String errMessage, String detailMessage) {

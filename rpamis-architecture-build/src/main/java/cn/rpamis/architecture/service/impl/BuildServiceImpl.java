@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * 生成类Service实现
+ *
  * @author benym
  * @date 2022/7/20 4:48 下午
  */
@@ -47,7 +49,7 @@ public class BuildServiceImpl implements BuildService {
     public FileVO architectureBuild(BaseProjectConfig baseProjectConfig) {
         AbstractBuildTemplate template;
         try {
-            template = templateFactory.getTemplate(baseProjectConfig.getTemplateType());
+            template = templateFactory.getTemplate(baseProjectConfig.getTemplateTypeEnum());
         } catch (Exception e) {
             throw ExceptionFactory.bizException("获取模板异常", e);
         }

@@ -164,15 +164,15 @@ public class ExceptionErrorHandler {
         return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(RpasException.class)
-    public ResponseEntity<Response<Object>> handleRpasException(RpasException rpasException) {
+    @ExceptionHandler(RpamisException.class)
+    public ResponseEntity<Response<Object>> handleRpasException(RpamisException rpamisException) {
         final Trace trace = traceIdUtils.getTrace();
-        String errCode = rpasException.getErrCode();
-        String message = rpasException.getMessage();
-        String detailMessage = rpasException.getDetailMessage();
+        String errCode = rpamisException.getErrCode();
+        String message = rpamisException.getMessage();
+        String detailMessage = rpamisException.getDetailMessage();
         logger.error("请求Id:{}, SpanId:{}, 系统内部异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, detailMessage);
         if (logger.isDebugEnabled()) {
-            logger.debug(message, rpasException);
+            logger.debug(message, rpamisException);
         }
         final Response<Object> failResponse = Response.fail(errCode, detailMessage);
         return new ResponseEntity<>(failResponse, HttpStatus.OK);

@@ -7,7 +7,6 @@ import cn.rpamis.common.dto.exception.*;
 import cn.rpamis.common.dto.response.Response;
 import cn.rpamis.common.exception.autoconfigure.ExceptionProperties;
 import cn.rpamis.common.utils.TraceIdUtils;
-import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.Logger;
@@ -146,15 +145,15 @@ public class DubboExceptionFilter implements Filter {
         return Response.fail(errCode, errMessage);
     }
 
-    @ExceptionHandler(RpasException.class)
-    public Object handleRpasException(RpasException exception) {
+    @ExceptionHandler(RpamisException.class)
+    public Object handleRpasException(RpamisException exception) {
         final Trace trace = traceIdUtils.getTrace();
         logger.error("catch dubbo rpasExpcetion, requestId:{}, spanId:{}, exception is:",
                 trace.getTraceId(), trace.getSpanId(), exception);
-        Optional<RpasException> opRpas = Optional.ofNullable(exception);
-        String errCode = opRpas.map(RpasException::getErrCode)
+        Optional<RpamisException> opRpas = Optional.ofNullable(exception);
+        String errCode = opRpas.map(RpamisException::getErrCode)
                 .orElse(ResponseCode.RPAS_EXCEPTION_CODE.getCode());
-        String errMessage = opRpas.map(RpasException::getErrMessage)
+        String errMessage = opRpas.map(RpamisException::getErrMessage)
                 .orElse(ResponseCode.RPAS_EXCEPTION_CODE.getMessage());
         return Response.fail(errCode, errMessage);
     }

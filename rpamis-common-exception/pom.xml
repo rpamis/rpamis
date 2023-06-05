@@ -25,12 +25,12 @@
         <dependency>
             <groupId>cn.rpamis</groupId>
             <artifactId>rpamis-common-dto</artifactId>
-            <version>1.0.0</version>
+            <version>${rpamis-common-dto.version}</version>
         </dependency>
         <dependency>
             <groupId>cn.rpamis</groupId>
             <artifactId>rpamis-common-utils</artifactId>
-            <version>1.0.0</version>
+            <version>${rpamis-common-utils.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

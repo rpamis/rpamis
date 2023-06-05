@@ -1,6 +1,6 @@
 package cn.rpamis.architecture.template;
 
-import cn.rpamis.architecture.consts.TemplateType;
+import cn.rpamis.architecture.consts.TemplateTypeEnum;
 import cn.rpamis.architecture.pojo.FileVO;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class SingleMouduleTemplate extends AbstractBuildTemplate {
 
     @Override
     protected String getTemplateType() {
-        return TemplateType.SINGLE_MOUDULE.getCode();
+        return TemplateTypeEnum.SINGLE_MOUDULE.getCode();
     }
 
     @Override

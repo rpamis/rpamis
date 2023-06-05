@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * String工具类
+ *
  * @author benym
  * @date 2022/7/28 21:53
  */
@@ -12,12 +14,23 @@ public class StringUtils {
     private static final Pattern SHORT_LINE_PATTERN = Pattern.compile("-([a-z])");
 
 
-    public static String getMainName (String str){
+    /**
+     * 获取主类名
+     *
+     * @param str str
+     * @return String
+     */
+    public static String getMainName(String str) {
         return captureName(toHump(str));
     }
 
-    // -线分割，之后一个字母转大写
-    public static String toHump (String str){
+    /**
+     * -线分割，之后一个字母转大写
+     *
+     * @param str str
+     * @return String
+     */
+    public static String toHump(String str) {
         //正则匹配下划线及后一个字符，删除下划线并将匹配的字符转成大写
         Matcher matcher = SHORT_LINE_PATTERN.matcher(str);
         StringBuffer sb = new StringBuffer(str);
@@ -35,11 +48,16 @@ public class StringUtils {
         return toHump(sb.toString());
     }
 
-    // 首字符转大写
+    /**
+     * 首字符转大写
+     *
+     * @param str str
+     * @return String
+     */
     private static String captureName(String str) {
         // 进行字母的ascii编码前移，效率要高于截取字符串进行转换的操作
-        char[] cs=str.toCharArray();
-        cs[0]-=32;
+        char[] cs = str.toCharArray();
+        cs[0] -= 32;
         return String.valueOf(cs);
     }
 

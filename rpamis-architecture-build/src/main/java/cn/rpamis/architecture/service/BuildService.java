@@ -6,6 +6,8 @@ import cn.rpamis.architecture.pojo.FileVO;
 import java.io.File;
 
 /**
+ * 生成类Service
+ *
  * @author benym
  * @date 2022/7/20 4:36 下午
  */

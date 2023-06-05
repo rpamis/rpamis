@@ -1,10 +1,12 @@
 package cn.rpamis.architecture.consts;
 
 /**
+ * 项目类型枚举
+ *
  * @author benym
  * @date 2022/7/21 11:03 上午
  */
-public enum TemplateType {
+public enum TemplateTypeEnum {
 
     /**
      * 多模块项目
@@ -23,7 +25,7 @@ public enum TemplateType {
 
     private String desc;
 
-    TemplateType(String code, String desc) {
+    TemplateTypeEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }

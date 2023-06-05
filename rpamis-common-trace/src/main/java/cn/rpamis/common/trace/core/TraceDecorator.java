@@ -8,6 +8,8 @@ import org.springframework.core.task.TaskDecorator;
 import java.util.Map;
 
 /**
+ * 线程Trace装饰器
+ *
  * @author benym
  * @date 2022/7/10 21:49
  */

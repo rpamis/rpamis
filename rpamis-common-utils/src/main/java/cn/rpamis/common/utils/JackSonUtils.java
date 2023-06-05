@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 
 /**
+ * Jackson工具类
+ *
  * @author benym
  * @date 2022/8/23 10:40
  */

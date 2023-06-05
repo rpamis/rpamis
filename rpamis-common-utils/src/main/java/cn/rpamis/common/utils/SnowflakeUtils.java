@@ -3,6 +3,8 @@ package cn.rpamis.common.utils;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
 
 /**
+ * Snowflake工具类
+ *
  * @author benym
  * @date 2022/7/10 21:16
  */

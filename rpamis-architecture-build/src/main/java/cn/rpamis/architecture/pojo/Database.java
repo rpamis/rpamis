@@ -1,78 +1,50 @@
 package cn.rpamis.architecture.pojo;
 
+import lombok.Builder;
+import lombok.Data;
+
 /**
+ * 数据库信息
+ *
  * @author benym
  * @date 2022/7/27 3:36 下午
  */
+@Data
+@Builder
 public class Database {
 
+    /**
+     * enabled
+     */
     private Boolean enabled;
 
+    /**
+     * host
+     */
     private String host;
 
+    /**
+     * port
+     */
     private String port;
 
+    /**
+     * 数据库名称
+     */
     private String databaseName;
 
+    /**
+     * 用户名
+     */
     private String userName;
 
+    /**
+     * passWord
+     */
     private String passWord;
 
-    private Boolean crud = false;
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    public String getDatabaseName() {
-        return databaseName;
-    }
-
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    public Boolean getCrud() {
-        return crud;
-    }
-
-    public void setCrud(Boolean crud) {
-        this.crud = crud;
-    }
+    /**
+     * crud
+     */
+    private Boolean crud;
 }

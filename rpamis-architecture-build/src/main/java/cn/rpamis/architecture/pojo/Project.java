@@ -1,116 +1,77 @@
 package cn.rpamis.architecture.pojo;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 /**
+ * 项目基本信息实体
+ *
  * @author benym
  * @date 2022/7/20 4:47 下午
  */
+@Data
+@Builder
 public class Project {
 
+    /**
+     * groupId
+     */
     @NotBlank(message = "groupId不能为空")
     @ApiModelProperty("groupId")
     private String groupId;
 
+    /**
+     * artifactId
+     */
     @NotBlank(message = "artifactId不能为空")
     @ApiModelProperty("artifactId")
     @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z]$", message = "artifactId仅能以英文字母开头, 英文字母结尾, 可包含字母、数字、-线")
     private String artifactId;
 
+    /**
+     * type
+     */
     @ApiModelProperty("maven")
     private String type;
 
+    /**
+     * packaging
+     */
     @ApiModelProperty("jar or war")
     private String packaging;
 
+    /**
+     * javaVersion
+     */
     @ApiModelProperty("Java版本")
     private String javaVersion;
 
+    /**
+     * 项目版本
+     */
     @ApiModelProperty("项目版本")
     private String version;
 
+    /**
+     * packageName
+     */
     @NotBlank(message = "packageName不能为空")
     @ApiModelProperty("package")
     private String packageName;
 
+    /**
+     * 描述
+     */
     @ApiModelProperty("项目描述")
     private String description;
 
+    /**
+     * mainName
+     */
     @ApiModelProperty("主类名(由artifactId自动转化生成)")
     private String mainName;
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getArtifactId() {
-        return artifactId;
-    }
-
-    public void setArtifactId(String artifactId) {
-        this.artifactId = artifactId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPackaging() {
-        return packaging;
-    }
-
-    public void setPackaging(String packaging) {
-        this.packaging = packaging;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getJavaVersion() {
-        return javaVersion;
-    }
-
-    public void setJavaVersion(String javaVersion) {
-        this.javaVersion = javaVersion;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
-    }
-
-    public String getMainName() {
-        return mainName;
-    }
-
-    public void setMainName(String mainName) {
-        this.mainName = mainName;
-    }
 }

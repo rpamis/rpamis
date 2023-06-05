@@ -1,6 +1,8 @@
 package cn.rpamis.common.dto.request;
 
 /**
+ * 请求日志实体
+ *
  * @author benym
  * @date 2022/7/12 6:49 下午
  */
@@ -125,5 +127,20 @@ public class RequestLog {
 
     public void setTotalTime(Long totalTime) {
         this.totalTime = totalTime;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestLog{" +
+                "requestUrl='" + requestUrl + '\'' +
+                ", remoteAddr='" + remoteAddr + '\'' +
+                ", requestHeaders=" + requestHeaders +
+                ", method='" + method + '\'' +
+                ", requestParams=" + requestParams +
+                ", status=" + status +
+                ", responseHeaders=" + responseHeaders +
+                ", response=" + response +
+                ", totalTime=" + totalTime +
+                '}';
     }
 }

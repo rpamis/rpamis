@@ -13,8 +13,14 @@ public abstract class AbstractException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 错误代码
+     */
     private String errCode;
 
+    /**
+     * 错误消息
+     */
     private String errMessage;
 
     protected AbstractException(String errMessage) {

@@ -9,23 +9,26 @@ import org.springframework.util.ConcurrentReferenceHashMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * Rpamis Bean拷贝工具类
+ *
  * @author benym
  * @date 2022/7/7 21:56
  */
-public class RpasBeanUtils {
+public class RpamisBeanUtils {
 
     /**
      * 享元模式
      */
     private static final Map<String, BeanCopier> BENCOPIER_MAP = new ConcurrentReferenceHashMap<>();
 
-    private RpasBeanUtils() {
+    private RpamisBeanUtils() {
         throw new IllegalStateException("工具类，禁止实例化");
     }
 
@@ -37,13 +40,10 @@ public class RpasBeanUtils {
      * @return BeanCopier
      */
     private static <S, T> BeanCopier getBeanCopier(Class<S> sourceClass, Class<T> targetClass) {
-        StringBuffer beanKey = new StringBuffer();
-        beanKey.append(sourceClass);
-        beanKey.append(targetClass);
         BeanCopier beanCopier;
-        String beanKeyStr = beanKey.toString();
+        String beanKeyStr = String.valueOf(sourceClass) + targetClass;
         if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
-            synchronized (RpasBeanUtils.class) {
+            synchronized (RpamisBeanUtils.class) {
                 if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
                     beanCopier = BeanCopier.create(sourceClass, targetClass, false);
                     BENCOPIER_MAP.put(beanKeyStr, beanCopier);
@@ -65,14 +65,10 @@ public class RpasBeanUtils {
      * @return BeanCopier
      */
     private static <S, T> BeanCopier getBeanCopier(Class<S> sourceClass, Class<T> targetClass, Converter converter) {
-        StringBuffer beanKey = new StringBuffer();
-        beanKey.append(sourceClass);
-        beanKey.append(targetClass);
-        beanKey.append(converter.toString());
         BeanCopier beanCopier;
-        String beanKeyStr = beanKey.toString();
+        String beanKeyStr = String.valueOf(sourceClass) + targetClass + converter.toString();
         if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
-            synchronized (RpasBeanUtils.class) {
+            synchronized (RpamisBeanUtils.class) {
                 if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
                     beanCopier = BeanCopier.create(sourceClass, targetClass, true);
                     BENCOPIER_MAP.put(beanKeyStr, beanCopier);
@@ -161,7 +157,7 @@ public class RpasBeanUtils {
      */
     public static <T> List<T> copyToList(List<?> sources, Class<T> clazz) {
         if (sources == null) {
-            return null;
+            return Collections.emptyList();
         }
         List<T> targets = new ArrayList<>(sources.size());
         if (!sources.isEmpty()) {
@@ -183,7 +179,7 @@ public class RpasBeanUtils {
      */
     public static <T> List<T> copyToList(List<?> sources, Class<T> clazz, Converter converter) {
         if (sources == null) {
-            return null;
+            return Collections.emptyList();
         }
         List<T> targets = new ArrayList<>(sources.size());
         if (!sources.isEmpty()) {
@@ -223,7 +219,7 @@ public class RpasBeanUtils {
         }
         PageResponse<T> pageResponse = copy(sourcePageResponse, PageResponse.class);
         if (!sourcePageResponse.getList().isEmpty()) {
-            pageResponse.setList(RpasBeanUtils.copyToList(sourcePageResponse.getList(), clazz));
+            pageResponse.setList(RpamisBeanUtils.copyToList(sourcePageResponse.getList(), clazz));
         }
         return pageResponse;
     }

@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 初始化
+ *
  * @date 2022/12/10 23:18
  * @author benym
  */
@@ -32,7 +34,11 @@ public class InitConfig implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(InitConfig.class);
 
-    public static final Map<String, String> parentDirMap = new HashMap<>(32);
+    private static final Map<String, String> PARENT_DIR_MAP = new HashMap<>(32);
+
+    public static Map<String, String> getMap(){
+        return PARENT_DIR_MAP;
+    }
 
     private static void copyFtlToCacheDir() {
         try {
@@ -44,7 +50,7 @@ public class InitConfig implements CommandLineRunner {
                 String path = URLDecoder.decode(resource.getURL().getPath(), "UTF-8");
                 List<String> split = StrUtil.split(path, "/");
                 if (!split.isEmpty()) {
-                    InitConfig.parentDirMap.put(split.get(split.size() - 1), split.get(split.size() - 2));
+                    InitConfig.PARENT_DIR_MAP.put(split.get(split.size() - 1), split.get(split.size() - 2));
                 }
                 copy(filename);
             }
@@ -56,19 +62,18 @@ public class InitConfig implements CommandLineRunner {
 
     private static void copy(String ftlName) {
         try {
-            String ftlPath = ProjectPath.COPYTEMPLATES_PATH + InitConfig.parentDirMap.get(ftlName)
+            String ftlPath = ProjectPath.COPYTEMPLATES_PATH + InitConfig.PARENT_DIR_MAP.get(ftlName)
                     + File.separator + ftlName;
             String sourceTemplatesPath = "templates" + File.separator;
             //检查项目运行时的src下的对应路径
             File newFile = new File(ftlPath);
             //读取ftl复制一份到cache路径下
             ClassPathResource classPathResource = new ClassPathResource
-                    (sourceTemplatesPath + InitConfig.parentDirMap.get(ftlName) + File.separator + ftlName);
+                    (sourceTemplatesPath + InitConfig.PARENT_DIR_MAP.get(ftlName) + File.separator + ftlName);
             InputStream ftlStream = classPathResource.getInputStream();
             byte[] certData = IOUtils.toByteArray(ftlStream);
             FileUtils.writeByteArrayToFile(newFile, certData);
         } catch (IOException e) {
-            logger.error("复制ftl文件失败{}", JSONUtil.toJsonStr(e.getMessage()));
             throw ExceptionFactory.bizException("复制ftl文件失败", e);
         }
     }

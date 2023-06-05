@@ -8,36 +8,45 @@ import cn.rpamis.common.dto.enums.StatusCode;
  * @author benym
  * @date 2022/7/6 21:39
  */
-public class RpasException extends RuntimeException {
+public class RpamisException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 错误代码
+     */
     private String errCode;
 
+    /**
+     * 错误消息
+     */
     private String errMessage;
 
+    /**
+     * 详细信息
+     */
     private String detailMessage;
 
-    public RpasException() {
+    public RpamisException() {
         super();
     }
 
-    public RpasException(String errCode, String errMessage, String detailMessage) {
+    public RpamisException(String errCode, String errMessage, String detailMessage) {
         super(errMessage);
         this.errCode = errCode;
         this.errMessage = errMessage;
         this.detailMessage = detailMessage;
     }
 
-    public RpasException(String errCode, String errMessage) {
+    public RpamisException(String errCode, String errMessage) {
         this(errCode, errMessage, null);
     }
 
-    public RpasException(StatusCode statusCode) {
+    public RpamisException(StatusCode statusCode) {
         this(statusCode.getCode(), statusCode.getMessage(), null);
     }
 
-    public RpasException(StatusCode statusCode, String detailMessage) {
+    public RpamisException(StatusCode statusCode, String detailMessage) {
         this(statusCode.getCode(), statusCode.getMessage(), detailMessage);
     }
 

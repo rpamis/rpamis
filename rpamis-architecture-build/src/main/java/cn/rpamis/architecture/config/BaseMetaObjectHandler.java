@@ -7,6 +7,8 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 /**
+ * Mbp全局填充策略
+ *
  * @author benym
  */
 @Component

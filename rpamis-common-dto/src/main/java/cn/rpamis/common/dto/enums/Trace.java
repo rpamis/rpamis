@@ -1,6 +1,8 @@
 package cn.rpamis.common.dto.enums;
 
 /**
+ * Trace实体
+ *
  * @author benym
  * @date 2022/7/10 20:37
  */

@@ -1,6 +1,8 @@
 package cn.rpamis.architecture.consts;
 
 /**
+ * 项目Key
+ *
  * @author benym
  * @date 2022/7/25 5:00 下午
  */

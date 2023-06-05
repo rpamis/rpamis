@@ -1,6 +1,6 @@
 package cn.rpamis.architecture.template;
 
-import cn.rpamis.architecture.consts.TemplateType;
+import cn.rpamis.architecture.consts.TemplateTypeEnum;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +23,15 @@ import java.util.stream.Collectors;
  * @date 2022/7/21 10:53 上午
  */
 @Component
-public class TemplateFactory implements InitializingBean, ApplicationContextAware {
+public class TemplateFactory implements InitializingBean {
 
     @Autowired
     private ApplicationContext applicationContext;
 
     private Map<String, AbstractBuildTemplate> templateMap;
 
-    public AbstractBuildTemplate getTemplate(TemplateType templateType) {
-        return templateMap.get(templateType.getCode());
+    public AbstractBuildTemplate getTemplate(TemplateTypeEnum templateTypeEnum) {
+        return templateMap.get(templateTypeEnum.getCode());
     }
 
     @Override
@@ -42,10 +42,5 @@ public class TemplateFactory implements InitializingBean, ApplicationContextAwar
                         .filter(template -> !StringUtils.isEmpty(template.getTemplateType()))
                         .collect(Collectors.toMap(AbstractBuildTemplate::getTemplateType, Function.identity())))
                 .orElse(new HashMap<>(8));
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
     }
 }

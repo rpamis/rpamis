@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.rpamis.architecture.config.InitConfig;
 import cn.rpamis.architecture.consts.ProjectTemplate;
-import cn.rpamis.architecture.consts.TemplateType;
+import cn.rpamis.architecture.consts.TemplateTypeEnum;
 import cn.rpamis.architecture.pojo.FileVO;
 import cn.rpamis.architecture.utils.StringUtils;
 import cn.rpamis.architecture.consts.ProjectKey;
@@ -26,7 +26,7 @@ public class MultiMouduleTemplate extends AbstractBuildTemplate {
 
     @Override
     protected String getTemplateType() {
-        return TemplateType.MULTI_MOUDULE.getCode();
+        return TemplateTypeEnum.MULTI_MOUDULE.getCode();
     }
 
     @Override
@@ -166,9 +166,9 @@ public class MultiMouduleTemplate extends AbstractBuildTemplate {
                         // 获取模板文件全称
                         String[] split = ftlFileName.split("#");
                         // 获取模板文件相对templates文件夹的位置，包括父路径，比如/application/xxx.ftl
-                        String ftlFilePath = File.separator + InitConfig.parentDirMap.get(ftlFileName) + File.separator + ftlFileName;
+                        String ftlFilePath = File.separator + InitConfig.getMap().get(ftlFileName) + File.separator + ftlFileName;
                         String mainName = "";
-                        if (InitConfig.parentDirMap.get(ftlFileName).equals("application")) {
+                        if (InitConfig.getMap().get(ftlFileName).equals("application")) {
                             mainName = StringUtils.getMainName(rpasConfig.getProject().getArtifactId());
                             rpasConfig.getProject().setMainName(mainName);
                         }

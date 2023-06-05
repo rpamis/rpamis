@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Feign TraceId Interceptor
+ *
  * @author benym
  * @date 2022/7/10 22:00
  */

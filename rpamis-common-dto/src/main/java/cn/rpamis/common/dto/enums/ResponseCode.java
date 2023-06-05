@@ -1,6 +1,8 @@
 package cn.rpamis.common.dto.enums;
 
 /**
+ * 状态码枚举类
+ *
  * @author benym
  * @date 2022/7/6 21:18
  */

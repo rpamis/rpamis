@@ -32,18 +32,11 @@ public class PageResponse<T> {
     }
 
     public int getPageIndex() {
-        if (pageIndex < 1) {
-            return 1;
-        }
-        return pageIndex;
+        return Math.max(pageIndex, 1);
     }
 
     public void setPageIndex(int pageIndex) {
-        if (pageIndex < 1) {
-            this.pageIndex = 1;
-        } else {
-            this.pageIndex = pageIndex;
-        }
+        this.pageIndex = Math.max(pageIndex, 1);
     }
 
     public int getPageSize() {

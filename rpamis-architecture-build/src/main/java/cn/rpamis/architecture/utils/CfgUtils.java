@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * freemarker Configuration工具类
+ *
  * @author benym
  * @date 2022/9/2 10:25
  */

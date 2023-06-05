@@ -26,8 +26,10 @@ public class TraceRequestWrapper extends HttpServletRequestWrapper {
 
     private final Map<String, String> headers;
 
-    // 用于存储post参数
-    // 避免HttpServletRequest的getInputStream()和getReader()因为只能读取一次，造成异常
+    /**
+     * 用于存储post参数
+     * 避免HttpServletRequest的getInputStream()和getReader()因为只能读取一次，造成异常
+     */
     private final byte[] postData;
 
     /**
