@@ -19,9 +19,9 @@ import java.util.UUID;
  * @date 2022/7/8 4:04 下午
  */
 @Component
-public class TraceIdUtils {
+public class TraceIdUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(TraceIdUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(TraceIdUtil.class);
 
     public static final ThreadLocal<Trace> CURRENT_TRACE = new NamedThreadLocal<>("Trace-ThreadLocal");
 
@@ -45,7 +45,7 @@ public class TraceIdUtils {
                 // 如果traceId为空，则同步生成spanId
                 if (traceId == null) {
                     traceId = UUID.randomUUID().toString();
-                    spanId = String.valueOf(SnowflakeUtils.get().next());
+                    spanId = String.valueOf(SnowflakeUtil.get().next());
                     MDC.put(Trace.TRACE_ID, traceId);
                     MDC.put(Trace.SPAN_ID, spanId);
                 }
@@ -53,7 +53,7 @@ public class TraceIdUtils {
                 trace.setSpanId(spanId);
             } else {
                 // 如果traceId不变，请求的spanId不一样，需要重新生成
-                trace.setSpanId(String.valueOf(SnowflakeUtils.get().next()));
+                trace.setSpanId(String.valueOf(SnowflakeUtil.get().next()));
                 MDC.put(Trace.SPAN_ID, trace.getSpanId());
             }
             CURRENT_TRACE.set(trace);
@@ -69,7 +69,7 @@ public class TraceIdUtils {
         }
         Trace trace = new Trace();
         trace.setTraceId(traceId);
-        trace.setSpanId(String.valueOf(SnowflakeUtils.get().next()));
+        trace.setSpanId(String.valueOf(SnowflakeUtil.get().next()));
         MDC.put(Trace.TRACE_ID, trace.getTraceId());
         MDC.put(Trace.SPAN_ID, trace.getSpanId());
         CURRENT_TRACE.set(trace);

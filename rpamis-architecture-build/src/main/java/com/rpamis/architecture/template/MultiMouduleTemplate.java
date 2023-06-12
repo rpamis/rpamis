@@ -9,7 +9,7 @@ import com.rpamis.architecture.pojo.FileVO;
 import com.rpamis.architecture.utils.StringUtils;
 import com.rpamis.architecture.consts.ProjectKey;
 import com.rpamis.architecture.consts.ProjectPath;
-import com.rpamis.common.utils.SnowflakeUtils;
+import com.rpamis.common.utils.SnowflakeUtil;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -31,7 +31,7 @@ public class MultiMouduleTemplate extends AbstractBuildTemplate {
 
     @Override
     protected void initPath() {
-        buildId = String.valueOf(SnowflakeUtils.get().next());
+        buildId = String.valueOf(SnowflakeUtil.get().next());
         String artifactId = rpasConfig.getProject().getArtifactId();
         String apiMoudule = artifactId + "-api";
         String daoMoudule = artifactId + "-dao";

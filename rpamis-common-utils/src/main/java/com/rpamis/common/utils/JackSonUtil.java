@@ -12,9 +12,9 @@ import java.util.Map;
  * @author benym
  * @date 2022/8/23 10:40
  */
-public class JackSonUtils {
+public class JackSonUtil {
 
-    private JackSonUtils() {
+    private JackSonUtil() {
         throw new IllegalStateException("工具类，禁止实例化");
     }
 

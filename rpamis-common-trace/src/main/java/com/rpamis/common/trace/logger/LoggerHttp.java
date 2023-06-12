@@ -3,7 +3,7 @@ package com.rpamis.common.trace.logger;
 import com.rpamis.common.trace.core.TraceRequestWrapper;
 import com.rpamis.common.trace.core.TraceResponseWrapper;
 import com.rpamis.common.dto.request.RequestLog;
-import com.rpamis.common.utils.JackSonUtils;
+import com.rpamis.common.utils.JackSonUtil;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.constraints.NotNull;
@@ -42,7 +42,7 @@ public class LoggerHttp {
         requestLog.setStatus(traceResponseWrapper.getStatus());
         Optional<String> contentType = Optional.ofNullable(traceResponseWrapper.getContentType());
         if (contentType.isPresent() && "application/json".equals(contentType.get())) {
-            requestLog.setResponse(JackSonUtils.toMap(
+            requestLog.setResponse(JackSonUtil.toMap(
                     new String(traceResponseWrapper.getContentAsByteArray())));
         }
         traceResponseWrapper.copyBodyToResponse();
@@ -51,6 +51,6 @@ public class LoggerHttp {
     }
 
     public static Map<Object, Object> getPostData(TraceRequestWrapper traceRequestWrapper) {
-        return JackSonUtils.toMap(traceRequestWrapper.getPostData());
+        return JackSonUtil.toMap(traceRequestWrapper.getPostData());
     }
 }

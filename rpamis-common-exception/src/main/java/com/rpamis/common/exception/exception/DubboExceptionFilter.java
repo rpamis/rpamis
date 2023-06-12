@@ -6,7 +6,7 @@ import com.rpamis.common.dto.enums.Trace;
 import com.rpamis.common.dto.exception.*;
 import com.rpamis.common.dto.response.Response;
 import com.rpamis.common.exception.autoconfigure.ExceptionProperties;
-import com.rpamis.common.utils.TraceIdUtils;
+import com.rpamis.common.utils.TraceIdUtil;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.Logger;
@@ -39,10 +39,10 @@ public class DubboExceptionFilter implements Filter {
 
     private ExceptionProperties exceptionProperties;
 
-    private TraceIdUtils traceIdUtils;
+    private TraceIdUtil traceIdUtil;
 
-    public void setTraceIdUtils(TraceIdUtils traceIdUtils) {
-        this.traceIdUtils = traceIdUtils;
+    public void setTraceIdUtil(TraceIdUtil traceIdUtil) {
+        this.traceIdUtil = traceIdUtil;
     }
 
     public void setExceptionProperties(ExceptionProperties exceptionProperties) {
@@ -64,7 +64,7 @@ public class DubboExceptionFilter implements Filter {
      */
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        final Trace trace = traceIdUtils.getTrace();
+        final Trace trace = traceIdUtil.getTrace();
         String params = JSONUtil.toJsonStr(invocation.getArguments());
         logger.info("Global dubbo exception filter, requestId:{}, spanId:{}, interface:{}, methodName:{}, params:{}",
                 trace.getTraceId(), trace.getSpanId(), invoker.getInterface(), invocation.getMethodName(), params);
@@ -95,7 +95,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(ValidException.class)
     public Object handleValidException(ValidException exception) {
-        final Trace trace = traceIdUtils.getTrace();
+        final Trace trace = traceIdUtil.getTrace();
         logger.warn("catch dubbo validExpcetion, requestId:{}, spanId:{}, exception is:",
                 trace.getTraceId(), trace.getSpanId(), exception);
         Optional<ValidException> opValid = Optional.ofNullable(exception);
@@ -108,7 +108,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(BizException.class)
     public Object handleBizException(BizException exception) {
-        final Trace trace = traceIdUtils.getTrace();
+        final Trace trace = traceIdUtil.getTrace();
         logger.warn("catch dubbo bizExpcetion, requestId:{}, spanId:{}, exception is:",
                 trace.getTraceId(), trace.getSpanId(), exception);
         Optional<BizException> opBiz = Optional.ofNullable(exception);
@@ -121,7 +121,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(BizNoStackException.class)
     public Object handleBizNoStackException(BizNoStackException exception) {
-        final Trace trace = traceIdUtils.getTrace();
+        final Trace trace = traceIdUtil.getTrace();
         logger.warn("catch dubbo bizNoStackException, requestId:{}, spanId:{}, exception is:",
                 trace.getTraceId(), trace.getSpanId(), exception);
         Optional<BizNoStackException> opValid = Optional.ofNullable(exception);
@@ -134,7 +134,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(SysException.class)
     public Object handleSysException(SysException exception) {
-        final Trace trace = traceIdUtils.getTrace();
+        final Trace trace = traceIdUtil.getTrace();
         logger.error("catch dubbo sysExpcetion, requestId:{}, spanId:{}, exception is:",
                 trace.getTraceId(), trace.getSpanId(), exception);
         Optional<SysException> opSys = Optional.ofNullable(exception);
@@ -147,7 +147,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(RpamisException.class)
     public Object handleRpasException(RpamisException exception) {
-        final Trace trace = traceIdUtils.getTrace();
+        final Trace trace = traceIdUtil.getTrace();
         logger.error("catch dubbo rpasExpcetion, requestId:{}, spanId:{}, exception is:",
                 trace.getTraceId(), trace.getSpanId(), exception);
         Optional<RpamisException> opRpas = Optional.ofNullable(exception);
@@ -160,7 +160,7 @@ public class DubboExceptionFilter implements Filter {
 
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception exception) {
-        final Trace trace = traceIdUtils.getTrace();
+        final Trace trace = traceIdUtil.getTrace();
         logger.error("catch dubbo unknown Expcetion, requestId:{}, spanId:{}, exception is:",
                 trace.getTraceId(), trace.getSpanId(), exception);
         Optional<Exception> opExcetion = Optional.ofNullable(exception);

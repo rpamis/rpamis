@@ -1,7 +1,5 @@
 package com.rpamis.common.utils;
 
-import cn.hutool.core.io.FileUtil;
-
 import java.io.File;
 
 /**
@@ -10,7 +8,7 @@ import java.io.File;
  * @author benym
  * @date 2023/6/2 18:00
  */
-public class FileUtils {
+public class FileUtil {
 
     /**
      * 生成gitkeep文件占位
@@ -28,9 +26,9 @@ public class FileUtils {
      * @param directory directory
      */
     public static void generateGitKeepFilesRecursively(File directory) {
-        if (directory.isDirectory() && FileUtil.isEmpty(directory)) {
+        if (directory.isDirectory() && cn.hutool.core.io.FileUtil.isEmpty(directory)) {
             String gitKeepFilePath = new File(directory, ".gitkeep").getAbsolutePath();
-            FileUtil.touch(gitKeepFilePath);
+            cn.hutool.core.io.FileUtil.touch(gitKeepFilePath);
         } else if (directory.isDirectory()) {
             File[] files = directory.listFiles();
             if (files != null) {

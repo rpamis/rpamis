@@ -1,7 +1,7 @@
 package com.rpamis.common.trace.core;
 
 import com.rpamis.common.dto.enums.Trace;
-import com.rpamis.common.utils.SnowflakeUtils;
+import com.rpamis.common.utils.SnowflakeUtil;
 import org.slf4j.MDC;
 import org.springframework.core.task.TaskDecorator;
 
@@ -24,7 +24,7 @@ public class TraceDecorator implements TaskDecorator {
         return () -> {
             try {
                 MDC.setContextMap(contextMap);
-                MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtils.get().next()));
+                MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtil.get().next()));
                 runnable.run();
             } finally {
                 MDC.clear();

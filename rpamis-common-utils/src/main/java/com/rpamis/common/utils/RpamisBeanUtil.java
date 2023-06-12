@@ -21,14 +21,14 @@ import java.util.stream.Collectors;
  * @author benym
  * @date 2022/7/7 21:56
  */
-public class RpamisBeanUtils {
+public class RpamisBeanUtil {
 
     /**
      * 享元模式
      */
     private static final Map<String, BeanCopier> BENCOPIER_MAP = new ConcurrentReferenceHashMap<>();
 
-    private RpamisBeanUtils() {
+    private RpamisBeanUtil() {
         throw new IllegalStateException("工具类，禁止实例化");
     }
 
@@ -43,7 +43,7 @@ public class RpamisBeanUtils {
         BeanCopier beanCopier;
         String beanKeyStr = String.valueOf(sourceClass) + targetClass;
         if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
-            synchronized (RpamisBeanUtils.class) {
+            synchronized (RpamisBeanUtil.class) {
                 if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
                     beanCopier = BeanCopier.create(sourceClass, targetClass, false);
                     BENCOPIER_MAP.put(beanKeyStr, beanCopier);
@@ -68,7 +68,7 @@ public class RpamisBeanUtils {
         BeanCopier beanCopier;
         String beanKeyStr = String.valueOf(sourceClass) + targetClass + converter.toString();
         if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
-            synchronized (RpamisBeanUtils.class) {
+            synchronized (RpamisBeanUtil.class) {
                 if (!BENCOPIER_MAP.containsKey(beanKeyStr)) {
                     beanCopier = BeanCopier.create(sourceClass, targetClass, true);
                     BENCOPIER_MAP.put(beanKeyStr, beanCopier);
@@ -219,7 +219,7 @@ public class RpamisBeanUtils {
         }
         PageResponse<T> pageResponse = copy(sourcePageResponse, PageResponse.class);
         if (!sourcePageResponse.getList().isEmpty()) {
-            pageResponse.setList(RpamisBeanUtils.copyToList(sourcePageResponse.getList(), clazz));
+            pageResponse.setList(RpamisBeanUtil.copyToList(sourcePageResponse.getList(), clazz));
         }
         return pageResponse;
     }

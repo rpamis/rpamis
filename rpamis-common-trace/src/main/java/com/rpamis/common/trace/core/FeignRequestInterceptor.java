@@ -1,7 +1,7 @@
 package com.rpamis.common.trace.core;
 
 import com.rpamis.common.dto.enums.Trace;
-import com.rpamis.common.utils.TraceIdUtils;
+import com.rpamis.common.utils.TraceIdUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(FeignRequestInterceptor.class);
 
     @Autowired
-    private TraceIdUtils traceIdUtils;
+    private TraceIdUtil traceIdUtil;
 
     /**
      * 为远程调用增加traceId
@@ -34,7 +34,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         if (traceId != null) {
             requestTemplate.header(Trace.TRACE_ID, traceId);
         } else {
-            requestTemplate.header(Trace.TRACE_ID, traceIdUtils.getTrace().getTraceId());
+            requestTemplate.header(Trace.TRACE_ID, traceIdUtil.getTrace().getTraceId());
         }
     }
 }

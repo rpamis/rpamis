@@ -5,8 +5,8 @@ import com.rpamis.common.trace.logger.LoggerHttp;
 import com.rpamis.common.dto.enums.Trace;
 import com.rpamis.common.dto.exception.ExceptionFactory;
 import com.rpamis.common.dto.request.RequestLog;
-import com.rpamis.common.utils.SnowflakeUtils;
-import com.rpamis.common.utils.TraceIdUtils;
+import com.rpamis.common.utils.SnowflakeUtil;
+import com.rpamis.common.utils.TraceIdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -40,7 +40,7 @@ public class TraceFilter implements Filter {
     private boolean traceLogActivate;
 
     @Autowired
-    private TraceIdUtils traceIdUtils;
+    private TraceIdUtil traceIdUtil;
 
     public TraceFilter() {
         // 空实例化
@@ -51,7 +51,7 @@ public class TraceFilter implements Filter {
             throws IOException, ServletException {
         StopWatch stopWatch = new StopWatch("Http Trace");
         stopWatch.start();
-        Trace trace = traceIdUtils.getTrace();
+        Trace trace = traceIdUtil.getTrace();
         TraceRequestWrapper traceRequestWrapper;
         RequestLog requestLog = null;
         TraceResponseWrapper traceResponseWrapper = new TraceResponseWrapper((HttpServletResponse) response);
@@ -65,7 +65,7 @@ public class TraceFilter implements Filter {
             traceRequestWrapper.putHeader(Trace.SPAN_ID, trace.getSpanId());
             chain.doFilter(traceRequestWrapper, traceResponseWrapper);
             // doFilter之后表示当前请求结束，下一次属于另外一个Span
-            MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtils.get().next()));
+            MDC.put(Trace.SPAN_ID, String.valueOf(SnowflakeUtil.get().next()));
             stopWatch.stop();
             if (traceLogActivate) {
                 // 更新出参信息
@@ -81,7 +81,7 @@ public class TraceFilter implements Filter {
             throw ExceptionFactory.sysException("traceId Filter unkonwn exception", e);
         } finally {
             // 请求完成之后同步清理traceId
-            TraceIdUtils.clearTrace();
+            TraceIdUtil.clearTrace();
         }
     }
 }

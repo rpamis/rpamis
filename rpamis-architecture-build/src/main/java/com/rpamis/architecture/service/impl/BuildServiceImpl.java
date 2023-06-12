@@ -1,6 +1,5 @@
 package com.rpamis.architecture.service.impl;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.rpamis.architecture.config.BaseProjectConfig;
 import com.rpamis.architecture.consts.ProjectPath;
@@ -10,7 +9,7 @@ import com.rpamis.architecture.template.AbstractBuildTemplate;
 import com.rpamis.architecture.template.TemplateFactory;
 import com.rpamis.architecture.utils.CfgUtils;
 import com.rpamis.common.dto.exception.ExceptionFactory;
-import com.rpamis.common.utils.FileUtils;
+import com.rpamis.common.utils.FileUtil;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,9 +79,9 @@ public class BuildServiceImpl implements BuildService {
         String genProjectPath =
                 ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + File.separator;
         String saveZipPath = ProjectPath.CACHETEMP_PATH + buildId + File.separator + artifactId + ".zip";
-        FileUtils.generateGitKeepFiles(genProjectPath);
+        FileUtil.generateGitKeepFiles(genProjectPath);
         ZipUtil.zip(genProjectPath, saveZipPath);
-        FileUtil.del(genProjectPath);
+        cn.hutool.core.io.FileUtil.del(genProjectPath);
         return saveZipPath;
     }
 
@@ -93,7 +92,7 @@ public class BuildServiceImpl implements BuildService {
                 .requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
         synchronized (this) {
             try {
-                List<String> list = FileUtil.listFileNames(ProjectPath.CACHETEMP_PATH + id);
+                List<String> list = cn.hutool.core.io.FileUtil.listFileNames(ProjectPath.CACHETEMP_PATH + id);
                 if (list.isEmpty()) {
                     throw ExceptionFactory.bizNoStackException("CACHE list为空");
                 }
@@ -107,7 +106,7 @@ public class BuildServiceImpl implements BuildService {
                 response.addHeader("Content-Disposition",
                         "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
                 String filePath = ProjectPath.CACHETEMP_PATH + id + File.separator + fileName;
-                outputStream.write(FileUtil.readBytes(filePath));
+                outputStream.write(cn.hutool.core.io.FileUtil.readBytes(filePath));
                 outputStream.flush();
             } catch (IOException e) {
                 throw ExceptionFactory.bizException("打包文件异常", e);
