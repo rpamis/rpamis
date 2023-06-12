@@ -79,6 +79,11 @@
             <artifactId>jackson-annotations</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
+        </dependency>
     </dependencies>
 
 </project>
