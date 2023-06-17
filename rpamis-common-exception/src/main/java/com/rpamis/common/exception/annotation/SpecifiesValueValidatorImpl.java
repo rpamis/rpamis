@@ -45,7 +45,7 @@ public class SpecifiesValueValidatorImpl implements ConstraintValidator<Specifie
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         try {
-            if (null == value) {
+            if (null == value || "".equals(value)) {
                 return true;
             }
             if (enumClass.isEnum()) {
