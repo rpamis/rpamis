@@ -5,7 +5,7 @@ import com.rpamis.common.dto.enums.ResponseCode;
 import com.rpamis.common.dto.enums.Trace;
 import com.rpamis.common.dto.exception.*;
 import com.rpamis.common.dto.response.Response;
-import com.rpamis.common.exception.autoconfigure.ExceptionProperties;
+import com.rpamis.common.exception.properties.ExceptionProperties;
 import com.rpamis.common.utils.TraceIdUtil;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;

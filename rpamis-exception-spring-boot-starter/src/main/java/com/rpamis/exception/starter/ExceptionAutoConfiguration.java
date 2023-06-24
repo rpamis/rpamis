@@ -1,7 +1,8 @@
-package com.rpamis.common.exception.autoconfigure;
+package com.rpamis.exception.starter;
 
 import com.rpamis.common.exception.exception.ExceptionBaseHandler;
 import com.rpamis.common.exception.exception.ExceptionErrorHandler;
+import com.rpamis.common.exception.properties.ExceptionProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

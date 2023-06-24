@@ -1,4 +1,4 @@
-package com.rpamis.common.exception.autoconfigure;
+package com.rpamis.common.exception.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.rpamis.common.exception.properties.ExceptionProperties,\
+  com.rpamis.exception.starter.ExceptionAutoConfiguration
