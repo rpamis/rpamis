@@ -8,17 +8,17 @@ package com.rpamis.common.utils;
  */
 public interface CachableEnum<C, D> {
 
-    /**
-     * 获取Code
-     *
-     * @return {@link Object}
-     */
-    C getCode();
+  /**
+   * 获取Code
+   *
+   * @return {@link Object}
+   */
+  C getCode();
 
-    /**
-     * 获取Desc
-     *
-     * @return {@link Object}
-     */
-    D getDesc();
+  /**
+   * 获取Desc
+   *
+   * @return {@link Object}
+   */
+  D getDesc();
 }

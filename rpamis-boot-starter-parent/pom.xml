@@ -64,6 +64,7 @@
     <lombok.version>1.18.12</lombok.version>
     <hutool.version>5.8.4</hutool.version>
     <swagger.version>2.6.1</swagger.version>
+    <reflections.version>0.10.2</reflections.version>
     <!-- 自研组件 -->
     <rpamis-common-dto.version>1.0.0</rpamis-common-dto.version>
     <rpamis-common-exception.version>1.0.0</rpamis-common-exception.version>

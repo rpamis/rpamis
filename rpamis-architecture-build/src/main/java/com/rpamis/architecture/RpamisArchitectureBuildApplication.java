@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @author benym
  */
-@ComponentScan(value = "cn.rpamis")
+@ComponentScan(value = "com.rpamis")
 @SpringBootApplication
 public class RpamisArchitectureBuildApplication {
 

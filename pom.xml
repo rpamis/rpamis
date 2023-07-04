@@ -16,6 +16,7 @@
     <module>rpamis-architecture-build</module>
     <module>rpamis-common-utils</module>
     <module>rpamis-exception-spring-boot-starter</module>
+    <module>rpamis-enum-spring-boot-starter</module>
   </modules>
 
   <properties>
