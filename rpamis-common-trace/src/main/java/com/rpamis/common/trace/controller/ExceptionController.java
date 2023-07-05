@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 public class ExceptionController {
-    @RequestMapping("/filterError")
-    public void throwFilterError(HttpServletRequest request) throws Exception {
-        throw ((Exception) request.getAttribute("filter error"));
-    }
+
+  @RequestMapping("/filterError")
+  public void throwFilterError(HttpServletRequest request) throws Exception {
+    throw ((Exception) request.getAttribute("filter error"));
+  }
 }

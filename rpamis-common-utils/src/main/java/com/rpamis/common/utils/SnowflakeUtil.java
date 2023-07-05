@@ -10,20 +10,20 @@ import cn.hutool.core.lang.generator.SnowflakeGenerator;
  */
 public class SnowflakeUtil {
 
-    private SnowflakeUtil() {
-        throw new IllegalStateException("工具类，禁止实例化");
-    }
+  private SnowflakeUtil() {
+    throw new IllegalStateException("工具类，禁止实例化");
+  }
 
-    private static volatile SnowflakeGenerator snowflakeGenerator;
+  private static volatile SnowflakeGenerator snowflakeGenerator;
 
-    public static SnowflakeGenerator get() {
+  public static SnowflakeGenerator get() {
+    if (snowflakeGenerator == null) {
+      synchronized (SnowflakeGenerator.class) {
         if (snowflakeGenerator == null) {
-            synchronized (SnowflakeGenerator.class) {
-                if (snowflakeGenerator == null) {
-                    snowflakeGenerator = new SnowflakeGenerator();
-                }
-            }
+          snowflakeGenerator = new SnowflakeGenerator();
         }
-        return snowflakeGenerator;
+      }
     }
+    return snowflakeGenerator;
+  }
 }

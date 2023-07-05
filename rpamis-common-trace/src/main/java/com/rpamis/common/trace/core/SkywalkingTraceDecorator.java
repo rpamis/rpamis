@@ -12,12 +12,12 @@ import org.springframework.core.task.TaskDecorator;
  */
 public class SkywalkingTraceDecorator implements TaskDecorator {
 
-    @Override
-    public Runnable decorate(Runnable runnable) {
-        try {
-            return RunnableWrapper.of(runnable);
-        } catch (Exception e) {
-            throw ExceptionFactory.sysException("skywalking decorator exception", e);
-        }
+  @Override
+  public Runnable decorate(Runnable runnable) {
+    try {
+      return RunnableWrapper.of(runnable);
+    } catch (Exception e) {
+      throw ExceptionFactory.sysException("skywalking decorator exception", e);
     }
+  }
 }

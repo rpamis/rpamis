@@ -11,47 +11,47 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(ExceptionProperties.PREFIX)
 public class ExceptionProperties {
 
-    /**
-     * 前缀
-     */
-    public static final String PREFIX = "rpamis.exception";
+  /**
+   * 前缀
+   */
+  public static final String PREFIX = "rpamis.exception";
 
-    /**
-     * 是否开启全局Web异常
-     */
-    private String enable = "true";
+  /**
+   * 是否开启全局Web异常
+   */
+  private String enable = "true";
 
-    /**
-     * 是否开启全局RPC统一返回体
-     */
-    private Boolean rpcPack = true;
+  /**
+   * 是否开启全局RPC统一返回体
+   */
+  private Boolean rpcPack = true;
 
-    /**
-     * 是否开启Exception.class捕获
-     */
-    private Boolean includeExceptionClass = true;
+  /**
+   * 是否开启Exception.class捕获
+   */
+  private Boolean includeExceptionClass = true;
 
-    public String getEnable() {
-        return enable;
-    }
+  public String getEnable() {
+    return enable;
+  }
 
-    public void setEnable(String enable) {
-        this.enable = enable;
-    }
+  public void setEnable(String enable) {
+    this.enable = enable;
+  }
 
-    public Boolean getRpcPack() {
-        return rpcPack;
-    }
+  public Boolean getRpcPack() {
+    return rpcPack;
+  }
 
-    public void setRpcPack(Boolean rpcPack) {
-        this.rpcPack = rpcPack;
-    }
+  public void setRpcPack(Boolean rpcPack) {
+    this.rpcPack = rpcPack;
+  }
 
-    public Boolean getIncludeExceptionClass() {
-        return includeExceptionClass;
-    }
+  public Boolean getIncludeExceptionClass() {
+    return includeExceptionClass;
+  }
 
-    public void setIncludeExceptionClass(Boolean includeExceptionClass) {
-        this.includeExceptionClass = includeExceptionClass;
-    }
+  public void setIncludeExceptionClass(Boolean includeExceptionClass) {
+    this.includeExceptionClass = includeExceptionClass;
+  }
 }

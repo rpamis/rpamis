@@ -11,19 +11,19 @@ import com.rpamis.common.dto.enums.StatusCode;
  */
 public class ValidException extends AbstractException {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private static final ResponseCode DEFAULT_VALID_ERRCODE = ResponseCode.VALID_EXCEPTION_CODE;
+  private static final ResponseCode DEFAULT_VALID_ERRCODE = ResponseCode.VALID_EXCEPTION_CODE;
 
-    public ValidException(String errMessage) {
-        super(DEFAULT_VALID_ERRCODE.getCode(), errMessage);
-    }
+  public ValidException(String errMessage) {
+    super(DEFAULT_VALID_ERRCODE.getCode(), errMessage);
+  }
 
-    public ValidException(String errCode, String errMessage) {
-        super(errCode, errMessage);
-    }
+  public ValidException(String errCode, String errMessage) {
+    super(errCode, errMessage);
+  }
 
-    public ValidException(StatusCode statusCode) {
-        super(statusCode.getCode(), statusCode.getMessage());
-    }
+  public ValidException(StatusCode statusCode) {
+    super(statusCode.getCode(), statusCode.getMessage());
+  }
 }

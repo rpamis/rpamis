@@ -18,14 +18,15 @@ import java.io.IOException;
 @WebFilter(filterName = "exceptionFilter", urlPatterns = {"/*"})
 @Component
 public class ExceptionFilter implements Filter {
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        try {
-            chain.doFilter(request, response);
-        } catch (Exception e) {
-            request.setAttribute("filter error", e);
-            request.getRequestDispatcher("/filterError").forward(request, response);
-        }
+
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    try {
+      chain.doFilter(request, response);
+    } catch (Exception e) {
+      request.setAttribute("filter error", e);
+      request.getRequestDispatcher("/filterError").forward(request, response);
     }
+  }
 }

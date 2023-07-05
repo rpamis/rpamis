@@ -1,9 +1,9 @@
 package com.rpamis.common.exception.exception;
 
 import com.rpamis.common.dto.enums.ResponseCode;
-import com.rpamis.common.dto.enums.Trace;
+import com.rpamis.common.dto.trace.Trace;
 import com.rpamis.common.dto.response.Response;
-import com.rpamis.common.utils.TraceIdUtil;
+import com.rpamis.common.trace.toolkit.utils.TraceIdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -27,16 +27,18 @@ import javax.annotation.Resource;
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
 public class ExceptionBaseHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionBaseHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(ExceptionBaseHandler.class);
 
-    @Resource
-    private TraceIdUtil traceIdUtil;
+  @Resource
+  private TraceIdUtil traceIdUtil;
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response<Object>> handleException(Exception exception) {
-        final Trace trace = traceIdUtil.getTrace();
-        logger.error("请求ID:{}, SpanId:{}, 未知异常:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), exception.getMessage(), exception);
-        final Response<Object> failResponse = Response.fail(ResponseCode.UNKNOWN_EXCEPTION_CODE, exception.getMessage());
-        return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<Response<Object>> handleException(Exception exception) {
+    final Trace trace = traceIdUtil.getTrace();
+    logger.error("请求ID:{}, SpanId:{}, 未知异常:{}, 详细信息:", trace.getTraceId(),
+        trace.getSpanId(), exception.getMessage(), exception);
+    final Response<Object> failResponse = Response.fail(ResponseCode.UNKNOWN_EXCEPTION_CODE,
+        exception.getMessage());
+    return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 }

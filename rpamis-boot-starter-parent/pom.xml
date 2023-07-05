@@ -70,6 +70,7 @@
     <rpamis-common-exception.version>1.0.0</rpamis-common-exception.version>
     <rpamis-common-utils.version>1.0.0</rpamis-common-utils.version>
     <rpamis-common-trace.version>1.0.0</rpamis-common-trace.version>
+    <rpamis-common-trace-toolkit.version>1.0.0</rpamis-common-trace-toolkit.version>
 
   </properties>
 
@@ -304,6 +305,11 @@
         <groupId>com.rpamis</groupId>
         <artifactId>rpamis-common-trace</artifactId>
         <version>${rpamis-common-trace.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-common-trace-toolkit</artifactId>
+        <version>${rpamis-common-trace-toolkit.version}</version>
       </dependency>
 
     </dependencies>

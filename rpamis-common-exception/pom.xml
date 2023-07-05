@@ -56,6 +56,11 @@
       <artifactId>dubbo-spring-boot-starter</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>com.rpamis</groupId>
+      <artifactId>rpamis-common-trace-toolkit</artifactId>
+      <version>${rpamis-common-trace-toolkit.version}</version>
+    </dependency>
   </dependencies>
 
 </project>

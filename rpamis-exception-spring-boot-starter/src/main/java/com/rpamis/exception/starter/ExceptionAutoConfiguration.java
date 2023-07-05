@@ -21,38 +21,37 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(prefix = ExceptionProperties.PREFIX, value = "enable", havingValue = "true")
 public class ExceptionAutoConfiguration {
 
-    /**
-     * 仅当@ConditionalOnProperty条件生效时注入
-     *
-     * @return ExceptionErrorHandler
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public ExceptionErrorHandler enableException() {
-        return new ExceptionErrorHandler();
-    }
+  /**
+   * 仅当@ConditionalOnProperty条件生效时注入
+   *
+   * @return ExceptionErrorHandler
+   */
+  @Bean
+  @ConditionalOnMissingBean
+  public ExceptionErrorHandler enableException() {
+    return new ExceptionErrorHandler();
+  }
 
-    /**
-     * 根据yml条件注入Exception.class的异常捕获
-     *
-     * @return ExceptionBaseHandler
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnExpression("${rpamis.exception.include-exception-class:true}")
-    public ExceptionBaseHandler enableBaseException() {
-        return new ExceptionBaseHandler();
-    }
+  /**
+   * 根据yml条件注入Exception.class的异常捕获
+   *
+   * @return ExceptionBaseHandler
+   */
+  @Bean
+  @ConditionalOnMissingBean
+  @ConditionalOnExpression("${rpamis.exception.include-exception-class:true}")
+  public ExceptionBaseHandler enableBaseException() {
+    return new ExceptionBaseHandler();
+  }
 
-    /**
-     * 当yml配置情况下注入这个类，仅提供给dubbo filter使用
-     * Bean name需和dubbo filter中该变量名一致，否则set注入失效
-     *
-     * @return ExceptionProperties
-     */
-    @Bean(name = "exceptionProperties")
-    @ConditionalOnMissingBean
-    public ExceptionProperties enableProperties() {
-        return new ExceptionProperties();
-    }
+  /**
+   * 当yml配置情况下注入这个类，仅提供给dubbo filter使用 Bean name需和dubbo filter中该变量名一致，否则set注入失效
+   *
+   * @return ExceptionProperties
+   */
+  @Bean(name = "exceptionProperties")
+  @ConditionalOnMissingBean
+  public ExceptionProperties enableProperties() {
+    return new ExceptionProperties();
+  }
 }

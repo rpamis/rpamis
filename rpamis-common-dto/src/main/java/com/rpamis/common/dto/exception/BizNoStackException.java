@@ -13,19 +13,19 @@ import java.io.Serializable;
  */
 public class BizNoStackException extends AbstractException implements Serializable {
 
-    private static final long serialVersionUID = 2628908675799105091L;
+  private static final long serialVersionUID = 2628908675799105091L;
 
-    private static final ResponseCode DEAULT_BIZ_ERRCODE = ResponseCode.BIZ_NOSTACK_EXCEPTION;
+  private static final ResponseCode DEAULT_BIZ_ERRCODE = ResponseCode.BIZ_NOSTACK_EXCEPTION;
 
-    public BizNoStackException(String errMessage) {
-        super(DEAULT_BIZ_ERRCODE.getCode(), errMessage);
-    }
+  public BizNoStackException(String errMessage) {
+    super(DEAULT_BIZ_ERRCODE.getCode(), errMessage);
+  }
 
-    public BizNoStackException(String errCode, String errMessage) {
-        super(errCode, errMessage);
-    }
+  public BizNoStackException(String errCode, String errMessage) {
+    super(errCode, errMessage);
+  }
 
-    public BizNoStackException(StatusCode statusCode) {
-        super(statusCode.getCode(), statusCode.getMessage());
-    }
+  public BizNoStackException(StatusCode statusCode) {
+    super(statusCode.getCode(), statusCode.getMessage());
+  }
 }

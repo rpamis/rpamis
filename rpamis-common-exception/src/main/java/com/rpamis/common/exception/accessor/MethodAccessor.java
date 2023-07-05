@@ -43,79 +43,80 @@ import java.util.function.Function;
  */
 public final class MethodAccessor {
 
-    private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
+  private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
 
-    private static final MethodType METHOD_TYPE = MethodType.methodType(void.class, String.class);
+  private static final MethodType METHOD_TYPE = MethodType.methodType(void.class, String.class);
 
-    private static final ConcurrentHashMap<String, Function<String, AbstractException>> CACHE_FUNCTION = new ConcurrentHashMap<>();
+  private static final ConcurrentHashMap<String, Function<String, AbstractException>> CACHE_FUNCTION = new ConcurrentHashMap<>();
 
-    /**
-     * 方法句柄是一个有类型的，可以直接执行的指向底层方法、构造器、field等的引用
-     * 可以简单理解为函数指针，它是一种更加底层的查找、调整和调用方法的机制
-     * <p>
-     * 提供比反射更高效的映射方法
-     * 效率上与原生调用仅有纳秒级差距
-     *
-     * @param cls     动态推断的class
-     * @param message 需要抛出给前端的信息
-     * @param <T>     class类型
-     * @return AbstractException或其子类
-     */
-    public static <T extends AbstractException> AbstractException getException(Class<T> cls, String message) {
-        try {
-            Function<String, AbstractException> function = CACHE_FUNCTION.get(cls.toString());
-            if (function != null) {
-                return applyMessage(function, message);
-            }
-            function = MethodAccessor.createConstruct(cls);
-            CACHE_FUNCTION.putIfAbsent(cls.toString(), function);
-            return applyMessage(function, message);
-        } catch (Exception e) {
-            throw ExceptionFactory.sysException("获取cache exception异常", e);
-        }
+  /**
+   * 方法句柄是一个有类型的，可以直接执行的指向底层方法、构造器、field等的引用 可以简单理解为函数指针，它是一种更加底层的查找、调整和调用方法的机制
+   * <p>
+   * 提供比反射更高效的映射方法 效率上与原生调用仅有纳秒级差距
+   *
+   * @param cls     动态推断的class
+   * @param message 需要抛出给前端的信息
+   * @param <T>     class类型
+   * @return AbstractException或其子类
+   */
+  public static <T extends AbstractException> AbstractException getException(Class<T> cls,
+      String message) {
+    try {
+      Function<String, AbstractException> function = CACHE_FUNCTION.get(cls.toString());
+      if (function != null) {
+        return applyMessage(function, message);
+      }
+      function = MethodAccessor.createConstruct(cls);
+      CACHE_FUNCTION.putIfAbsent(cls.toString(), function);
+      return applyMessage(function, message);
+    } catch (Exception e) {
+      throw ExceptionFactory.sysException("获取cache exception异常", e);
     }
+  }
 
-    /**
-     * 参考@link{<a href="https://stackoverflow.com/questions/53675777/how-to-instantiate-an-object-using-lambdametafactory">...</a>}
-     * 根据异常Class，动态通过LambdaMetafactory寻找构造函数
-     *
-     * @param cls 异常Class
-     * @param <T> 异常Class类型
-     * @return Function<String, AbstractException>
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> Function<String, AbstractException> createConstruct(Class<T> cls) {
-        try {
-            MethodHandle methodHandle = LOOKUP.findConstructor(cls, METHOD_TYPE);
-            CallSite site = LambdaMetafactory.metafactory(
-                    LOOKUP,
-                    "apply",
-                    MethodType.methodType(Function.class),
-                    methodHandle.type().generic(),
-                    methodHandle,
-                    methodHandle.type());
-            return (Function<String, AbstractException>) site.getTarget().invokeExact();
-        } catch (Throwable e) {
-            throw ExceptionFactory.sysException("LambdaMetafactory create construct异常:", e);
-        }
+  /**
+   * 参考@link{<a
+   * href="https://stackoverflow.com/questions/53675777/how-to-instantiate-an-object-using-lambdametafactory">...</a>}
+   * 根据异常Class，动态通过LambdaMetafactory寻找构造函数
+   *
+   * @param cls 异常Class
+   * @param <T> 异常Class类型
+   * @return Function<String, AbstractException>
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> Function<String, AbstractException> createConstruct(Class<T> cls) {
+    try {
+      MethodHandle methodHandle = LOOKUP.findConstructor(cls, METHOD_TYPE);
+      CallSite site = LambdaMetafactory.metafactory(
+          LOOKUP,
+          "apply",
+          MethodType.methodType(Function.class),
+          methodHandle.type().generic(),
+          methodHandle,
+          methodHandle.type());
+      return (Function<String, AbstractException>) site.getTarget().invokeExact();
+    } catch (Throwable e) {
+      throw ExceptionFactory.sysException("LambdaMetafactory create construct异常:", e);
     }
+  }
 
-    /**
-     * 根据Function函数和异常message，调用对应构造函数方法
-     *
-     * @param function function函数
-     * @param message  异常消息
-     * @return AbstractException
-     */
-    public static AbstractException applyMessage(Function<String, AbstractException> function, String message) {
-        try {
-            return function.apply(message);
-        } catch (Exception e) {
-            throw ExceptionFactory.sysException("LambdaMetafactory function apply异常:", e);
-        }
+  /**
+   * 根据Function函数和异常message，调用对应构造函数方法
+   *
+   * @param function function函数
+   * @param message  异常消息
+   * @return AbstractException
+   */
+  public static AbstractException applyMessage(Function<String, AbstractException> function,
+      String message) {
+    try {
+      return function.apply(message);
+    } catch (Exception e) {
+      throw ExceptionFactory.sysException("LambdaMetafactory function apply异常:", e);
     }
+  }
 
-    private MethodAccessor() {
-        throw new IllegalStateException("常量类，禁止实例化");
-    }
+  private MethodAccessor() {
+    throw new IllegalStateException("常量类，禁止实例化");
+  }
 }

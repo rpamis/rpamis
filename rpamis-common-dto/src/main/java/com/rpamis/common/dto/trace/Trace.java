@@ -1,4 +1,4 @@
-package com.rpamis.common.dto.enums;
+package com.rpamis.common.dto.trace;
 
 /**
  * Trace实体

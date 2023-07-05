@@ -14,29 +14,29 @@ import java.util.Map;
  */
 public class JackSonUtil {
 
-    private JackSonUtil() {
-        throw new IllegalStateException("工具类，禁止实例化");
-    }
+  private JackSonUtil() {
+    throw new IllegalStateException("工具类，禁止实例化");
+  }
 
-    private static volatile ObjectMapper objectMapper;
+  private static volatile ObjectMapper objectMapper;
 
-    public static ObjectMapper getObjectMapper() {
+  public static ObjectMapper getObjectMapper() {
+    if (objectMapper == null) {
+      synchronized (ObjectMapper.class) {
         if (objectMapper == null) {
-            synchronized (ObjectMapper.class) {
-                if (objectMapper == null) {
-                    objectMapper = new ObjectMapper();
-                }
-            }
+          objectMapper = new ObjectMapper();
         }
-        return objectMapper;
+      }
     }
+    return objectMapper;
+  }
 
-    public static Map<Object, Object> toMap(String str) {
-        try {
-            return getObjectMapper().readValue(str, new TypeReference<Map<Object, Object>>() {
-            });
-        } catch (Exception e) {
-            throw ExceptionFactory.sysException("JackSonUtils str toMap error", e);
-        }
+  public static Map<Object, Object> toMap(String str) {
+    try {
+      return getObjectMapper().readValue(str, new TypeReference<Map<Object, Object>>() {
+      });
+    } catch (Exception e) {
+      throw ExceptionFactory.sysException("JackSonUtils str toMap error", e);
     }
+  }
 }

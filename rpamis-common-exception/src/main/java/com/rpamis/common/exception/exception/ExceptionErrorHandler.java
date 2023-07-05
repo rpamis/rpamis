@@ -2,10 +2,10 @@ package com.rpamis.common.exception.exception;
 
 
 import com.rpamis.common.dto.enums.ResponseCode;
-import com.rpamis.common.dto.enums.Trace;
+import com.rpamis.common.dto.trace.Trace;
 import com.rpamis.common.dto.exception.*;
 import com.rpamis.common.dto.response.Response;
-import com.rpamis.common.utils.TraceIdUtil;
+import com.rpamis.common.trace.toolkit.utils.TraceIdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -52,129 +52,153 @@ import java.util.stream.Collectors;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ExceptionErrorHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionErrorHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(ExceptionErrorHandler.class);
 
-    @Resource
-    private TraceIdUtil traceIdUtil;
+  @Resource
+  private TraceIdUtil traceIdUtil;
 
-    @ExceptionHandler(BindException.class)
-    public ResponseEntity<Response<Object>> handleBindException(BindException bindException) {
-        final Trace trace = traceIdUtil.getTrace();
-        String validateMessage = Objects.requireNonNull(bindException.getBindingResult().getFieldError()).getDefaultMessage();
-        logger.warn("[BindException], 请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
-        if (logger.isDebugEnabled()) {
-            logger.debug(validateMessage, bindException);
-        }
-        final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR, validateMessage);
-        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  @ExceptionHandler(BindException.class)
+  public ResponseEntity<Response<Object>> handleBindException(BindException bindException) {
+    final Trace trace = traceIdUtil.getTrace();
+    String validateMessage = Objects.requireNonNull(
+        bindException.getBindingResult().getFieldError()).getDefaultMessage();
+    logger.warn("[BindException], 请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(),
+        trace.getSpanId(), validateMessage);
+    if (logger.isDebugEnabled()) {
+      logger.debug(validateMessage, bindException);
     }
+    final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR,
+        validateMessage);
+    return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Response<Object>> handleConsException(ConstraintViolationException constraintViolationException) {
-        final Trace trace = traceIdUtil.getTrace();
-        Set<ConstraintViolation<?>> constraintViolations = constraintViolationException.getConstraintViolations();
-        String validateMessage = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(";"));
-        logger.warn("[ConstraintViolationException], 请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
-        if (logger.isDebugEnabled()) {
-            logger.debug(validateMessage, constraintViolationException);
-        }
-        final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR, validateMessage);
-        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<Response<Object>> handleConsException(
+      ConstraintViolationException constraintViolationException) {
+    final Trace trace = traceIdUtil.getTrace();
+    Set<ConstraintViolation<?>> constraintViolations = constraintViolationException.getConstraintViolations();
+    String validateMessage = constraintViolations.stream().map(ConstraintViolation::getMessage)
+        .collect(Collectors.joining(";"));
+    logger.warn("[ConstraintViolationException], 请求Id:{}, SpanId:{}, 参数校验失败:{}",
+        trace.getTraceId(), trace.getSpanId(), validateMessage);
+    if (logger.isDebugEnabled()) {
+      logger.debug(validateMessage, constraintViolationException);
     }
+    final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR,
+        validateMessage);
+    return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Response<Object>> handleBindException(MethodArgumentNotValidException methodArgumentNotValidException) {
-        final Trace trace = traceIdUtil.getTrace();
-        String validateMessage = Objects.requireNonNull(methodArgumentNotValidException.getBindingResult().getFieldError()).getDefaultMessage();
-        logger.warn("[MethodArgumentNotValidException], 请求Id:{}, SpanId:{}, 参数校验失败:{}", trace.getTraceId(), trace.getSpanId(), validateMessage);
-        if (logger.isDebugEnabled()) {
-            logger.debug(methodArgumentNotValidException.getMessage(), methodArgumentNotValidException);
-        }
-        final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR, validateMessage);
-        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<Response<Object>> handleBindException(
+      MethodArgumentNotValidException methodArgumentNotValidException) {
+    final Trace trace = traceIdUtil.getTrace();
+    String validateMessage = Objects.requireNonNull(
+        methodArgumentNotValidException.getBindingResult().getFieldError()).getDefaultMessage();
+    logger.warn("[MethodArgumentNotValidException], 请求Id:{}, SpanId:{}, 参数校验失败:{}",
+        trace.getTraceId(), trace.getSpanId(), validateMessage);
+    if (logger.isDebugEnabled()) {
+      logger.debug(methodArgumentNotValidException.getMessage(), methodArgumentNotValidException);
     }
+    final Response<Object> failResponse = Response.fail(ResponseCode.VALIDATE_ERROR,
+        validateMessage);
+    return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Response<Object>> handleNotReadException(HttpMessageNotReadableException notReadableException) {
-        final Trace trace = traceIdUtil.getTrace();
-        logger.warn("请求Id:{}, SpanId:{}, 错误码:{}, 错误信息:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(),
-                ResponseCode.READ_JSON_ERROR.getCode(), ResponseCode.READ_JSON_ERROR.getMessage(), notReadableException.getMessage());
-        if (logger.isDebugEnabled()) {
-            logger.debug(notReadableException.getMessage(), notReadableException);
-        }
-        final Response<Object> failResponse = Response.fail(ResponseCode.READ_JSON_ERROR, ResponseCode.READ_JSON_ERROR.getMessage());
-        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<Response<Object>> handleNotReadException(
+      HttpMessageNotReadableException notReadableException) {
+    final Trace trace = traceIdUtil.getTrace();
+    logger.warn("请求Id:{}, SpanId:{}, 错误码:{}, 错误信息:{}, 详细信息:{}", trace.getTraceId(),
+        trace.getSpanId(),
+        ResponseCode.READ_JSON_ERROR.getCode(), ResponseCode.READ_JSON_ERROR.getMessage(),
+        notReadableException.getMessage());
+    if (logger.isDebugEnabled()) {
+      logger.debug(notReadableException.getMessage(), notReadableException);
     }
+    final Response<Object> failResponse = Response.fail(ResponseCode.READ_JSON_ERROR,
+        ResponseCode.READ_JSON_ERROR.getMessage());
+    return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<Response<Object>> handleParameterException(MissingServletRequestParameterException misException) {
-        final Trace trace = traceIdUtil.getTrace();
-        String missParams = String.format("%s参数, 类型%s缺失", misException.getParameterName(), misException.getParameterType());
-        logger.warn("请求Id:{} ,SpanId:{} ,详细信息:{}", trace.getTraceId(), trace.getSpanId(), missParams);
-        if (logger.isDebugEnabled()) {
-            logger.debug(misException.getMessage(), misException);
-        }
-        final Response<Object> failResponse = Response.fail(ResponseCode.INVALID_PARAMETER, missParams);
-        return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  @ExceptionHandler(MissingServletRequestParameterException.class)
+  public ResponseEntity<Response<Object>> handleParameterException(
+      MissingServletRequestParameterException misException) {
+    final Trace trace = traceIdUtil.getTrace();
+    String missParams = String.format("%s参数, 类型%s缺失", misException.getParameterName(),
+        misException.getParameterType());
+    logger.warn("请求Id:{} ,SpanId:{} ,详细信息:{}", trace.getTraceId(), trace.getSpanId(),
+        missParams);
+    if (logger.isDebugEnabled()) {
+      logger.debug(misException.getMessage(), misException);
     }
+    final Response<Object> failResponse = Response.fail(ResponseCode.INVALID_PARAMETER, missParams);
+    return new ResponseEntity<>(failResponse, HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(ValidException.class)
-    public ResponseEntity<Response<Object>> handleValidException(ValidException validException) {
-        final Trace trace = traceIdUtil.getTrace();
-        String errCode = validException.getErrCode();
-        String message = validException.getMessage();
-        logger.warn("请求Id:{}, SpanId:{}, 参数校验异常:{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
-        if (logger.isDebugEnabled()) {
-            logger.debug(message, validException);
-        }
-        final Response<Object> failResponse = Response.fail(errCode, message);
-        return new ResponseEntity<>(failResponse, HttpStatus.OK);
+  @ExceptionHandler(ValidException.class)
+  public ResponseEntity<Response<Object>> handleValidException(ValidException validException) {
+    final Trace trace = traceIdUtil.getTrace();
+    String errCode = validException.getErrCode();
+    String message = validException.getMessage();
+    logger.warn("请求Id:{}, SpanId:{}, 参数校验异常:{}, 错误码:{}", trace.getTraceId(),
+        trace.getSpanId(), message, errCode);
+    if (logger.isDebugEnabled()) {
+      logger.debug(message, validException);
     }
+    final Response<Object> failResponse = Response.fail(errCode, message);
+    return new ResponseEntity<>(failResponse, HttpStatus.OK);
+  }
 
-    @ExceptionHandler(BizException.class)
-    public ResponseEntity<Response<Object>> handleBizException(BizException bizException) {
-        final Trace trace = traceIdUtil.getTrace();
-        String errCode = bizException.getErrCode();
-        String message = bizException.getMessage();
-        logger.warn("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, bizException);
-        final Response<Object> failResponse = Response.fail(errCode, message);
-        return new ResponseEntity<>(failResponse, HttpStatus.OK);
-    }
+  @ExceptionHandler(BizException.class)
+  public ResponseEntity<Response<Object>> handleBizException(BizException bizException) {
+    final Trace trace = traceIdUtil.getTrace();
+    String errCode = bizException.getErrCode();
+    String message = bizException.getMessage();
+    logger.warn("请求Id:{}, SpanId:{}, 业务异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(),
+        trace.getSpanId(), message, errCode, bizException);
+    final Response<Object> failResponse = Response.fail(errCode, message);
+    return new ResponseEntity<>(failResponse, HttpStatus.OK);
+  }
 
-    @ExceptionHandler(BizNoStackException.class)
-    public ResponseEntity<Response<Object>> handleBizNoStackException(BizNoStackException bizNoStackException) {
-        final Trace trace = traceIdUtil.getTrace();
-        String errCode = bizNoStackException.getErrCode();
-        String message = bizNoStackException.getMessage();
-        logger.warn("请求Id:{}, SpanId:{}, 业务异常(无堆栈):{}, 错误码:{}", trace.getTraceId(), trace.getSpanId(), message, errCode);
-        if (logger.isDebugEnabled()) {
-            logger.debug(message, bizNoStackException);
-        }
-        final Response<Object> failResponse = Response.fail(errCode, message);
-        return new ResponseEntity<>(failResponse, HttpStatus.OK);
+  @ExceptionHandler(BizNoStackException.class)
+  public ResponseEntity<Response<Object>> handleBizNoStackException(
+      BizNoStackException bizNoStackException) {
+    final Trace trace = traceIdUtil.getTrace();
+    String errCode = bizNoStackException.getErrCode();
+    String message = bizNoStackException.getMessage();
+    logger.warn("请求Id:{}, SpanId:{}, 业务异常(无堆栈):{}, 错误码:{}", trace.getTraceId(),
+        trace.getSpanId(), message, errCode);
+    if (logger.isDebugEnabled()) {
+      logger.debug(message, bizNoStackException);
     }
+    final Response<Object> failResponse = Response.fail(errCode, message);
+    return new ResponseEntity<>(failResponse, HttpStatus.OK);
+  }
 
-    @ExceptionHandler(SysException.class)
-    public ResponseEntity<Response<Object>> handleSysException(SysException sysException) {
-        final Trace trace = traceIdUtil.getTrace();
-        String errCode = sysException.getErrCode();
-        String message = sysException.getMessage();
-        logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(), trace.getSpanId(), message, errCode, sysException);
-        final Response<Object> failResponse = Response.fail(errCode, message);
-        return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  @ExceptionHandler(SysException.class)
+  public ResponseEntity<Response<Object>> handleSysException(SysException sysException) {
+    final Trace trace = traceIdUtil.getTrace();
+    String errCode = sysException.getErrCode();
+    String message = sysException.getMessage();
+    logger.error("请求Id:{}, SpanId:{}, 系统异常:{}, 错误码:{}, 详细信息:", trace.getTraceId(),
+        trace.getSpanId(), message, errCode, sysException);
+    final Response<Object> failResponse = Response.fail(errCode, message);
+    return new ResponseEntity<>(failResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 
-    @ExceptionHandler(RpamisException.class)
-    public ResponseEntity<Response<Object>> handleRpasException(RpamisException rpamisException) {
-        final Trace trace = traceIdUtil.getTrace();
-        String errCode = rpamisException.getErrCode();
-        String message = rpamisException.getMessage();
-        String detailMessage = rpamisException.getDetailMessage();
-        logger.error("请求Id:{}, SpanId:{}, 系统内部异常:{}, 错误码:{}, 详细信息:{}", trace.getTraceId(), trace.getSpanId(), message, errCode, detailMessage);
-        if (logger.isDebugEnabled()) {
-            logger.debug(message, rpamisException);
-        }
-        final Response<Object> failResponse = Response.fail(errCode, detailMessage);
-        return new ResponseEntity<>(failResponse, HttpStatus.OK);
+  @ExceptionHandler(RpamisException.class)
+  public ResponseEntity<Response<Object>> handleRpasException(RpamisException rpamisException) {
+    final Trace trace = traceIdUtil.getTrace();
+    String errCode = rpamisException.getErrCode();
+    String message = rpamisException.getMessage();
+    String detailMessage = rpamisException.getDetailMessage();
+    logger.error("请求Id:{}, SpanId:{}, 系统内部异常:{}, 错误码:{}, 详细信息:{}",
+        trace.getTraceId(), trace.getSpanId(), message, errCode, detailMessage);
+    if (logger.isDebugEnabled()) {
+      logger.debug(message, rpamisException);
     }
+    final Response<Object> failResponse = Response.fail(errCode, detailMessage);
+    return new ResponseEntity<>(failResponse, HttpStatus.OK);
+  }
 }

@@ -65,6 +65,10 @@ public class EnumLookup {
 
   /**
    * 缓存枚举到Cache Map
+   * 当调用getCode()和getDesc()方法时，实际上返回的是CachableEnum的C和D类型的对象。
+   * 由于泛型擦除的原因，在运行时无法获取具体的泛型类型参数，因此编译器将它们擦除为Object类型。
+   * 尽管code和desc被声明为 Object类型，但由于 C和D的实际类型是在实现CachableEnum接口时确定的
+   * 因此调用getCode()和getDesc()方法返回的对象类型将与C和D的实际类型一致。
    *
    * @param implClass 实现CachableEnum接口的实现类
    */

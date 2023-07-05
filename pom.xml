@@ -17,6 +17,7 @@
     <module>rpamis-common-utils</module>
     <module>rpamis-exception-spring-boot-starter</module>
     <module>rpamis-enum-spring-boot-starter</module>
+    <module>rpamis-common-trace-toolkit</module>
   </modules>
 
   <properties>

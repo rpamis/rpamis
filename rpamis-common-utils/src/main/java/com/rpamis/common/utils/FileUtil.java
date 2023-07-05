@@ -10,32 +10,32 @@ import java.io.File;
  */
 public class FileUtil {
 
-    /**
-     * 生成gitkeep文件占位
-     *
-     * @param path path
-     */
-    public static void generateGitKeepFiles(String path) {
-        File directory = new File(path);
-        generateGitKeepFilesRecursively(directory);
-    }
+  /**
+   * 生成gitkeep文件占位
+   *
+   * @param path path
+   */
+  public static void generateGitKeepFiles(String path) {
+    File directory = new File(path);
+    generateGitKeepFilesRecursively(directory);
+  }
 
-    /**
-     * 递归在目录下无文件的目录生成.gitkeep文件
-     *
-     * @param directory directory
-     */
-    public static void generateGitKeepFilesRecursively(File directory) {
-        if (directory.isDirectory() && cn.hutool.core.io.FileUtil.isEmpty(directory)) {
-            String gitKeepFilePath = new File(directory, ".gitkeep").getAbsolutePath();
-            cn.hutool.core.io.FileUtil.touch(gitKeepFilePath);
-        } else if (directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    generateGitKeepFilesRecursively(file);
-                }
-            }
+  /**
+   * 递归在目录下无文件的目录生成.gitkeep文件
+   *
+   * @param directory directory
+   */
+  public static void generateGitKeepFilesRecursively(File directory) {
+    if (directory.isDirectory() && cn.hutool.core.io.FileUtil.isEmpty(directory)) {
+      String gitKeepFilePath = new File(directory, ".gitkeep").getAbsolutePath();
+      cn.hutool.core.io.FileUtil.touch(gitKeepFilePath);
+    } else if (directory.isDirectory()) {
+      File[] files = directory.listFiles();
+      if (files != null) {
+        for (File file : files) {
+          generateGitKeepFilesRecursively(file);
         }
+      }
     }
+  }
 }

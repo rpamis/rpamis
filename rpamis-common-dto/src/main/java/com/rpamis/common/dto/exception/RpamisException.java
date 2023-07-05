@@ -10,56 +10,56 @@ import com.rpamis.common.dto.enums.StatusCode;
  */
 public class RpamisException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    /**
-     * 错误代码
-     */
-    private String errCode;
+  /**
+   * 错误代码
+   */
+  private String errCode;
 
-    /**
-     * 错误消息
-     */
-    private String errMessage;
+  /**
+   * 错误消息
+   */
+  private String errMessage;
 
-    /**
-     * 详细信息
-     */
-    private String detailMessage;
+  /**
+   * 详细信息
+   */
+  private String detailMessage;
 
-    public RpamisException() {
-        super();
-    }
+  public RpamisException() {
+    super();
+  }
 
-    public RpamisException(String errCode, String errMessage, String detailMessage) {
-        super(errMessage);
-        this.errCode = errCode;
-        this.errMessage = errMessage;
-        this.detailMessage = detailMessage;
-    }
+  public RpamisException(String errCode, String errMessage, String detailMessage) {
+    super(errMessage);
+    this.errCode = errCode;
+    this.errMessage = errMessage;
+    this.detailMessage = detailMessage;
+  }
 
-    public RpamisException(String errCode, String errMessage) {
-        this(errCode, errMessage, null);
-    }
+  public RpamisException(String errCode, String errMessage) {
+    this(errCode, errMessage, null);
+  }
 
-    public RpamisException(StatusCode statusCode) {
-        this(statusCode.getCode(), statusCode.getMessage(), null);
-    }
+  public RpamisException(StatusCode statusCode) {
+    this(statusCode.getCode(), statusCode.getMessage(), null);
+  }
 
-    public RpamisException(StatusCode statusCode, String detailMessage) {
-        this(statusCode.getCode(), statusCode.getMessage(), detailMessage);
-    }
+  public RpamisException(StatusCode statusCode, String detailMessage) {
+    this(statusCode.getCode(), statusCode.getMessage(), detailMessage);
+  }
 
-    public String getErrCode() {
-        return errCode;
-    }
+  public String getErrCode() {
+    return errCode;
+  }
 
-    public String getErrMessage() {
-        return errMessage;
-    }
+  public String getErrMessage() {
+    return errMessage;
+  }
 
-    public String getDetailMessage() {
-        return detailMessage;
-    }
+  public String getDetailMessage() {
+    return detailMessage;
+  }
 
 }

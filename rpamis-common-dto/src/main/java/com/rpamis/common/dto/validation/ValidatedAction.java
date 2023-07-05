@@ -8,15 +8,19 @@ package com.rpamis.common.dto.validation;
  */
 public class ValidatedAction {
 
-    public interface Insert {
-    }
+  public interface Insert {
 
-    public interface Update {
-    }
+  }
 
-    public interface Search {
-    }
+  public interface Update {
 
-    public interface Delete {
-    }
+  }
+
+  public interface Search {
+
+  }
+
+  public interface Delete {
+
+  }
 }
