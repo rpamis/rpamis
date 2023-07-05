@@ -18,6 +18,7 @@
     <module>rpamis-exception-spring-boot-starter</module>
     <module>rpamis-enum-spring-boot-starter</module>
     <module>rpamis-common-trace-toolkit</module>
+    <module>rpamis-exception-dto</module>
   </modules>
 
   <properties>

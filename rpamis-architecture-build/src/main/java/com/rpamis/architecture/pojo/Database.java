@@ -13,38 +13,38 @@ import lombok.Data;
 @Builder
 public class Database {
 
-    /**
-     * enabled
-     */
-    private Boolean enabled;
+  /**
+   * enabled
+   */
+  private Boolean enabled;
 
-    /**
-     * host
-     */
-    private String host;
+  /**
+   * host
+   */
+  private String host;
 
-    /**
-     * port
-     */
-    private String port;
+  /**
+   * port
+   */
+  private String port;
 
-    /**
-     * 数据库名称
-     */
-    private String databaseName;
+  /**
+   * 数据库名称
+   */
+  private String databaseName;
 
-    /**
-     * 用户名
-     */
-    private String userName;
+  /**
+   * 用户名
+   */
+  private String userName;
 
-    /**
-     * passWord
-     */
-    private String passWord;
+  /**
+   * passWord
+   */
+  private String passWord;
 
-    /**
-     * crud
-     */
-    private Boolean crud;
+  /**
+   * crud
+   */
+  private Boolean crud;
 }

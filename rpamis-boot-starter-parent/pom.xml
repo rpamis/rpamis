@@ -71,6 +71,9 @@
     <rpamis-common-utils.version>1.0.0</rpamis-common-utils.version>
     <rpamis-common-trace.version>1.0.0</rpamis-common-trace.version>
     <rpamis-common-trace-toolkit.version>1.0.0</rpamis-common-trace-toolkit.version>
+    <rpamis-enum-spring-boot-starter.version>1.0.0</rpamis-enum-spring-boot-starter.version>
+    <rpamis-exception-dto.version>1.0.0</rpamis-exception-dto.version>
+    <rpamis-exception-spring-boot-starter.version>1.0.0</rpamis-exception-spring-boot-starter.version>
 
   </properties>
 
@@ -298,11 +301,6 @@
       </dependency>
       <dependency>
         <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-common-utils</artifactId>
-        <version>${rpamis-common-utils.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
         <artifactId>rpamis-common-trace</artifactId>
         <version>${rpamis-common-trace.version}</version>
       </dependency>
@@ -310,6 +308,26 @@
         <groupId>com.rpamis</groupId>
         <artifactId>rpamis-common-trace-toolkit</artifactId>
         <version>${rpamis-common-trace-toolkit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-common-utils</artifactId>
+        <version>${rpamis-common-utils.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-enum-spring-boot-starter</artifactId>
+        <version>${rpamis-enum-spring-boot-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-exception-dto</artifactId>
+        <version>${rpamis-exception-dto.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-exception-spring-boot-starter</artifactId>
+        <version>${rpamis-exception-spring-boot-starter.version}</version>
       </dependency>
 
     </dependencies>

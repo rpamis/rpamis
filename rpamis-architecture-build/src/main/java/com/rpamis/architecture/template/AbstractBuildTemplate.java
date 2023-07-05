@@ -18,55 +18,55 @@ import java.util.Map;
  */
 public abstract class AbstractBuildTemplate {
 
-    @Autowired(required = false)
-    protected BuildService buildService;
+  @Autowired(required = false)
+  protected BuildService buildService;
 
-    protected Map<String, String> pathMap = new HashMap<>(64);
+  protected Map<String, String> pathMap = new HashMap<>(64);
 
-    protected MultiValueMap<String, String> ftlMap = new LinkedMultiValueMap<>(64);
+  protected MultiValueMap<String, String> ftlMap = new LinkedMultiValueMap<>(64);
 
-    protected String buildId = "";
+  protected String buildId = "";
 
-    protected BaseProjectConfig rpasConfig;
+  protected BaseProjectConfig rpasConfig;
 
-    /**
-     * 获取模版类型
-     *
-     * @return String
-     */
-    protected abstract String getTemplateType();
+  /**
+   * 获取模版类型
+   *
+   * @return String
+   */
+  protected abstract String getTemplateType();
 
-    /**
-     * 初始化项目基础路径
-     */
-    protected abstract void initPath();
+  /**
+   * 初始化项目基础路径
+   */
+  protected abstract void initPath();
 
-    /**
-     * 解析模版路径
-     */
-    protected abstract void resolve();
+  /**
+   * 解析模版路径
+   */
+  protected abstract void resolve();
 
-    /**
-     * 生成项目骨架和模版
-     *
-     * @return FileVO
-     */
-    protected abstract FileVO create();
+  /**
+   * 生成项目骨架和模版
+   *
+   * @return FileVO
+   */
+  protected abstract FileVO create();
 
-    /**
-     * 清空map信息
-     */
-    private void clear(){
-        ftlMap.clear();
-        pathMap.clear();
-    }
+  /**
+   * 清空map信息
+   */
+  private void clear() {
+    ftlMap.clear();
+    pathMap.clear();
+  }
 
-    public final FileVO createProject(BaseProjectConfig baseProjectConfig) {
-        rpasConfig = baseProjectConfig;
-        initPath();
-        resolve();
-        FileVO fileVO = create();
-        clear();
-        return fileVO;
-    }
+  public final FileVO createProject(BaseProjectConfig baseProjectConfig) {
+    rpasConfig = baseProjectConfig;
+    initPath();
+    resolve();
+    FileVO fileVO = create();
+    clear();
+    return fileVO;
+  }
 }

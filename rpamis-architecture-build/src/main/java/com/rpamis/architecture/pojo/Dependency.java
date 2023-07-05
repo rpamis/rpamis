@@ -13,18 +13,18 @@ import lombok.Data;
 @Builder
 public class Dependency {
 
-    /**
-     * consul
-     */
-    private Consul consul;
+  /**
+   * consul
+   */
+  private Consul consul;
 
-    /**
-     * feign
-     */
-    private Feign feign;
+  /**
+   * feign
+   */
+  private Feign feign;
 
-    /**
-     * database
-     */
-    private Database database;
+  /**
+   * database
+   */
+  private Database database;
 }

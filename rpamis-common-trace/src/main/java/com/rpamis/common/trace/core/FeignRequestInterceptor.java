@@ -1,7 +1,7 @@
 package com.rpamis.common.trace.core;
 
 import com.rpamis.common.dto.trace.Trace;
-import com.rpamis.common.trace.utils.TraceIdUtil;
+import com.rpamis.common.trace.toolkit.utils.TraceIdUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import java.util.Enumeration;

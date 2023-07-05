@@ -13,8 +13,8 @@ import lombok.Data;
 @Builder
 public class Feign {
 
-    /**
-     * enabled
-     */
-    private Boolean enabled;
+  /**
+   * enabled
+   */
+  private Boolean enabled;
 }

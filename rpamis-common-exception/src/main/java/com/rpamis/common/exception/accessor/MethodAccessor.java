@@ -1,8 +1,7 @@
 package com.rpamis.common.exception.accessor;
 
-import com.rpamis.common.dto.exception.AbstractException;
-import com.rpamis.common.dto.exception.ExceptionFactory;
-
+import com.rpamis.exception.dto.AbstractException;
+import com.rpamis.exception.dto.ExceptionFactory;
 import java.lang.invoke.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;

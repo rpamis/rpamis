@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class RpamisArchitectureBuildApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(RpamisArchitectureBuildApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(RpamisArchitectureBuildApplication.class, args);
+  }
 
 }

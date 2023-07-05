@@ -13,23 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class SingleMouduleTemplate extends AbstractBuildTemplate {
 
-    @Override
-    protected String getTemplateType() {
-        return TemplateTypeEnum.SINGLE_MOUDULE.getCode();
-    }
+  @Override
+  protected String getTemplateType() {
+    return TemplateTypeEnum.SINGLE_MOUDULE.getCode();
+  }
 
-    @Override
-    protected void initPath() {
+  @Override
+  protected void initPath() {
 
-    }
+  }
 
-    @Override
-    protected void resolve() {
+  @Override
+  protected void resolve() {
 
-    }
+  }
 
-    @Override
-    protected FileVO create() {
-        return null;
-    }
+  @Override
+  protected FileVO create() {
+    return null;
+  }
 }

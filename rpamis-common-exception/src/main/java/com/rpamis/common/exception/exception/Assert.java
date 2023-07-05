@@ -1,7 +1,11 @@
 package com.rpamis.common.exception.exception;
 
 import com.rpamis.common.exception.accessor.MethodAccessor;
-import com.rpamis.common.dto.exception.*;
+import com.rpamis.exception.dto.AbstractException;
+import com.rpamis.exception.dto.BizException;
+import com.rpamis.exception.dto.ExceptionFactory;
+import com.rpamis.exception.dto.RpamisException;
+import com.rpamis.exception.dto.SysException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;

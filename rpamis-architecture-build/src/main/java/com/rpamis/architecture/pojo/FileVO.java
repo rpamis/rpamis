@@ -13,18 +13,18 @@ import lombok.Data;
 @Builder
 public class FileVO {
 
-    /**
-     * id
-     */
-    private String id;
+  /**
+   * id
+   */
+  private String id;
 
-    /**
-     * 文件路径
-     */
-    private String filePath;
+  /**
+   * 文件路径
+   */
+  private String filePath;
 
-    public FileVO(String id, String filePath) {
-        this.id = id;
-        this.filePath = filePath;
-    }
+  public FileVO(String id, String filePath) {
+    this.id = id;
+    this.filePath = filePath;
+  }
 }

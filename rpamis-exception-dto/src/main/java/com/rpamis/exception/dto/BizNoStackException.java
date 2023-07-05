@@ -1,8 +1,7 @@
-package com.rpamis.common.dto.exception;
+package com.rpamis.exception.dto;
 
 import com.rpamis.common.dto.enums.ResponseCode;
 import com.rpamis.common.dto.enums.StatusCode;
-
 import java.io.Serializable;
 
 /**

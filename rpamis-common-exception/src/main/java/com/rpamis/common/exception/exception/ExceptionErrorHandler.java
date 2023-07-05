@@ -3,9 +3,13 @@ package com.rpamis.common.exception.exception;
 
 import com.rpamis.common.dto.enums.ResponseCode;
 import com.rpamis.common.dto.trace.Trace;
-import com.rpamis.common.dto.exception.*;
 import com.rpamis.common.dto.response.Response;
 import com.rpamis.common.trace.toolkit.utils.TraceIdUtil;
+import com.rpamis.exception.dto.BizException;
+import com.rpamis.exception.dto.BizNoStackException;
+import com.rpamis.exception.dto.RpamisException;
+import com.rpamis.exception.dto.SysException;
+import com.rpamis.exception.dto.ValidException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;

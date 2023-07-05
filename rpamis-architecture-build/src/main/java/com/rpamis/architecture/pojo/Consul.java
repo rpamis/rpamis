@@ -13,18 +13,18 @@ import lombok.Data;
 @Builder
 public class Consul {
 
-    /**
-     * host
-     */
-    private String host;
+  /**
+   * host
+   */
+  private String host;
 
-    /**
-     * port
-     */
-    private String port;
+  /**
+   * port
+   */
+  private String port;
 
-    /**
-     * enabled
-     */
-    private Boolean enabled;
+  /**
+   * enabled
+   */
+  private Boolean enabled;
 }

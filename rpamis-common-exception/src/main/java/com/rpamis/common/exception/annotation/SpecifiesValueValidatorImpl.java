@@ -1,7 +1,6 @@
 package com.rpamis.common.exception.annotation;
 
-import com.rpamis.common.dto.exception.ExceptionFactory;
-
+import com.rpamis.exception.dto.ExceptionFactory;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.InvocationTargetException;

@@ -12,28 +12,28 @@ import javax.validation.Valid;
 /**
  * 项目基本配置
  *
- * @date 2022/7/20 5:01 下午
  * @author benym
+ * @date 2022/7/20 5:01 下午
  */
 @Data
 @Builder
 public class BaseProjectConfig implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    /**
-     * project
-     */
-    @Valid
-    private Project project;
+  /**
+   * project
+   */
+  @Valid
+  private Project project;
 
-    /**
-     * dependency
-     */
-    private Dependency dependency;
+  /**
+   * dependency
+   */
+  private Dependency dependency;
 
-    /**
-     * 模板类型
-     */
-    private TemplateTypeEnum templateTypeEnum;
+  /**
+   * 模板类型
+   */
+  private TemplateTypeEnum templateTypeEnum;
 }

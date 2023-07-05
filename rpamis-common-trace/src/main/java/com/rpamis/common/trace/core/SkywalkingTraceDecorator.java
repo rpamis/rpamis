@@ -1,6 +1,6 @@
 package com.rpamis.common.trace.core;
 
-import com.rpamis.common.dto.exception.ExceptionFactory;
+import com.rpamis.exception.dto.ExceptionFactory;
 import org.apache.skywalking.apm.toolkit.trace.RunnableWrapper;
 import org.springframework.core.task.TaskDecorator;
 

@@ -19,20 +19,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/rpamis")
 public class ArchitectureBuildController {
 
-    @Autowired
-    private BuildService buildService;
+  @Autowired
+  private BuildService buildService;
 
-    @ApiOperation("项目生成")
-    @PostMapping("/build")
-    public Response<FileVO> build(@RequestBody @Validated BaseProjectConfig baseProjectConfig) {
-        FileVO fileVO = buildService.architectureBuild(baseProjectConfig);
-        return Response.success(fileVO);
-    }
+  @ApiOperation("项目生成")
+  @PostMapping("/build")
+  public Response<FileVO> build(@RequestBody @Validated BaseProjectConfig baseProjectConfig) {
+    FileVO fileVO = buildService.architectureBuild(baseProjectConfig);
+    return Response.success(fileVO);
+  }
 
-    @ApiOperation("下载项目")
-    @GetMapping("/download/{id}")
-    public void download(@PathVariable("id") String id) {
-        buildService.download(id);
-    }
+  @ApiOperation("下载项目")
+  @GetMapping("/download/{id}")
+  public void download(@PathVariable("id") String id) {
+    buildService.download(id);
+  }
 
 }
