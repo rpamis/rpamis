@@ -10,11 +10,11 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>rpamis-enum-spring-boot-starter</artifactId>
+  <artifactId>rpamis-enum-core</artifactId>
   <version>1.0.0</version>
-  <name>rpamis-enum-spring-boot-starter</name>
+  <name>rpamis-enum-core</name>
   <packaging>jar</packaging>
-  <description>rpamis-enum-spring-boot-starter</description>
+  <description>rpamis-enum-core</description>
 
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
@@ -24,17 +24,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.rpamis</groupId>
-      <artifactId>rpamis-enum-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <optional>true</optional>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>${reflections.version}</version>
     </dependency>
   </dependencies>
 

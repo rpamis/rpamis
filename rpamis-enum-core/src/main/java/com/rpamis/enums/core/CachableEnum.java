@@ -1,4 +1,4 @@
-package com.rpamis.common.utils;
+package com.rpamis.enums.core;
 
 /**
  * 通用缓存枚举接口

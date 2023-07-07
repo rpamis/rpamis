@@ -1,7 +1,11 @@
 package com.rpamis.enums.starter;
 
+import com.rpamis.enums.core.EnumCacheBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -11,10 +15,15 @@ import org.springframework.context.annotation.Configuration;
  * @date 2023/7/4 16:50
  */
 @Configuration
+@EnableConfigurationProperties(CacheEnumProperties.class)
+@ConditionalOnProperty(prefix = CacheEnumProperties.PREFIX, name = "enabled", havingValue = "true")
 public class CacheEnumAutoConfiguration implements ApplicationRunner {
+
+  @Autowired
+  private CacheEnumProperties cacheEnumProperties;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-    Class.forName("com.rpamis.common.utils.EnumLookup");
+    EnumCacheBuilder.setScanPackages(cacheEnumProperties.getPackages());
   }
 }

@@ -1,4 +1,4 @@
-package com.rpamis.common.utils;
+package com.rpamis.enums.core;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,16 +6,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 枚举缓存工具类，powered by chatgpt
+ * 枚举缓存构建器
  *
  * @author benym
- * @date 2023/6/12 11:31
+ * @date 2023/7/7 18:35
  */
-public class EnumLookup {
-
-  private EnumLookup() {
-    throw new IllegalStateException("工具类禁止实例化");
-  }
+public class EnumCacheBuilder {
 
   /**
    * code缓存
@@ -27,39 +23,30 @@ public class EnumLookup {
    */
   private static final Map<Class<? extends CachableEnum<?, ?>>, Map<Object, CachableEnum<?, ?>>> DESC_CACHE = new ConcurrentHashMap<>();
 
+  /**
+   * 扫描路径
+   */
+  private static List<String> scanPackages = null;
+
   static {
     cacheEnums();
-  }
-
-  /**
-   * 通过枚举class和code获取枚举
-   *
-   * @param enumClass 枚举class
-   * @param code      code
-   * @return {@link T}
-   */
-  public static <T extends CachableEnum<?, ?>> T getEnumByCode(Class<T> enumClass, Object code) {
-    return enumClass.cast(CODE_CACHE.getOrDefault(enumClass, new HashMap<>(8)).get(code));
-  }
-
-  /**
-   * 通过枚举class和desc获取枚举
-   *
-   * @param enumClass 枚举class
-   * @param desc      desc
-   * @return {@link T}
-   */
-  public static <T extends CachableEnum<?, ?>> T getEnumByDesc(Class<T> enumClass, Object desc) {
-    return enumClass.cast(DESC_CACHE.getOrDefault(enumClass, new HashMap<>(8)).get(desc));
   }
 
   /**
    * 缓存枚举方法
    */
   private static void cacheEnums() {
-    List<Class<? extends CachableEnum<?, ?>>> implClasses = ClassScanner.getCachableEnumImplClasses();
-    for (Class<? extends CachableEnum<?, ?>> implClass : implClasses) {
-      cacheEnumClass(implClass);
+    if (scanPackages.isEmpty()) {
+      List<Class<? extends CachableEnum<?, ?>>> implClasses = ClassScanner.getCachableEnumImplClasses();
+      for (Class<? extends CachableEnum<?, ?>> implClass : implClasses) {
+        cacheEnumClass(implClass);
+      }
+    } else {
+      List<Class<? extends CachableEnum<?, ?>>> implClasses = ClassScanner.getCachableEnumImplClassesByPackages(
+          scanPackages.toArray(new String[0]));
+      for (Class<? extends CachableEnum<?, ?>> implClass : implClasses) {
+        cacheEnumClass(implClass);
+      }
     }
   }
 
@@ -86,4 +73,15 @@ public class EnumLookup {
     DESC_CACHE.put(implClass, descMap);
   }
 
+  public static Map<Class<? extends CachableEnum<?, ?>>, Map<Object, CachableEnum<?, ?>>> getCodeCache() {
+    return CODE_CACHE;
+  }
+
+  public static Map<Class<? extends CachableEnum<?, ?>>, Map<Object, CachableEnum<?, ?>>> getDescCache() {
+    return DESC_CACHE;
+  }
+
+  public static void setScanPackages(List<String> scanPackages) {
+    EnumCacheBuilder.scanPackages = scanPackages;
+  }
 }

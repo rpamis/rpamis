@@ -1,12 +1,11 @@
-package com.rpamis.common.utils;
-
-import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
+package com.rpamis.enums.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
 
 /**
  * Class扫描工具类
@@ -34,13 +33,28 @@ public class ClassScanner {
   }
 
   /**
-   * 获取实现了CacheableEnum接口的实现类
+   * 获取系统内所有实现了CacheableEnum接口的实现类
    *
    * @return List<Class < ? extends CachableEnum < ?, ?>>>
    */
   @SuppressWarnings("unchecked")
   public static List<Class<? extends CachableEnum<?, ?>>> getCachableEnumImplClasses() {
     Reflections reflections = new Reflections(Scanners.SubTypes);
+    return reflections.getSubTypesOf(CachableEnum.class)
+        .stream()
+        .map(clazz -> (Class<? extends CachableEnum<?, ?>>) clazz)
+        .distinct().collect(Collectors.toList());
+  }
+
+  /**
+   * 获取配置路径下实现了CacheableEnum接口的实现类
+   *
+   * @return List<Class < ? extends CachableEnum < ?, ?>>>
+   */
+  @SuppressWarnings("unchecked")
+  public static List<Class<? extends CachableEnum<?, ?>>> getCachableEnumImplClassesByPackages(
+      String... paths) {
+    Reflections reflections = new Reflections(paths, Scanners.SubTypes);
     return reflections.getSubTypesOf(CachableEnum.class)
         .stream()
         .map(clazz -> (Class<? extends CachableEnum<?, ?>>) clazz)
