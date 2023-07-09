@@ -32,6 +32,6 @@ public class RpamisTraceStrategyImpl implements TraceStrategy {
 
   @Override
   public String strategyName() {
-    return TraceTypeEnum.RPAMIS.getType();
+    return TraceTypeEnum.RPAMIS.getCode();
   }
 }

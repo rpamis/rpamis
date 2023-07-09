@@ -25,6 +25,6 @@ public class SkyWalkingTraceStrategyImpl implements TraceStrategy {
 
   @Override
   public String strategyName() {
-    return TraceTypeEnum.SKYWALK.getType();
+    return TraceTypeEnum.SKYWALK.getCode();
   }
 }

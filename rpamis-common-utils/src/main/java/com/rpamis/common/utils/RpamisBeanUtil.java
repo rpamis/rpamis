@@ -1,8 +1,8 @@
 package com.rpamis.common.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rpamis.common.dto.exception.ExceptionFactory;
 import com.rpamis.common.dto.response.PageResponse;
+import com.rpamis.exception.dto.ExceptionFactory;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
 import org.springframework.util.ConcurrentReferenceHashMap;

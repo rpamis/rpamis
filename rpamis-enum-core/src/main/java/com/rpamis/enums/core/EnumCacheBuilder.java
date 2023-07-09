@@ -1,5 +1,6 @@
 package com.rpamis.enums.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2023/7/7 18:35
  */
 public class EnumCacheBuilder {
+
+  private EnumCacheBuilder() {
+    throw new IllegalStateException("工具类禁止实例化");
+  }
 
   /**
    * code缓存
@@ -26,10 +31,25 @@ public class EnumCacheBuilder {
   /**
    * 扫描路径
    */
-  private static List<String> scanPackages = null;
+  private static List<String> scanPackages = new ArrayList<>();
 
-  static {
-    cacheEnums();
+  /**
+   * 是否初始化标志位
+   */
+  private static volatile boolean initialized = false;
+
+  /**
+   * 初始化
+   */
+  public static void build() {
+    if (!initialized) {
+      synchronized (EnumCacheBuilder.class) {
+        if (!initialized) {
+          cacheEnums();
+          initialized = true;
+        }
+      }
+    }
   }
 
   /**
@@ -51,10 +71,9 @@ public class EnumCacheBuilder {
   }
 
   /**
-   * 缓存枚举到Cache Map
-   * 当调用getCode()和getDesc()方法时，实际上返回的是CachableEnum的C和D类型的对象。
+   * 缓存枚举到Cache Map 当调用getCode()和getDesc()方法时，实际上返回的是CachableEnum的C和D类型的对象。
    * 由于泛型擦除的原因，在运行时无法获取具体的泛型类型参数，因此编译器将它们擦除为Object类型。
-   * 尽管code和desc被声明为 Object类型，但由于 C和D的实际类型是在实现CachableEnum接口时确定的
+   * 尽管code和desc被声明为 Object类型，但由于C和D的实际类型是在实现CachableEnum接口时确定的
    * 因此调用getCode()和getDesc()方法返回的对象类型将与C和D的实际类型一致。
    *
    * @param implClass 实现CachableEnum接口的实现类
@@ -73,11 +92,15 @@ public class EnumCacheBuilder {
     DESC_CACHE.put(implClass, descMap);
   }
 
+  @SuppressWarnings("all")
   public static Map<Class<? extends CachableEnum<?, ?>>, Map<Object, CachableEnum<?, ?>>> getCodeCache() {
+    build();
     return CODE_CACHE;
   }
 
+  @SuppressWarnings("all")
   public static Map<Class<? extends CachableEnum<?, ?>>, Map<Object, CachableEnum<?, ?>>> getDescCache() {
+    build();
     return DESC_CACHE;
   }
 

@@ -288,6 +288,11 @@
         <artifactId>springfox-swagger-ui</artifactId>
         <version>${swagger.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>${reflections.version}</version>
+      </dependency>
 
       <!-- 自研组件 -->
       <dependency>

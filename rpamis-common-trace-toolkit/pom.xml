@@ -26,7 +26,6 @@
     <dependency>
       <groupId>com.rpamis</groupId>
       <artifactId>rpamis-common-utils</artifactId>
-      <version>${rpamis-common-utils.version}</version>
       <optional>true</optional>
     </dependency>
     <dependency>

@@ -22,4 +22,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.rpamis</groupId>
+      <artifactId>rpamis-common-dto</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

@@ -10,3 +10,10 @@ server:
   port: 8180
   servlet:
     context-path: /rpamis-architecture-build
+
+cache:
+  enums:
+    packages:
+      - com.rpamis.common.dto.enums
+      - com.rpamis.architecture.consts
+    enabled: true

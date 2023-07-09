@@ -29,6 +29,10 @@
     </dependency>
     <dependency>
       <groupId>com.rpamis</groupId>
+      <artifactId>rpamis-exception-dto</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.rpamis</groupId>
       <artifactId>rpamis-common-trace-toolkit</artifactId>
     </dependency>
     <dependency>

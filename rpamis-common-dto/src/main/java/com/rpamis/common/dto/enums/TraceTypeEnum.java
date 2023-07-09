@@ -1,12 +1,14 @@
 package com.rpamis.common.dto.enums;
 
+import com.rpamis.enums.core.CachableEnum;
+
 /**
  * Trace类型枚举
  *
  * @author benym
  * @date 2022/7/8 4:18 下午
  */
-public enum TraceTypeEnum {
+public enum TraceTypeEnum implements CachableEnum<String, String> {
 
   /**
    * rpamis默认实现
@@ -17,22 +19,31 @@ public enum TraceTypeEnum {
    */
   SKYWALK("skywalking", "skywalking实现");
 
-  private String type;
+  /**
+   * code
+   */
+  private String code;
+
+  /**
+   * desc
+   */
   private String desc;
 
-  TraceTypeEnum(String type, String desc) {
-    this.type = type;
+  TraceTypeEnum(String code, String desc) {
+    this.code = code;
     this.desc = desc;
   }
 
-  public String getType() {
-    return type;
+  @Override
+  public String getCode() {
+    return code;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setCode(String code) {
+    this.code = code;
   }
 
+  @Override
   public String getDesc() {
     return desc;
   }

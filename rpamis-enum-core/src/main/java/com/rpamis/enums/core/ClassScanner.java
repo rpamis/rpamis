@@ -37,7 +37,7 @@ public class ClassScanner {
    *
    * @return List<Class < ? extends CachableEnum < ?, ?>>>
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("all")
   public static List<Class<? extends CachableEnum<?, ?>>> getCachableEnumImplClasses() {
     Reflections reflections = new Reflections(Scanners.SubTypes);
     return reflections.getSubTypesOf(CachableEnum.class)
@@ -51,7 +51,7 @@ public class ClassScanner {
    *
    * @return List<Class < ? extends CachableEnum < ?, ?>>>
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("all")
   public static List<Class<? extends CachableEnum<?, ?>>> getCachableEnumImplClassesByPackages(
       String... paths) {
     Reflections reflections = new Reflections(paths, Scanners.SubTypes);

@@ -18,7 +18,7 @@ public class SnowflakeUtil {
 
   public static SnowflakeGenerator get() {
     if (snowflakeGenerator == null) {
-      synchronized (SnowflakeGenerator.class) {
+      synchronized (SnowflakeUtil.class) {
         if (snowflakeGenerator == null) {
           snowflakeGenerator = new SnowflakeGenerator();
         }

@@ -1,9 +1,9 @@
 package com.rpamis.common.utils;
 
-import com.rpamis.common.dto.exception.ExceptionFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.rpamis.exception.dto.ExceptionFactory;
 import java.util.Map;
 
 /**
@@ -22,7 +22,7 @@ public class JackSonUtil {
 
   public static ObjectMapper getObjectMapper() {
     if (objectMapper == null) {
-      synchronized (ObjectMapper.class) {
+      synchronized (JackSonUtil.class) {
         if (objectMapper == null) {
           objectMapper = new ObjectMapper();
         }

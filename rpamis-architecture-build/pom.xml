@@ -59,12 +59,10 @@
     <dependency>
       <groupId>com.rpamis</groupId>
       <artifactId>rpamis-common-exception</artifactId>
-      <version>${rpamis-common-exception.version}</version>
     </dependency>
     <dependency>
       <groupId>com.rpamis</groupId>
       <artifactId>rpamis-common-trace</artifactId>
-      <version>${rpamis-common-trace.version}</version>
     </dependency>
     <dependency>
       <groupId>io.springfox</groupId>
@@ -77,6 +75,10 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.rpamis</groupId>
+      <artifactId>rpamis-enum-spring-boot-starter</artifactId>
     </dependency>
   </dependencies>
 

@@ -1,7 +1,8 @@
 package com.rpamis.common.trace.core;
 
-import com.rpamis.common.dto.exception.ExceptionFactory;
 
+
+import com.rpamis.exception.dto.ExceptionFactory;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

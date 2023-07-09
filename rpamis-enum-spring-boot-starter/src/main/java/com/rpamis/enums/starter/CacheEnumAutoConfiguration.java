@@ -25,5 +25,6 @@ public class CacheEnumAutoConfiguration implements ApplicationRunner {
   @Override
   public void run(ApplicationArguments args) throws Exception {
     EnumCacheBuilder.setScanPackages(cacheEnumProperties.getPackages());
+    EnumCacheBuilder.build();
   }
 }
