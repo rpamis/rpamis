@@ -17,7 +17,7 @@ public class CacheEnumProperties {
   /**
    * 是否启用枚举缓存
    */
-  private boolean enabled = true;
+  private Boolean enabled = true;
 
   /**
    * 基本扫描路径
@@ -33,11 +33,11 @@ public class CacheEnumProperties {
     this.packages = packages;
   }
 
-  public boolean isEnabled() {
+  public Boolean getEnabled() {
     return enabled;
   }
 
-  public void setEnabled(boolean enabled) {
+  public void setEnabled(Boolean enabled) {
     this.enabled = enabled;
   }
 }

@@ -19,7 +19,7 @@ public class ExceptionProperties {
   /**
    * 是否开启全局Web异常
    */
-  private String enable = "true";
+  private String enabled = "true";
 
   /**
    * 是否开启全局RPC统一返回体
@@ -31,12 +31,12 @@ public class ExceptionProperties {
    */
   private Boolean includeExceptionClass = true;
 
-  public String getEnable() {
-    return enable;
+  public String getEnabled() {
+    return enabled;
   }
 
-  public void setEnable(String enable) {
-    this.enable = enable;
+  public void setEnabled(String enabled) {
+    this.enabled = enabled;
   }
 
   public Boolean getRpcPack() {

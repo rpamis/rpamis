@@ -3,11 +3,13 @@ package com.rpamis.architecture.config;
 import com.rpamis.architecture.consts.TemplateTypeEnum;
 import com.rpamis.architecture.pojo.Dependency;
 import com.rpamis.architecture.pojo.Project;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
 import javax.validation.Valid;
+import lombok.NoArgsConstructor;
 
 /**
  * 项目基本配置
@@ -17,6 +19,8 @@ import javax.validation.Valid;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseProjectConfig implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -35,5 +39,5 @@ public class BaseProjectConfig implements Serializable {
   /**
    * 模板类型
    */
-  private TemplateTypeEnum templateTypeEnum;
+  private TemplateTypeEnum templateType;
 }

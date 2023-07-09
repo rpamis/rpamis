@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(value = ExceptionProperties.class)
-@ConditionalOnProperty(prefix = ExceptionProperties.PREFIX, value = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = ExceptionProperties.PREFIX, value = "enabled", havingValue = "true", matchIfMissing = true)
 public class ExceptionAutoConfiguration {
 
   /**

@@ -56,7 +56,7 @@ public class EnumCacheBuilder {
    * 缓存枚举方法
    */
   private static void cacheEnums() {
-    if (scanPackages.isEmpty()) {
+    if (scanPackages == null || scanPackages.isEmpty()) {
       List<Class<? extends CachableEnum<?, ?>>> implClasses = ClassScanner.getCachableEnumImplClasses();
       for (Class<? extends CachableEnum<?, ?>> implClass : implClasses) {
         cacheEnumClass(implClass);

@@ -4,6 +4,7 @@ import com.rpamis.common.dto.enums.TraceTypeEnum;
 import com.rpamis.common.dto.trace.Trace;
 import com.rpamis.common.trace.toolkit.strategy.TraceStrategy;
 import org.slf4j.MDC;
+import org.springframework.stereotype.Component;
 
 /**
  * Rpamis Trace策略实现
@@ -11,6 +12,7 @@ import org.slf4j.MDC;
  * @author benym
  * @date 2023/7/5 10:45
  */
+@Component
 public class RpamisTraceStrategyImpl implements TraceStrategy {
 
   @Override

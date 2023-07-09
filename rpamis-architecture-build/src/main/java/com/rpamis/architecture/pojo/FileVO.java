@@ -1,7 +1,10 @@
 package com.rpamis.architecture.pojo;
 
+import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 项目文件VO
@@ -11,8 +14,11 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class FileVO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class FileVO implements Serializable {
 
+  private static final long serialVersionUID = -1011756219112553426L;
   /**
    * id
    */
@@ -22,9 +28,4 @@ public class FileVO {
    * 文件路径
    */
   private String filePath;
-
-  public FileVO(String id, String filePath) {
-    this.id = id;
-    this.filePath = filePath;
-  }
 }

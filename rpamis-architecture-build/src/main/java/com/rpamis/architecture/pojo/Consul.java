@@ -1,7 +1,10 @@
 package com.rpamis.architecture.pojo;
 
+import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Consul注册中心
@@ -11,8 +14,11 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class Consul {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Consul implements Serializable {
 
+  private static final long serialVersionUID = 2541572673289440848L;
   /**
    * host
    */

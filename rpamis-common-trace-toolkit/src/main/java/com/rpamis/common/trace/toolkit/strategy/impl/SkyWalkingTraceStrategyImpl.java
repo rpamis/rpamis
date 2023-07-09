@@ -4,6 +4,7 @@ import com.rpamis.common.dto.enums.TraceTypeEnum;
 import com.rpamis.common.dto.trace.Trace;
 import com.rpamis.common.trace.toolkit.strategy.TraceStrategy;
 import org.apache.skywalking.apm.toolkit.trace.TraceContext;
+import org.springframework.stereotype.Component;
 
 /**
  * Skywalking Trace策略实现
@@ -11,6 +12,7 @@ import org.apache.skywalking.apm.toolkit.trace.TraceContext;
  * @author benym
  * @date 2023/7/5 10:44
  */
+@Component
 public class SkyWalkingTraceStrategyImpl implements TraceStrategy {
 
   @Override

@@ -48,7 +48,7 @@ public class BuildServiceImpl implements BuildService {
   public FileVO architectureBuild(BaseProjectConfig baseProjectConfig) {
     AbstractBuildTemplate template;
     try {
-      template = templateFactory.getTemplate(baseProjectConfig.getTemplateTypeEnum());
+      template = templateFactory.getTemplate(baseProjectConfig.getTemplateType());
     } catch (Exception e) {
       throw ExceptionFactory.bizException("获取模板异常", e);
     }

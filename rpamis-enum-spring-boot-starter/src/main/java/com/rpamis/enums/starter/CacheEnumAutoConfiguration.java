@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(CacheEnumProperties.class)
-@ConditionalOnProperty(prefix = CacheEnumProperties.PREFIX, name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = CacheEnumProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 public class CacheEnumAutoConfiguration implements ApplicationRunner {
 
   @Autowired

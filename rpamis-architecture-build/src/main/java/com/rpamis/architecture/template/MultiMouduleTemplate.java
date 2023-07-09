@@ -138,7 +138,7 @@ public class MultiMouduleTemplate extends AbstractBuildTemplate {
         ftlMap.add(ProjectKey.YAML_RESOURCE_PATH, ProjectTemplate.BOOTSTRAP_YAML_NAME);
       }
       if (rpasConfig.getDependency().getDatabase() != null) {
-        if (rpasConfig.getDependency().getDatabase().getCrud()) {
+        if (Boolean.TRUE.equals(rpasConfig.getDependency().getDatabase().getCrud())) {
           // todo crud模板
           System.out.println(1);
         }

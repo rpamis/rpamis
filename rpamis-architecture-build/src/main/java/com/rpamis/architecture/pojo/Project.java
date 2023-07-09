@@ -1,11 +1,14 @@
 package com.rpamis.architecture.pojo;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import lombok.NoArgsConstructor;
 
 /**
  * 项目基本信息实体
@@ -15,8 +18,11 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @Builder
-public class Project {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Project implements Serializable {
 
+  private static final long serialVersionUID = 8725624102238392562L;
   /**
    * groupId
    */
