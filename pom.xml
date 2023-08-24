@@ -20,6 +20,7 @@
     <module>rpamis-common-trace-toolkit</module>
     <module>rpamis-exception-dto</module>
     <module>rpamis-enum-core</module>
+    <module>rpamis-extension-aspect</module>
   </modules>
 
   <properties>
