@@ -62,6 +62,13 @@ public @interface SpecifiesValueValidator {
   Class<?> enumClass() default Class.class;
 
   /**
+   * 指定枚举Class使用哪个方法进行参数比对
+   *
+   * @return String
+   */
+  String enumMethod() default "";
+
+  /**
    * 可重复校验
    */
   @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})

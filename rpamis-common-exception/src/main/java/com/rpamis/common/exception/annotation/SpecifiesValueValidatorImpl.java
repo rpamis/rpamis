@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.util.StringUtils;
 
 /**
  * 特定值校验器实现
@@ -26,6 +27,8 @@ public class SpecifiesValueValidatorImpl implements
 
   private Set<Integer> intSet;
 
+  private String enumMethod;
+
   @Override
   public void initialize(SpecifiesValueValidator constraintAnnotation) {
     String[] strGroup = constraintAnnotation.strGroup();
@@ -33,6 +36,7 @@ public class SpecifiesValueValidatorImpl implements
     int[] intGroup = constraintAnnotation.intGroup();
     intSet = Arrays.stream(intGroup).boxed().collect(Collectors.toSet());
     enumClass = constraintAnnotation.enumClass();
+    enumMethod = constraintAnnotation.enumMethod();
   }
 
   /**
@@ -49,7 +53,7 @@ public class SpecifiesValueValidatorImpl implements
         return true;
       }
       if (enumClass.isEnum()) {
-        return validEnum(value, enumClass);
+        return validEnum(value, enumClass, enumMethod);
       }
       if (value instanceof String && strSet.contains(value)) {
         return true;
@@ -68,12 +72,13 @@ public class SpecifiesValueValidatorImpl implements
     return false;
   }
 
-  public static boolean validEnum(Object value, Class<?> enumClass)
+  public static boolean validEnum(Object value, Class<?> enumClass, String enumMethod)
       throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    String methodName = StringUtils.hasLength(enumMethod) ? enumMethod : "getCode";
     // 获取传入的枚举class的所有定义的枚举，反射获取code判断是否和入参相同
     Object[] enumConstants = enumClass.getEnumConstants();
     for (Object enumConstant : enumConstants) {
-      Method method = enumClass.getDeclaredMethod("getCode");
+      Method method = enumClass.getDeclaredMethod(methodName);
       Object invokeResult = method.invoke(enumConstant);
       if (invokeResult.equals(value)) {
         return true;
