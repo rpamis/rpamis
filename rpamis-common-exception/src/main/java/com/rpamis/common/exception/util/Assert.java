@@ -1,4 +1,4 @@
-package com.rpamis.common.exception.exception;
+package com.rpamis.common.exception.util;
 
 import com.rpamis.common.exception.accessor.MethodAccessor;
 import com.rpamis.exception.dto.AbstractException;
@@ -23,6 +23,7 @@ import java.util.Map;
  */
 public abstract class Assert {
 
+  // todo 适配状态码接口推断
   private Assert() {
     throw new IllegalStateException("抽象类，禁止实例化");
   }
