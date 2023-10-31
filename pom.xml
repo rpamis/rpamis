@@ -21,6 +21,7 @@
     <module>rpamis-exception-dto</module>
     <module>rpamis-enum-core</module>
     <module>rpamis-extension-aspect</module>
+    <module>rpamis-extension-spi</module>
   </modules>
 
   <properties>
