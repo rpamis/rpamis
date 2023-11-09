@@ -16,17 +16,32 @@ public class SpiLoader<T> {
 
   private final Class<?> type;
 
+  /**
+   * Spi Ioc工厂
+   */
   private final SpiIocFactory objectFactory;
 
+  /**
+   * Spi加载策略数组
+   */
   private static volatile SpiLoadingStrategy[] spiLoadingStrategies = initSpiLoadingStrategies();
 
+  /**
+   * SpiLoader缓存，Spi接口->SpiLoader
+   */
   private static final ConcurrentHashMap<Class<?>, SpiLoader<?>> SPI_LOADERS = new ConcurrentHashMap<>(
+      64);
+
+  /**
+   *
+   */
+  private final ConcurrentHashMap<String, SpiInstancesContainer<Object>> cachedSpiInstances = new ConcurrentHashMap<>(
       64);
 
   private SpiLoader(Class<?> type) {
     this.type = type;
     this.objectFactory =
-        type == SpiIocFactory.class ? null : (SpiIocFactory) getSpiLoader(SpiIocFactory.class);
+        type == SpiIocFactory.class ? null : getSpiLoader(SpiIocFactory.class).getSpiImplByName("rpamisSpiIocFactory");
   }
 
   /**
@@ -59,6 +74,39 @@ public class SpiLoader<T> {
       spiLoader = (SpiLoader<T>) SPI_LOADERS.get(type);
     }
     return spiLoader;
+  }
+
+  /**
+   * 根据名称获取Spi实现类
+   *
+   * @param name name
+   * @return T
+   */
+  @SuppressWarnings("unchecked")
+  public T getSpiImplByName(String name) {
+    if (name == null || "".equals(name)) {
+      throw new IllegalArgumentException("Spi Impl name == null");
+    }
+    SpiInstancesContainer<Object> container = this.cachedSpiInstances.get(name);
+    if (container == null) {
+      this.cachedSpiInstances.putIfAbsent(name, new SpiInstancesContainer<>());
+      container = this.cachedSpiInstances.get(name);
+    }
+    Object instance = container.getValue();
+    if (instance == null) {
+      synchronized (container) {
+        instance = container.getValue();
+        if (instance == null) {
+          instance = this.createSpiImpl(name);
+          container.setValue(instance);
+        }
+      }
+    }
+    return (T) instance;
+  }
+
+  private T createSpiImpl(String name) {
+    return null;
   }
 
   /**

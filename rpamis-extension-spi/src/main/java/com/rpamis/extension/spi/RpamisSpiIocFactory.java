@@ -10,6 +10,10 @@ public class RpamisSpiIocFactory implements SpiIocFactory {
 
   @Override
   public <T> T getSpi(Class<T> type, String name) {
+    if (type.isInterface() && type.isAnnotationPresent(RpamisSpi.class)) {
+      SpiLoader<T> spiLoader = SpiLoader.getSpiLoader(type);
+
+    }
     return null;
   }
 }
