@@ -1,21 +1,21 @@
 package com.rpamis.extension.spi;
 
 /**
- * Spi实例工厂
+ * 插件实例工厂
  *
  * @author benym
  * @date 2023/11/8 18:44
  */
-@RpamisSpi("spiFactory")
-public interface SpiIocFactory {
+@RpamisSpi
+public interface PluginInjector {
 
   /**
-   * 获取已实例化的Spi
+   * 获取Spi实现类
    *
    * @param type type
    * @param name name
    * @return T
    * @param <T> T
    */
-  <T> T getSpi(Class<T> type, String name);
+  <T> T getSpiImpl(Class<T> type, String name);
 }

@@ -1,4 +1,4 @@
-package com.rpamis.extension.spi;
+package com.rpamis.extension.spi.loading;
 
 /**
  * 原生Java spi加载策略

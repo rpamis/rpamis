@@ -1,16 +1,16 @@
 package com.rpamis.extension.spi;
 
 /**
- * Spi示例容器
+ * 通用实例容器
  *
  * @author benym
  * @date 2023/11/9 17:20
  */
-public class SpiInstancesContainer<T> {
+public class UniversalContainer<T> {
 
   private volatile T value;
 
-  public SpiInstancesContainer() {
+  public UniversalContainer() {
   }
 
   public T getValue() {

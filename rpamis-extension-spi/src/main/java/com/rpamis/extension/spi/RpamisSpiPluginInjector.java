@@ -1,18 +1,20 @@
 package com.rpamis.extension.spi;
 
 /**
- * RpamisSpi实例工厂
+ * RpamisSpi插件注入者
  *
  * @author benym
  * @date 2023/11/8 18:46
  */
-public class RpamisSpiIocFactory implements SpiIocFactory {
+public class RpamisSpiPluginInjector implements PluginInjector {
 
   @Override
-  public <T> T getSpi(Class<T> type, String name) {
+  public <T> T getSpiImpl(Class<T> type, String name) {
     if (type.isInterface() && type.isAnnotationPresent(RpamisSpi.class)) {
       SpiLoader<T> spiLoader = SpiLoader.getSpiLoader(type);
-
+      if (spiLoader.getSupportedSpiImpl().size() > 0) {
+        return spiLoader.getSpiImpl(name);
+      }
     }
     return null;
   }

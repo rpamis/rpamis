@@ -1,0 +1,3 @@
+com.rpamis.extension.spi.loading.RpamisInternalSpiLoadingStrategy
+com.rpamis.extension.spi.loading.RpamisExternalSpiLoadingStrategy
+com.rpamis.extension.spi.loading.NativeSpiLoadingStrategy

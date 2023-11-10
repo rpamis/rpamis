@@ -1,8 +1,14 @@
 package com.rpamis.extension.spi;
 
+import com.rpamis.extension.spi.loading.SpiLoadingStrategy;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.StreamSupport;
 
@@ -17,9 +23,9 @@ public class SpiLoader<T> {
   private final Class<?> type;
 
   /**
-   * Spi Ioc工厂
+   * 插件Ioc工厂
    */
-  private final SpiIocFactory objectFactory;
+  private final PluginInjector pluginInjector;
 
   /**
    * Spi加载策略数组
@@ -33,15 +39,27 @@ public class SpiLoader<T> {
       64);
 
   /**
-   *
+   * Spi name->Spi impl实例
    */
-  private final ConcurrentHashMap<String, SpiInstancesContainer<Object>> cachedSpiInstances = new ConcurrentHashMap<>(
+  private final ConcurrentHashMap<String, UniversalContainer<Object>> cachedSpiInstances = new ConcurrentHashMap<>(
       64);
+
+  /**
+   * Spi Class->Spi impl实例
+   */
+  private final ConcurrentHashMap<Class<?>, Object> cachedClassToSpiImpl = new ConcurrentHashMap<>(
+      64);
+
+
+  /**
+   * Spi name->Spi impl Class实例
+   */
+  private final UniversalContainer<Map<String, Class<?>>> cachedNameToSpiImplClasses = new UniversalContainer<>();
 
   private SpiLoader(Class<?> type) {
     this.type = type;
-    this.objectFactory =
-        type == SpiIocFactory.class ? null : getSpiLoader(SpiIocFactory.class).getSpiImplByName("rpamisSpiIocFactory");
+    this.pluginInjector =
+        type == PluginInjector.class ? null : getSpiLoader(PluginInjector.class).getAccommodator();
   }
 
   /**
@@ -83,13 +101,13 @@ public class SpiLoader<T> {
    * @return T
    */
   @SuppressWarnings("unchecked")
-  public T getSpiImplByName(String name) {
+  public T getSpiImpl(String name) {
     if (name == null || "".equals(name)) {
       throw new IllegalArgumentException("Spi Impl name == null");
     }
-    SpiInstancesContainer<Object> container = this.cachedSpiInstances.get(name);
+    UniversalContainer<Object> container = this.cachedSpiInstances.get(name);
     if (container == null) {
-      this.cachedSpiInstances.putIfAbsent(name, new SpiInstancesContainer<>());
+      this.cachedSpiInstances.putIfAbsent(name, new UniversalContainer<>());
       container = this.cachedSpiInstances.get(name);
     }
     Object instance = container.getValue();
@@ -105,8 +123,103 @@ public class SpiLoader<T> {
     return (T) instance;
   }
 
+  /**
+   * 创建Spi实现类实例
+   *
+   * @param name spi实现类名称
+   * @return T
+   */
+  @SuppressWarnings("unchecked")
   private T createSpiImpl(String name) {
-    return null;
+    Class<?> clazz = this.getSpiImplClasses().get(name);
+    if (clazz == null) {
+      throw new IllegalStateException("No such Spi implement " + type.getName() + "by name" + name);
+    }
+    try {
+      T spiImplInstance = (T) cachedClassToSpiImpl.get(clazz);
+      if (spiImplInstance == null) {
+        cachedClassToSpiImpl.putIfAbsent(clazz, clazz.newInstance());
+        spiImplInstance = (T) cachedClassToSpiImpl.get(clazz);
+        injectSpiImpl(spiImplInstance);
+      }
+      return spiImplInstance;
+    } catch (Throwable e) {
+      throw new IllegalStateException("Extension instance (name: " + name + ", class: " +
+          type + ") couldn't be instantiated: " + e.getMessage(), e);
+    }
+  }
+
+  /**
+   * 注入Spi实现类
+   *
+   * @param spiImplInstance spiImplInstance
+   */
+  private void injectSpiImpl(T spiImplInstance) {
+
+  }
+
+  /**
+   * 获取支持的Spi实现类名称Set
+   *
+   * @return Set<String>
+   */
+  public Set<String> getSupportedSpiImpl() {
+    Map<String, Class<?>> classes = getSpiImplClasses();
+    return Collections.unmodifiableSet(new TreeSet<>(classes.keySet()));
+  }
+
+  /**
+   * 获取Spi名称->Spi实现类Class的缓存
+   *
+   * @return Map<String, Class < ?>>
+   */
+  private Map<String, Class<?>> getSpiImplClasses() {
+    Map<String, Class<?>> spiToImplClassMap = cachedNameToSpiImplClasses.getValue();
+    if (spiToImplClassMap == null) {
+      synchronized (cachedNameToSpiImplClasses) {
+        spiToImplClassMap = cachedNameToSpiImplClasses.getValue();
+        if (spiToImplClassMap == null) {
+          try {
+            spiToImplClassMap = loadSpiImplClasses();
+          } catch (InterruptedException e) {
+            throw new IllegalStateException(
+                "Exception occurred when loading spi implement class (interface: " + type + ")", e);
+          }
+          cachedNameToSpiImplClasses.setValue(spiToImplClassMap);
+        }
+      }
+    }
+    return spiToImplClassMap;
+  }
+
+  /**
+   * 根据Spi加载策略，加载Spi实现类Class进入缓存
+   *
+   * @return Map<String, Class < ?>>
+   */
+  private Map<String, Class<?>> loadSpiImplClasses() throws InterruptedException {
+    Map<String, Class<?>> spiToImplClassMap = new HashMap<>(64);
+    for (SpiLoadingStrategy strategy : spiLoadingStrategies) {
+      loadSpiPath(spiToImplClassMap, strategy, type.getName());
+    }
+    return spiToImplClassMap;
+  }
+
+
+  private void loadSpiPath(Map<String, Class<?>> spiToImplClassMap, SpiLoadingStrategy strategy,
+      String spiInterfaceReference) {
+    String fileName = strategy.spiPath() + spiInterfaceReference;
+
+  }
+
+  /**
+   * 获取自适应插件注入者
+   *
+   * @return PluginInjector
+   */
+  @SuppressWarnings("unchecked")
+  public T getAccommodator() {
+    return (T) new SelfAdaptivePluginInjector();
   }
 
   /**

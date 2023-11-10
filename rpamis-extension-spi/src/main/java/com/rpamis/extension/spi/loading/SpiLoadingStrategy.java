@@ -1,4 +1,6 @@
-package com.rpamis.extension.spi;
+package com.rpamis.extension.spi.loading;
+
+import com.rpamis.extension.spi.loading.LoadPriority;
 
 /**
  * Spi加载策略接口

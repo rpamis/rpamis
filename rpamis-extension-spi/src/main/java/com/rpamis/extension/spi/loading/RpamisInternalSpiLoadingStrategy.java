@@ -1,4 +1,4 @@
-package com.rpamis.extension.spi;
+package com.rpamis.extension.spi.loading;
 
 /**
  * Rpamis内部Spi加载策略
@@ -6,7 +6,7 @@ package com.rpamis.extension.spi;
  * @author benym
  * @date 2023/10/31 23:35
  */
-public class RpamisInternalSpiLoadingStrategy implements SpiLoadingStrategy{
+public class RpamisInternalSpiLoadingStrategy implements SpiLoadingStrategy {
 
   @Override
   public String spiPath() {

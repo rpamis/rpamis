@@ -1,0 +1,2 @@
+selfAdaptivePluginInjector=com.rpamis.extension.spi.SelfAdaptivePluginInjector
+rpamisSpiPluginInjector=com.rpamis.extension.spi.RpamisSpiPluginInjector

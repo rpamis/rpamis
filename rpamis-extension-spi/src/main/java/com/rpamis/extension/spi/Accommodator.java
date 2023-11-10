@@ -7,21 +7,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Rpamis Spi注解
+ * 适应者注解
  *
  * @author benym
- * @date 2023/11/1 0:03
+ * @date 2023/11/10 16:26
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-public @interface RpamisSpi {
+@Target({ElementType.TYPE, ElementType.METHOD})
+public @interface Accommodator {
 
   /**
-   * 默认使用的Spi实现类名称
+   * 适应者名称
    *
    * @return String
    */
   String value() default "";
-
 }

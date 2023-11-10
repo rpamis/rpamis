@@ -1,4 +1,4 @@
-package com.rpamis.extension.spi;
+package com.rpamis.extension.spi.loading;
 
 import java.util.Comparator;
 
