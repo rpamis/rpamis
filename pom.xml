@@ -4,13 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>com.rpamis</groupId>
-    <artifactId>rpamis-boot-starter-parent</artifactId>
-    <version>1.0.0.RELEASE</version>
-    <relativePath/>
-  </parent>
-  
+  <groupId>com.rpamis</groupId>
   <artifactId>rpamis</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
@@ -33,6 +27,14 @@
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- 开源相关 -->
+    <jacoco.version>0.8.10</jacoco.version>
+    <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+    <maven-source-plugin.version>2.4</maven-source-plugin.version>
+    <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+    <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+    <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
   </properties>
 
   <distributionManagement>

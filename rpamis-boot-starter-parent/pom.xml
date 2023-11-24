@@ -75,14 +75,6 @@
     <rpamis-exception-dto.version>1.0.0</rpamis-exception-dto.version>
     <rpamis-enum-core.version>1.0.0</rpamis-enum-core.version>
     <rpamis-exception-spring-boot-starter.version>1.0.0</rpamis-exception-spring-boot-starter.version>
-    <!-- 开源相关 -->
-    <jacoco.version>0.8.10</jacoco.version>
-    <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
-    <maven-source-plugin.version>2.4</maven-source-plugin.version>
-    <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
-    <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
-    <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
   </properties>
 
   <dependencyManagement>
