@@ -8,6 +8,8 @@
   <artifactId>rpamis</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0</version>
+  <name>rpamis</name>
+  <description>rpamis</description>
   <modules>
     <module>rpamis-boot-starter-parent</module>
     <module>rpamis-common-dto</module>
@@ -36,6 +38,13 @@
     <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
   </properties>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
 
   <distributionManagement>
     <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
