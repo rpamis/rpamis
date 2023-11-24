@@ -37,7 +37,7 @@ import static org.apache.dubbo.common.constants.CommonConstants.PROVIDER;
  * @author benym
  * @date 2022/11/3 16:31
  */
-@Activate(group = {PROVIDER, CONSUMER}, order = Ordered.HIGHEST_PRECEDENCE)
+@Activate(group = {PROVIDER}, order = Ordered.HIGHEST_PRECEDENCE)
 public class DubboExceptionFilter implements Filter {
 
   private static final Logger logger = LoggerFactory.getLogger(DubboExceptionFilter.class);
@@ -91,6 +91,8 @@ public class DubboExceptionFilter implements Filter {
             return result;
           }
           result.setValue(value);
+          // 兼容dubbo3.x
+          result.setException(null);
         }
         return result;
       } catch (Exception e) {
