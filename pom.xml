@@ -10,6 +10,7 @@
   <version>1.0.0</version>
   <name>rpamis</name>
   <description>rpamis</description>
+  <url>https://github.com/benym/rpamis</url>
   <modules>
     <module>rpamis-boot-starter-parent</module>
     <module>rpamis-common-dto</module>
