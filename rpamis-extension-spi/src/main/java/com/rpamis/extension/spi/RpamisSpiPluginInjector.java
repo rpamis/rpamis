@@ -12,7 +12,7 @@ public class RpamisSpiPluginInjector implements PluginInjector {
   public <T> T getSpiImpl(Class<T> type, String name) {
     if (type.isInterface() && type.isAnnotationPresent(RpamisSpi.class)) {
       SpiLoader<T> spiLoader = SpiLoader.getSpiLoader(type);
-      if (spiLoader.getSupportedSpiImpl().size() > 0) {
+      if (!spiLoader.getSupportedSpiImpl().isEmpty()) {
         return spiLoader.getSpiImpl(name);
       }
     }
