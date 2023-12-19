@@ -40,10 +40,13 @@ public class SpiLoader<T> {
 
   private final Map<String, IllegalStateException> exceptions = new ConcurrentHashMap<>();
 
+  /**
+   * 当前获取Spi的接口Class
+   */
   private final Class<?> type;
 
   /**
-   * 插件Ioc工厂
+   * 插件工厂
    */
   private final PluginInjector pluginInjector;
 
@@ -99,8 +102,7 @@ public class SpiLoader<T> {
    */
   private static SpiLoadingStrategy[] initSpiLoadingStrategies() {
     return StreamSupport.stream(ServiceLoader.load(SpiLoadingStrategy.class).spliterator(), false)
-        .sorted()
-        .toArray(SpiLoadingStrategy[]::new);
+        .sorted().toArray(SpiLoadingStrategy[]::new);
   }
 
   @SuppressWarnings("unchecked")
@@ -112,9 +114,9 @@ public class SpiLoader<T> {
       throw new IllegalArgumentException("Spi type (" + type + ") is not an interface!");
     }
     if (!withSpiAnnotation(type)) {
-      throw new IllegalArgumentException("Spi type (" + type +
-          ") is not an spi, because it is NOT annotated with @" + RpamisSpi.class.getSimpleName()
-          + "!");
+      throw new IllegalArgumentException(
+          "Spi type (" + type + ") is not an spi, because it is NOT annotated with @"
+              + RpamisSpi.class.getSimpleName() + "!");
     }
     SpiLoader<T> spiLoader = (SpiLoader<T>) SPI_LOADERS.get(type);
     if (spiLoader == null) {
@@ -153,14 +155,19 @@ public class SpiLoader<T> {
     return (T) instance;
   }
 
+  /**
+   * 根据Spi impl名称组装exception信息
+   *
+   * @param name name
+   * @return IllegalStateException
+   */
   private IllegalStateException findException(String name) {
     for (Map.Entry<String, IllegalStateException> entry : exceptions.entrySet()) {
       if (entry.getKey().toLowerCase().contains(name.toLowerCase())) {
         return entry.getValue();
       }
     }
-    StringBuilder buf = new StringBuilder(
-        "No such extension " + type.getName() + " by name " + name);
+    StringBuilder buf = new StringBuilder("No such spi " + type.getName() + " by name " + name);
     int i = 1;
     for (Map.Entry<String, IllegalStateException> entry : exceptions.entrySet()) {
       if (i == 1) {
@@ -197,8 +204,9 @@ public class SpiLoader<T> {
       }
       return spiImplInstance;
     } catch (Throwable e) {
-      throw new IllegalStateException("Extension instance (name: " + name + ", class: " +
-          type + ") couldn't be instantiated: " + e.getMessage(), e);
+      throw new IllegalStateException(
+          "Extension instance (name: " + name + ", class: " + type + ") couldn't be instantiated: "
+              + e.getMessage(), e);
     }
   }
 
@@ -249,7 +257,7 @@ public class SpiLoader<T> {
       }
     } catch (Exception e) {
       String exceptionMessage = String.format(
-          "Failed to inject via method %s  of interface %s, because: %s", method.getName(),
+          "Failed to inject via method %s of interface %s, because: %s", method.getName(),
           type.getName(), e);
       LOGGER.log(Level.SEVERE, exceptionMessage);
     }
@@ -262,8 +270,7 @@ public class SpiLoader<T> {
    * @return boolean
    */
   private boolean isSetter(Method method) {
-    return method.getName().startsWith("set")
-        && method.getParameterTypes().length == 1
+    return method.getName().startsWith("set") && method.getParameterTypes().length == 1
         && Modifier.isPublic(method.getModifiers());
   }
 
@@ -288,8 +295,8 @@ public class SpiLoader<T> {
    */
   private static boolean isPrimitive(Class<?> cls) {
     return cls.isPrimitive() || cls == String.class || cls == Boolean.class
-        || cls == Character.class
-        || Number.class.isAssignableFrom(cls) || Date.class.isAssignableFrom(cls);
+        || cls == Character.class || Number.class.isAssignableFrom(cls)
+        || Date.class.isAssignableFrom(cls);
   }
 
   /**
@@ -311,6 +318,21 @@ public class SpiLoader<T> {
   public Set<String> getSupportedSpiImpl() {
     Map<String, Class<?>> classes = getSpiImplClasses();
     return Collections.unmodifiableSet(new TreeSet<>(classes.keySet()));
+  }
+
+  /**
+   * 根据class和spi实现类name获取spi实现类实例
+   *
+   * @param type type
+   * @param name name
+   * @return T
+   */
+  public static <T> T getSpiImplByClassAndName(Class<T> type, String name) {
+    SpiLoader<T> spiLoader = SpiLoader.getSpiLoader(type);
+    if (!spiLoader.getSupportedSpiImpl().isEmpty()) {
+      return spiLoader.getSpiImpl(name);
+    }
+    return null;
   }
 
   /**
@@ -338,6 +360,19 @@ public class SpiLoader<T> {
   }
 
   /**
+   * 获取默认的Spi实现类
+   *
+   * @return T
+   */
+  public T getDefaultSpiImpl() {
+    getSpiImplClasses();
+    if (null == cachedDefaultName || cachedDefaultName.length() == 0) {
+      return null;
+    }
+    return getSpiImpl(cachedDefaultName);
+  }
+
+  /**
    * 提取Spi注解上默认的Spi名称，并进行缓存
    */
   private void cacheDefaultSpiName() {
@@ -345,13 +380,13 @@ public class SpiLoader<T> {
     if (annotation == null) {
       return;
     }
-    String value = annotation.value();
-    if ((value = value.trim()).length() > 0) {
+    String value = annotation.value().trim();
+    if (value.length() > 0) {
       String[] names = NAME_SEPARATOR.split(value);
       if (names.length > 1) {
         throw new IllegalStateException(
-            "More than 1 default spi name on spi " + type.getName()
-                + ": " + Arrays.toString(names));
+            "More than 1 default spi name on spi " + type.getName() + ": " + Arrays.toString(
+                names));
       }
       if (names.length == 1) {
         cachedDefaultName = names[0];
@@ -399,8 +434,9 @@ public class SpiLoader<T> {
         }
       }
     } catch (Throwable e) {
-      LOGGER.log(Level.SEVERE, "Exception when load extension class(interface: " +
-          type + ", description file: " + fileName + ").", e);
+      LOGGER.log(Level.SEVERE,
+          "Exception when load extension class(interface: " + type + ", description file: "
+              + fileName + ").", e);
     }
   }
 
@@ -415,8 +451,7 @@ public class SpiLoader<T> {
       URL resourceUrl) {
     try {
       try (BufferedReader reader = new BufferedReader(
-          new InputStreamReader(resourceUrl.openStream(),
-              StandardCharsets.UTF_8))) {
+          new InputStreamReader(resourceUrl.openStream(), StandardCharsets.UTF_8))) {
         String line;
         while ((line = reader.readLine()) != null) {
           final int ci = line.indexOf('#');
@@ -446,8 +481,9 @@ public class SpiLoader<T> {
         }
       }
     } catch (Throwable e) {
-      LOGGER.log(Level.SEVERE, "Exception when load extension class(interface: " +
-          type + ", class file: " + resourceUrl + ") in " + resourceUrl, e);
+      LOGGER.log(Level.SEVERE,
+          "Exception when load extension class(interface: " + type + ", class file: " + resourceUrl
+              + ") in " + resourceUrl, e);
     }
   }
 
@@ -455,9 +491,9 @@ public class SpiLoader<T> {
       String name) {
     // 判断class是否实现了type类型的接口
     if (!type.isAssignableFrom(clazz)) {
-      throw new IllegalStateException("Error when load extension class(interface: " +
-          type + ", class line: " + clazz.getName() + "), class "
-          + clazz.getName() + "is not subtype of interface.");
+      throw new IllegalStateException(
+          "Error when load extension class(interface: " + type + ", class line: " + clazz.getName()
+              + "), class " + clazz.getName() + "is not subtype of interface.");
     }
     // 如果是适应者则跳过
     if (clazz.isAnnotationPresent(Accommodator.class)) {
