@@ -101,6 +101,9 @@
         <rpamis-exception-spring-boot-starter.version>1.0.0</rpamis-exception-spring-boot-starter.version>
         <rpamis-extension-aspect.version>1.0.0</rpamis-extension-aspect.version>
         <rpamis-extension-spi.version>1.0.1</rpamis-extension-spi.version>
+        <rpamis-security-annotation.version>1.0.1</rpamis-security-annotation.version>
+        <rpamis-security-spring-boot-starter.version>1.0.1</rpamis-security-spring-boot-starter.version>
+        <rpamis-security-test.version>1.0.1</rpamis-security-test.version>
       </properties>
       <distributionManagement>
         <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
@@ -144,6 +147,9 @@
         <rpamis-exception-spring-boot-starter.version>1.0.0-SNAPSHOT</rpamis-exception-spring-boot-starter.version>
         <rpamis-extension-aspect.version>1.0.0-SNAPSHOT</rpamis-extension-aspect.version>
         <rpamis-extension-spi.version>1.0.0-SNAPSHOT</rpamis-extension-spi.version>
+        <rpamis-security-annotation.version>1.0.0-SNAPSHOT</rpamis-security-annotation.version>
+        <rpamis-security-spring-boot-starter.version>1.0.0-SNAPSHOT</rpamis-security-spring-boot-starter.version>
+        <rpamis-security-test.version>1.0.0-SNAPSHOT</rpamis-security-test.version>
       </properties>
       <distributionManagement>
         <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
@@ -440,6 +446,26 @@
         <groupId>com.rpamis</groupId>
         <artifactId>rpamis-extension-aspect</artifactId>
         <version>${rpamis-extension-spi.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-security-annotation</artifactId>
+        <version>${rpamis-security-annotation.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-security-annotation</artifactId>
+        <version>${rpamis-security-annotation.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-security-spring-boot-starter</artifactId>
+        <version>${rpamis-security-spring-boot-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-security-test</artifactId>
+        <version>${rpamis-security-test.version}</version>
       </dependency>
 
     </dependencies>
