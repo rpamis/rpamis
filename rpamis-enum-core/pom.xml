@@ -5,13 +5,13 @@
   <parent>
     <groupId>com.rpamis</groupId>
     <artifactId>rpamis-boot-starter-parent</artifactId>
-    <version>1.0.0.RELEASE</version>
-    <relativePath/>
+    <version>1.0.2-SNAPSHOT</version>
+    <relativePath>../rpamis-boot-starter-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>rpamis-enum-core</artifactId>
-  <version>1.0.0</version>
+  <version>${rpamis-enum-core.version}</version>
   <name>rpamis-enum-core</name>
   <packaging>jar</packaging>
   <description>rpamis-enum-core</description>

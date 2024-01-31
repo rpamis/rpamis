@@ -7,10 +7,10 @@
   <groupId>com.rpamis</groupId>
   <artifactId>rpamis</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>rpamis</name>
   <description>rpamis</description>
-  <url>https://github.com/benym/rpamis</url>
+  <url>https://github.com/rpamis/rpamis</url>
   <modules>
     <module>rpamis-boot-starter-parent</module>
     <module>rpamis-common-dto</module>
@@ -38,6 +38,8 @@
     <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
     <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+    <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+    <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
   </properties>
 
   <licenses>
@@ -47,17 +49,65 @@
     </license>
   </licenses>
 
-  <distributionManagement>
-    <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
-    <snapshotRepository>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <distributionManagement>
+        <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
+        <repository>
+          <id>release</id>
+          <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+      </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <version>${maven-release-plugin.version}</version>
+            <configuration>
+              <autoVersionSubmodules>true</autoVersionSubmodules>
+              <useReleaseProfile>false</useReleaseProfile>
+              <releaseProfiles>release</releaseProfiles>
+              <goals>deploy</goals>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>sonatype</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-    </snapshotRepository>
-    <repository>
-      <id>sonatype</id>
-      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <distributionManagement>
+        <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
+        <snapshotRepository>
+          <id>sonatype</id>
+          <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+          <id>sonatype</id>
+          <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>${nexus-staging-maven-plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>sonatype</serverId>
+              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <build>
     <plugins>
@@ -155,14 +205,14 @@
 
   <!--url中配自己的项目地址,connection配自己项目地址加git,最后配自己对应账号主页-->
   <scm>
-    <url>git@github.com:benym/rpamis.git</url>
-    <connection>scm:git@github.com:benym/rpamis.git</connection>
-    <developerConnection>https://github.com/benym</developerConnection>
+    <url>git@github.com:rpamis/rpamis.git</url>
+    <connection>scm:git@github.com:rpamis/rpamis.git</connection>
+    <developerConnection>https://github.com/rpamis</developerConnection>
   </scm>
 
   <issueManagement>
     <system>Github Issue</system>
-    <url>https://github.com/benym/rpamis/issues</url>
+    <url>https://github.com/rpamis/rpamis/issues</url>
   </issueManagement>
 
   <!--开发者信息-->

@@ -5,13 +5,13 @@
   <parent>
     <groupId>com.rpamis</groupId>
     <artifactId>rpamis-boot-starter-parent</artifactId>
-    <version>1.0.0.RELEASE</version>
-    <relativePath/>
+    <version>1.0.2-SNAPSHOT</version>
+    <relativePath>../rpamis-boot-starter-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>rpamis-common-trace-toolkit</artifactId>
-  <version>1.0.0</version>
+  <version>${rpamis-common-trace-toolkit.version}</version>
   <name>rpamis-common-trace-toolkit</name>
   <packaging>jar</packaging>
   <description>rpamis-common-trace-toolkit</description>

@@ -5,13 +5,13 @@
   <parent>
     <groupId>com.rpamis</groupId>
     <artifactId>rpamis-boot-starter-parent</artifactId>
-    <version>1.0.1.RELEASE</version>
-    <relativePath/>
+    <version>1.0.2-SNAPSHOT</version>
+    <relativePath>../rpamis-boot-starter-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>rpamis-extension-spi</artifactId>
-  <version>1.0.1</version>
+  <version>${rpamis-extension-spi.version}</version>
   <name>rpamis-extension-spi</name>
   <packaging>jar</packaging>
   <description>rpamis-extension-spi</description>
