@@ -67,6 +67,7 @@ public class InitConfig implements CommandLineRunner {
       //检查项目运行时的src下的对应路径
       File newFile = new File(ftlPath);
       //读取ftl复制一份到cache路径下
+      // 这里其实直传文件名就行了，如ClassPathResource classPathResource = new ClassPathResource(ftlName)
       ClassPathResource classPathResource = new ClassPathResource
           (sourceTemplatesPath + InitConfig.PARENT_DIR_MAP.get(ftlName) + File.separator + ftlName);
       InputStream ftlStream = classPathResource.getInputStream();
