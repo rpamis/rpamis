@@ -207,7 +207,7 @@
   <scm>
     <url>git@github.com:rpamis/rpamis.git</url>
     <connection>scm:git@github.com:rpamis/rpamis.git</connection>
-    <developerConnection>https://github.com/rpamis</developerConnection>
+    <developerConnection>scm:https://github.com/rpamis</developerConnection>
   </scm>
 
   <issueManagement>
