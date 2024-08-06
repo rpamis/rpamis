@@ -35,7 +35,7 @@
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     <!-- Spring -->
     <springboot.version>2.3.4.RELEASE</springboot.version>
-    <springcloud.version>Greenwich.SR2</springcloud.version>
+    <springcloud.version>Hoxton.SR10</springcloud.version>
     <consul.version>2.2.5.RELEASE</consul.version>
     <!-- RPC -->
     <feign.version>2.1.5.RELEASE</feign.version>
