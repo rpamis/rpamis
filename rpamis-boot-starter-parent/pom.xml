@@ -54,7 +54,7 @@
     <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
     <mysql.version>8.0.20</mysql.version>
     <mariadb.version>2.6.2</mariadb.version>
-    <shardingsphere.version>4.0.1</shardingsphere.version>
+    <shardingsphere.version>4.1.1</shardingsphere.version>
     <!-- 序列化 -->
     <jackson-databind.version>2.13.2.2</jackson-databind.version>
     <jackson.version>2.13.2</jackson.version>
