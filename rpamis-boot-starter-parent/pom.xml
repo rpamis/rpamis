@@ -7,7 +7,7 @@
   <parent>
     <artifactId>spring-boot-dependencies</artifactId>
     <groupId>org.springframework.boot</groupId>
-    <version>2.3.4.RELEASE</version>
+    <version>3.3.2</version>
     <relativePath/>
   </parent>
 
@@ -34,7 +34,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     <!-- Spring -->
-    <springboot.version>2.3.4.RELEASE</springboot.version>
+    <springboot.version>3.3.2</springboot.version>
     <springcloud.version>Greenwich.SR2</springcloud.version>
     <consul.version>2.2.5.RELEASE</consul.version>
     <!-- RPC -->
