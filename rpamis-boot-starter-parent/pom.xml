@@ -61,7 +61,7 @@
     <jsoup.version>1.14.2</jsoup.version>
     <json-smart.version>2.4.7</json-smart.version>
     <!-- Tomcat -->
-    <tomcat-embed.version>9.0.50</tomcat-embed.version>
+    <tomcat-embed.version>10.1.26</tomcat-embed.version>
     <!-- 工具类 -->
     <cglib-nodep.version>3.3.0</cglib-nodep.version>
     <aspectj-aspectjweaver.version>1.9.5</aspectj-aspectjweaver.version>
