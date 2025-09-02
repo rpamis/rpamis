@@ -15,18 +15,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class SkyWalkingTraceStrategyImpl implements TraceStrategy {
 
-  @Override
-  public Trace generateTrace() {
-    String traceId = TraceContext.traceId();
-    String spanId = String.valueOf(TraceContext.spanId());
-    Trace trace = new Trace();
-    trace.setTraceId(traceId);
-    trace.setSpanId(spanId);
-    return trace;
-  }
+	@Override
+	public Trace generateTrace() {
+		String traceId = TraceContext.traceId();
+		String spanId = String.valueOf(TraceContext.spanId());
+		Trace trace = new Trace();
+		trace.setTraceId(traceId);
+		trace.setSpanId(spanId);
+		return trace;
+	}
 
-  @Override
-  public String strategyName() {
-    return TraceTypeEnum.SKYWALK.getCode();
-  }
+	@Override
+	public String strategyName() {
+		return TraceTypeEnum.SKYWALK.getCode();
+	}
+
 }

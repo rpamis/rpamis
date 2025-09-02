@@ -15,25 +15,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class RpamisTraceStrategyImpl implements TraceStrategy {
 
-  @Override
-  public Trace generateTrace() {
-    String traceId = MDC.get(Trace.TRACE_ID);
-    String spanId = MDC.get(Trace.SPAN_ID);
-    // 如果traceId为空，则同步生成spanId
-    if (traceId == null) {
-      traceId = generateId();
-      spanId = generateId();
-      MDC.put(Trace.TRACE_ID, traceId);
-      MDC.put(Trace.SPAN_ID, spanId);
-    }
-    Trace trace = new Trace();
-    trace.setTraceId(traceId);
-    trace.setSpanId(spanId);
-    return trace;
-  }
+	@Override
+	public Trace generateTrace() {
+		String traceId = MDC.get(Trace.TRACE_ID);
+		String spanId = MDC.get(Trace.SPAN_ID);
+		// 如果traceId为空，则同步生成spanId
+		if (traceId == null) {
+			traceId = generateId();
+			spanId = generateId();
+			MDC.put(Trace.TRACE_ID, traceId);
+			MDC.put(Trace.SPAN_ID, spanId);
+		}
+		Trace trace = new Trace();
+		trace.setTraceId(traceId);
+		trace.setSpanId(spanId);
+		return trace;
+	}
 
-  @Override
-  public String strategyName() {
-    return TraceTypeEnum.RPAMIS.getCode();
-  }
+	@Override
+	public String strategyName() {
+		return TraceTypeEnum.RPAMIS.getCode();
+	}
+
 }

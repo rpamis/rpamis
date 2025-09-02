@@ -10,31 +10,28 @@ import java.util.HashMap;
  */
 public class EnumLookup {
 
-  private EnumLookup() {
-    throw new IllegalStateException("工具类禁止实例化");
-  }
+	private EnumLookup() {
+		throw new IllegalStateException("工具类禁止实例化");
+	}
 
-  /**
-   * 通过枚举class和code获取枚举
-   *
-   * @param enumClass 枚举class
-   * @param code      code
-   * @return {@link T}
-   */
-  public static <T extends CachableEnum<?, ?>> T getEnumByCode(Class<T> enumClass, Object code) {
-    return enumClass.cast(
-        EnumCacheBuilder.getCodeCache().getOrDefault(enumClass, new HashMap<>(8)).get(code));
-  }
+	/**
+	 * 通过枚举class和code获取枚举
+	 * @param enumClass 枚举class
+	 * @param code code
+	 * @return {@link T}
+	 */
+	public static <T extends CachableEnum<?, ?>> T getEnumByCode(Class<T> enumClass, Object code) {
+		return enumClass.cast(EnumCacheBuilder.getCodeCache().getOrDefault(enumClass, new HashMap<>(8)).get(code));
+	}
 
-  /**
-   * 通过枚举class和desc获取枚举
-   *
-   * @param enumClass 枚举class
-   * @param desc      desc
-   * @return {@link T}
-   */
-  public static <T extends CachableEnum<?, ?>> T getEnumByDesc(Class<T> enumClass, Object desc) {
-    return enumClass.cast(
-        EnumCacheBuilder.getDescCache().getOrDefault(enumClass, new HashMap<>(8)).get(desc));
-  }
+	/**
+	 * 通过枚举class和desc获取枚举
+	 * @param enumClass 枚举class
+	 * @param desc desc
+	 * @return {@link T}
+	 */
+	public static <T extends CachableEnum<?, ?>> T getEnumByDesc(Class<T> enumClass, Object desc) {
+		return enumClass.cast(EnumCacheBuilder.getDescCache().getOrDefault(enumClass, new HashMap<>(8)).get(desc));
+	}
+
 }

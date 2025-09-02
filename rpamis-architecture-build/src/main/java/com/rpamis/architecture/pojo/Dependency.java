@@ -18,19 +18,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Dependency implements Serializable {
 
-  private static final long serialVersionUID = 2002865978882205674L;
-  /**
-   * consul
-   */
-  private Consul consul;
+	private static final long serialVersionUID = 2002865978882205674L;
 
-  /**
-   * feign
-   */
-  private Feign feign;
+	/**
+	 * consul
+	 */
+	private Consul consul;
 
-  /**
-   * database
-   */
-  private Database database;
+	/**
+	 * feign
+	 */
+	private Feign feign;
+
+	/**
+	 * database
+	 */
+	private Database database;
+
 }

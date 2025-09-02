@@ -8,18 +8,19 @@ package com.rpamis.extension.spi.loading;
  */
 public class RpamisInternalSpiLoadingStrategy implements SpiLoadingStrategy {
 
-  @Override
-  public String spiPath() {
-    return "META-INF/rpamis/internal/";
-  }
+	@Override
+	public String spiPath() {
+		return "META-INF/rpamis/internal/";
+	}
 
-  @Override
-  public String getName() {
-    return "RPAMIS_INTERNAL";
-  }
+	@Override
+	public String getName() {
+		return "RPAMIS_INTERNAL";
+	}
 
-  @Override
-  public int getPriority() {
-    return MAX_PRIORITY;
-  }
+	@Override
+	public int getPriority() {
+		return MAX_PRIORITY;
+	}
+
 }

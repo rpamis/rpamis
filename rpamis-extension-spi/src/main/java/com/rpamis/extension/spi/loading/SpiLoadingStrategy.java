@@ -10,19 +10,18 @@ import com.rpamis.extension.spi.loading.LoadPriority;
  */
 public interface SpiLoadingStrategy extends LoadPriority {
 
-  /**
-   * spi加载路径
-   *
-   * @return String
-   */
-  String spiPath();
+	/**
+	 * spi加载路径
+	 * @return String
+	 */
+	String spiPath();
 
-  /**
-   * 获得类名
-   *
-   * @return String
-   */
-  default String getName() {
-    return this.getClass().getSimpleName();
-  }
+	/**
+	 * 获得类名
+	 * @return String
+	 */
+	default String getName() {
+		return this.getClass().getSimpleName();
+	}
+
 }

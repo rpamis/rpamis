@@ -18,14 +18,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FileVO implements Serializable {
 
-  private static final long serialVersionUID = -1011756219112553426L;
-  /**
-   * id
-   */
-  private String id;
+	private static final long serialVersionUID = -1011756219112553426L;
 
-  /**
-   * 文件路径
-   */
-  private String filePath;
+	/**
+	 * id
+	 */
+	private String id;
+
+	/**
+	 * 文件路径
+	 */
+	private String filePath;
+
 }

@@ -19,22 +19,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class TraceStrategyFactory implements InitializingBean {
 
-  @Autowired
-  private ApplicationContext applicationContext;
+	@Autowired
+	private ApplicationContext applicationContext;
 
-  private Map<String, TraceStrategy> strategyMap = new HashMap<>(8);
+	private Map<String, TraceStrategy> strategyMap = new HashMap<>(8);
 
-  public TraceStrategy getStrategy(String traceType) {
-    return strategyMap.get(traceType);
-  }
+	public TraceStrategy getStrategy(String traceType) {
+		return strategyMap.get(traceType);
+	}
 
-  @Override
-  public void afterPropertiesSet() throws Exception {
-    Map<String, TraceStrategy> beansOfType = applicationContext.getBeansOfType(TraceStrategy.class);
-    strategyMap = Optional.of(beansOfType)
-        .map(beansOfTypeMap -> beansOfTypeMap.values().stream()
-            .filter(traceStrategy -> traceStrategy.strategyName() != null)
-            .collect(Collectors.toMap(TraceStrategy::strategyName, Function.identity())))
-        .orElse(new HashMap<>(8));
-  }
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		Map<String, TraceStrategy> beansOfType = applicationContext.getBeansOfType(TraceStrategy.class);
+		strategyMap = Optional.of(beansOfType)
+			.map(beansOfTypeMap -> beansOfTypeMap.values()
+				.stream()
+				.filter(traceStrategy -> traceStrategy.strategyName() != null)
+				.collect(Collectors.toMap(TraceStrategy::strategyName, Function.identity())))
+			.orElse(new HashMap<>(8));
+	}
+
 }

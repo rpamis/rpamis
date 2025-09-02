@@ -8,18 +8,19 @@ package com.rpamis.extension.spi.loading;
  */
 public class NativeSpiLoadingStrategy implements SpiLoadingStrategy {
 
-  @Override
-  public String spiPath() {
-    return "META-INF/services/";
-  }
+	@Override
+	public String spiPath() {
+		return "META-INF/services/";
+	}
 
-  @Override
-  public String getName() {
-    return "NATIVE";
-  }
+	@Override
+	public String getName() {
+		return "NATIVE";
+	}
 
-  @Override
-  public int getPriority() {
-    return MIN_PRIORITY;
-  }
+	@Override
+	public int getPriority() {
+		return MIN_PRIORITY;
+	}
+
 }

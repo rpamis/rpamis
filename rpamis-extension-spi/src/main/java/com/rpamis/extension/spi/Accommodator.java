@@ -14,13 +14,13 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 public @interface Accommodator {
 
-  /**
-   * 适应者名称
-   *
-   * @return String
-   */
-  String value() default "";
+	/**
+	 * 适应者名称
+	 * @return String
+	 */
+	String value() default "";
+
 }

@@ -8,13 +8,14 @@ package com.rpamis.common.dto.enums;
  */
 public interface StatusCode {
 
-  /**
-   * 状态码
-   */
-  String getCode();
+	/**
+	 * 状态码
+	 */
+	String getCode();
 
-  /**
-   * 消息
-   */
-  String getMessage();
+	/**
+	 * 消息
+	 */
+	String getMessage();
+
 }

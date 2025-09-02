@@ -10,45 +10,46 @@ import com.rpamis.enums.core.CachableEnum;
  */
 public enum TraceTypeEnum implements CachableEnum<String, String> {
 
-  /**
-   * rpamis默认实现
-   */
-  RPAMIS("rpamis", "rpamis默认实现"),
-  /**
-   * skywalking实现
-   */
-  SKYWALK("skywalking", "skywalking实现");
+	/**
+	 * rpamis默认实现
+	 */
+	RPAMIS("rpamis", "rpamis默认实现"),
+	/**
+	 * skywalking实现
+	 */
+	SKYWALK("skywalking", "skywalking实现");
 
-  /**
-   * code
-   */
-  private String code;
+	/**
+	 * code
+	 */
+	private String code;
 
-  /**
-   * desc
-   */
-  private String desc;
+	/**
+	 * desc
+	 */
+	private String desc;
 
-  TraceTypeEnum(String code, String desc) {
-    this.code = code;
-    this.desc = desc;
-  }
+	TraceTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
-  @Override
-  public String getCode() {
-    return code;
-  }
+	@Override
+	public String getCode() {
+		return code;
+	}
 
-  public void setCode(String code) {
-    this.code = code;
-  }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-  @Override
-  public String getDesc() {
-    return desc;
-  }
+	@Override
+	public String getDesc() {
+		return desc;
+	}
 
-  public void setDesc(String desc) {
-    this.desc = desc;
-  }
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
 }

@@ -1,93 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <artifactId>spring-boot-dependencies</artifactId>
-    <groupId>org.springframework.boot</groupId>
-    <version>2.3.4.RELEASE</version>
-    <relativePath/>
-  </parent>
+    <parent>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <version>3.4.9</version>
+        <relativePath/>
+    </parent>
 
-  <groupId>com.rpamis</groupId>
-  <artifactId>rpamis-boot-starter-parent</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>rpamis-boot-starter-parent</name>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-boot-starter-parent</artifactId>
+    <version>1.0.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>rpamis-boot-starter-parent</name>
 
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-    </license>
-  </licenses>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
-  <properties>
-    <java.version>1.8</java.version>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <!-- 环境配置 -->
-    <resource.delimiter>@</resource.delimiter>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    <!-- Spring -->
-    <springboot.version>2.3.4.RELEASE</springboot.version>
-    <springcloud.version>Greenwich.SR2</springcloud.version>
-    <consul.version>2.2.5.RELEASE</consul.version>
-    <!-- RPC -->
-    <feign.version>2.1.5.RELEASE</feign.version>
-    <dubbo.version>3.0.10</dubbo.version>
-    <!-- 日志跟踪 -->
-    <log4j.version>2.17.0</log4j.version>
-    <logback.version>1.2.3</logback.version>
-    <skywalking.version>8.7.0</skywalking.version>
-    <!-- Redis -->
-    <redisson.version>3.17.0</redisson.version>
-    <!-- Kafka -->
-    <kafka.version>2.7.8</kafka.version>
-    <!-- 存储 -->
-    <minio.version>7.0.2</minio.version>
-    <mybatis-plus.version>3.3.2</mybatis-plus.version>
-    <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
-    <mysql.version>8.0.20</mysql.version>
-    <mariadb.version>2.6.2</mariadb.version>
-    <shardingsphere.version>4.0.1</shardingsphere.version>
-    <!-- 序列化 -->
-    <jackson-databind.version>2.13.2.2</jackson-databind.version>
-    <jackson.version>2.13.2</jackson.version>
-    <jsoup.version>1.14.2</jsoup.version>
-    <json-smart.version>2.4.7</json-smart.version>
-    <!-- Tomcat -->
-    <tomcat-embed.version>9.0.50</tomcat-embed.version>
-    <!-- 工具类 -->
-    <cglib-nodep.version>3.3.0</cglib-nodep.version>
-    <aspectj-aspectjweaver.version>1.9.5</aspectj-aspectjweaver.version>
-    <commons-collections4.version>4.4</commons-collections4.version>
-    <commons-io.version>2.6</commons-io.version>
-    <commons-lang.version>2.6</commons-lang.version>
-    <lombok.version>1.18.12</lombok.version>
-    <hutool.version>5.8.4</hutool.version>
-    <swagger.version>2.6.1</swagger.version>
-    <reflections.version>0.10.2</reflections.version>
-    <!-- 开源相关 -->
-    <jacoco.version>0.8.10</jacoco.version>
-    <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
-    <maven-source-plugin.version>2.4</maven-source-plugin.version>
-    <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
-    <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
-    <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-    <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-    <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-  </properties>
-
-  <profiles>
-    <profile>
-      <id>release</id>
-      <properties>
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <!-- 环境配置 -->
+        <resource.delimiter>@</resource.delimiter>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <!-- Spring -->
+        <springboot.version>3.4.9</springboot.version>
+        <springcloud.version>2025.1.0-M1</springcloud.version>
+        <consul.version>5.0.0-M1</consul.version>
+        <!-- Spring AI -->
+        <spring.ai.version>1.0.1</spring.ai.version>
+        <!-- RPC -->
+        <feign.version>5.0.0-M1</feign.version>
+        <dubbo.version>3.3.5</dubbo.version>
+        <dubbo.zk.version>3.2.18</dubbo.zk.version>
+        <!-- 日志跟踪 -->
+        <log4j.version>2.25.1</log4j.version>
+        <logback.version>1.5.18</logback.version>
+        <skywalking.version>8.7.0</skywalking.version>
+        <!-- Redis -->
+        <redisson.version>3.42.0</redisson.version>
+        <!-- Kafka -->
+        <kafka.version>3.3.0</kafka.version>
+        <!-- 存储 -->
+        <minio.version>8.5.17</minio.version>
+        <mybatis-plus.version>3.5.6</mybatis-plus.version>
+        <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
+        <mysql.version>8.0.20</mysql.version>
+        <mariadb.version>3.5.5</mariadb.version>
+        <shardingsphere.version>4.0.1</shardingsphere.version>
+        <!-- 工具类 -->
+        <cglib-nodep.version>3.3.0</cglib-nodep.version>
+        <aspectj-aspectjweaver.version>1.9.5</aspectj-aspectjweaver.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-lang.version>2.6</commons-lang.version>
+        <lombok.version>1.18.20</lombok.version>
+        <hutool.version>5.8.9</hutool.version>
+        <swagger.version>2.6.1</swagger.version>
+        <reflections.version>0.10.2</reflections.version>
         <!-- 自研组件 -->
         <rpamis-architecture-build.version>1.0.0</rpamis-architecture-build.version>
         <rpamis-common-dto.version>1.0.0</rpamis-common-dto.version>
@@ -104,524 +84,509 @@
         <rpamis-security-annotation.version>1.0.1</rpamis-security-annotation.version>
         <rpamis-security-spring-boot-starter.version>1.0.1</rpamis-security-spring-boot-starter.version>
         <rpamis-security-test.version>1.0.1</rpamis-security-test.version>
-      </properties>
-      <distributionManagement>
-        <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
-        <repository>
-          <id>release</id>
-          <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
-        </repository>
-      </distributionManagement>
-      <build>
+        <!-- 开源相关 -->
+        <jacoco.version>0.8.10</jacoco.version>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <distributionManagement>
+                <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
+                <!--        <repository>-->
+                <!--          <id>release</id>-->
+                <!--          <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>-->
+                <!--        </repository>-->
+                <repository>
+                    <id>central</id>
+                    <url>https://central.sonatype.com</url>
+                </repository>
+            </distributionManagement>
+            <build>
+                <plugins>
+                    <!--          <plugin>-->
+                    <!--            <groupId>org.apache.maven.plugins</groupId>-->
+                    <!--            <artifactId>maven-release-plugin</artifactId>-->
+                    <!--            <version>${maven-release-plugin.version}</version>-->
+                    <!--            <configuration>-->
+                    <!--              <autoVersionSubmodules>true</autoVersionSubmodules>-->
+                    <!--              <useReleaseProfile>false</useReleaseProfile>-->
+                    <!--              <releaseProfiles>release</releaseProfiles>-->
+                    <!--              <goals>deploy</goals>-->
+                    <!--            </configuration>-->
+                    <!--          </plugin>-->
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.6.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <!--<autoPublish>true</autoPublish>-->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>sonatype</id>
+            <distributionManagement>
+                <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
+                <!--        <snapshotRepository>-->
+                <!--          <id>sonatype</id>-->
+                <!--          <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>-->
+                <!--        </snapshotRepository>-->
+                <!--        <repository>-->
+                <!--          <id>sonatype</id>-->
+                <!--          <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+                <!--        </repository>-->
+                <repository>
+                    <id>central</id>
+                    <url>https://central.sonatype.com</url>
+                </repository>
+            </distributionManagement>
+            <build>
+                <plugins>
+                    <!--          <plugin>-->
+                    <!--            <groupId>org.sonatype.plugins</groupId>-->
+                    <!--            <artifactId>nexus-staging-maven-plugin</artifactId>-->
+                    <!--            <version>${nexus-staging-maven-plugin.version}</version>-->
+                    <!--            <extensions>true</extensions>-->
+                    <!--            <configuration>-->
+                    <!--              <serverId>sonatype</serverId>-->
+                    <!--              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
+                    <!--              <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+                    <!--            </configuration>-->
+                    <!--          </plugin>-->
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.6.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <!--                            <autoPublish>true</autoPublish>-->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springboot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springcloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-consul-dependencies</artifactId>
+                <version>${consul.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${feign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-openfeign-core</artifactId>
+                <version>${feign.version}</version>
+            </dependency>
+            <!-- spring-ai -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring.ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Dubbo -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-zookeeper</artifactId>
+                <version>${dubbo.zk.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <!-- 日志跟踪 -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <!-- Redis -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <!-- Kafka -->
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${kafka.version}</version>
+            </dependency>
+
+            <!-- 存储 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${shardingsphere.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${mariadb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <!-- 工具类 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj-aspectjweaver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>${cglib-nodep.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+
+            <!-- 自研组件 -->
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-common-dto</artifactId>
+                <version>${rpamis-common-dto.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-common-exception</artifactId>
+                <version>${rpamis-common-exception.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-common-trace</artifactId>
+                <version>${rpamis-common-trace.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-common-trace-toolkit</artifactId>
+                <version>${rpamis-common-trace-toolkit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-common-utils</artifactId>
+                <version>${rpamis-common-utils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-enum-spring-boot-starter</artifactId>
+                <version>${rpamis-enum-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-exception-dto</artifactId>
+                <version>${rpamis-exception-dto.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-enum-core</artifactId>
+                <version>${rpamis-enum-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-exception-spring-boot-starter</artifactId>
+                <version>${rpamis-exception-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-extension-aspect</artifactId>
+                <version>${rpamis-extension-spi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-security-annotation</artifactId>
+                <version>${rpamis-security-annotation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-security-spring-boot-starter</artifactId>
+                <version>${rpamis-security-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rpamis</groupId>
+                <artifactId>rpamis-security-test</artifactId>
+                <version>${rpamis-security-test.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Package as an executable jar -->
+    <build>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/application*.yml</include>
+                    <include>**/application*.yaml</include>
+                    <include>**/application*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>**/application*.yml</exclude>
+                    <exclude>**/application*.yaml</exclude>
+                    <exclude>**/application*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${springboot.version}</version>
+                    <executions>
+                        <execution>
+                            <id>repackage</id>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-release-plugin</artifactId>
-            <version>${maven-release-plugin.version}</version>
-            <configuration>
-              <autoVersionSubmodules>true</autoVersionSubmodules>
-              <useReleaseProfile>false</useReleaseProfile>
-              <releaseProfiles>release</releaseProfiles>
-              <goals>deploy</goals>
-            </configuration>
-          </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <configuration>
+                    <append>true</append>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+            </plugin>
+            <!-- Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <additionalJOptions>
+                        <additionalJOption>-Xdoclint:none</additionalJOption>
+                    </additionalJOptions>
+                    <!-- 解决控制台乱码 -->
+                    <charset>UTF-8</charset>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Gpg Signature -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>sonatype</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <!-- 自研组件 -->
-        <rpamis-architecture-build.version>1.0.0-SNAPSHOT</rpamis-architecture-build.version>
-        <rpamis-common-dto.version>1.0.0-SNAPSHOT</rpamis-common-dto.version>
-        <rpamis-common-exception.version>1.0.0-SNAPSHOT</rpamis-common-exception.version>
-        <rpamis-common-utils.version>1.0.0-SNAPSHOT</rpamis-common-utils.version>
-        <rpamis-common-trace.version>1.0.0-SNAPSHOT</rpamis-common-trace.version>
-        <rpamis-common-trace-toolkit.version>1.0.0-SNAPSHOT</rpamis-common-trace-toolkit.version>
-        <rpamis-enum-spring-boot-starter.version>1.0.0-SNAPSHOT</rpamis-enum-spring-boot-starter.version>
-        <rpamis-exception-dto.version>1.0.0-SNAPSHOT</rpamis-exception-dto.version>
-        <rpamis-enum-core.version>1.0.0-SNAPSHOT</rpamis-enum-core.version>
-        <rpamis-exception-spring-boot-starter.version>1.0.0-SNAPSHOT</rpamis-exception-spring-boot-starter.version>
-        <rpamis-extension-aspect.version>1.0.0-SNAPSHOT</rpamis-extension-aspect.version>
-        <rpamis-extension-spi.version>1.0.0-SNAPSHOT</rpamis-extension-spi.version>
-        <rpamis-security-annotation.version>1.0.0-SNAPSHOT</rpamis-security-annotation.version>
-        <rpamis-security-spring-boot-starter.version>1.0.0-SNAPSHOT</rpamis-security-spring-boot-starter.version>
-        <rpamis-security-test.version>1.0.0-SNAPSHOT</rpamis-security-test.version>
-      </properties>
-      <distributionManagement>
-        <!--这两个id需要和setting.xml文件中的server字段的id进行对应-->
-        <snapshotRepository>
-          <id>sonatype</id>
-          <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-          <id>sonatype</id>
-          <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-      </distributionManagement>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>${nexus-staging-maven-plugin.version}</version>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>sonatype</serverId>
-              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+    </build>
 
-  <dependencyManagement>
-    <dependencies>
-      <!-- Spring -->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${springboot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${springcloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-consul-dependencies</artifactId>
-        <version>${consul.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-openfeign</artifactId>
-        <version>${feign.version}</version>
-      </dependency>
-      <!-- Dubbo -->
-      <dependency>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo</artifactId>
-        <version>${dubbo.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo-dependencies-zookeeper</artifactId>
-        <version>${dubbo.version}</version>
-        <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo-spring-boot-starter</artifactId>
-        <version>${dubbo.version}</version>
-      </dependency>
-      <!-- 日志跟踪 -->
-      <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-bom</artifactId>
-        <version>${log4j.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>${logback.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-core</artifactId>
-        <version>${logback.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.skywalking</groupId>
-        <artifactId>apm-toolkit-trace</artifactId>
-        <version>${skywalking.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.skywalking</groupId>
-        <artifactId>apm-toolkit-logback-1.x</artifactId>
-        <version>${skywalking.version}</version>
-      </dependency>
-      <!-- Redis -->
-      <dependency>
-        <groupId>org.redisson</groupId>
-        <artifactId>redisson-spring-boot-starter</artifactId>
-        <version>${redisson.version}</version>
-      </dependency>
+    <!--url中配自己的项目地址,connection配自己项目地址加git,最后配自己对应账号主页-->
+    <scm>
+        <url>git@github.com:rpamis/rpamis.git</url>
+        <connection>scm:git@github.com:rpamis/rpamis.git</connection>
+        <developerConnection>https://github.com/rpamis</developerConnection>
+    </scm>
 
-      <!-- Kafka -->
-      <dependency>
-        <groupId>org.springframework.kafka</groupId>
-        <artifactId>spring-kafka</artifactId>
-        <version>${kafka.version}</version>
-      </dependency>
+    <issueManagement>
+        <system>Github Issue</system>
+        <url>https://github.com/rpamis/rpamis/issues</url>
+    </issueManagement>
 
-      <!-- 存储 -->
-      <dependency>
-        <groupId>com.baomidou</groupId>
-        <artifactId>mybatis-plus-boot-starter</artifactId>
-        <version>${mybatis-plus.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.baomidou</groupId>
-        <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-        <version>${dynamic-datasource.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.shardingsphere</groupId>
-        <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-        <version>${shardingsphere.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.minio</groupId>
-        <artifactId>minio</artifactId>
-        <version>${minio.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mariadb.jdbc</groupId>
-        <artifactId>mariadb-java-client</artifactId>
-        <version>${mariadb.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>${mysql.version}</version>
-      </dependency>
-
-      <!-- 序列化 -->
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>${jackson-databind.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jsoup</groupId>
-        <artifactId>jsoup</artifactId>
-        <version>${jsoup.version}</version>
-      </dependency>
-
-      <!-- Tomcat -->
-      <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-core</artifactId>
-        <version>${tomcat-embed.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-el</artifactId>
-        <version>${tomcat-embed.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-websocket</artifactId>
-        <version>${tomcat-embed.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.tomcat</groupId>
-        <artifactId>tomcat-annotations-api</artifactId>
-        <version>${tomcat-embed.version}</version>
-      </dependency>
-
-      <!-- 工具类 -->
-      <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>${lombok.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.aspectj</groupId>
-        <artifactId>aspectjweaver</artifactId>
-        <version>${aspectj-aspectjweaver.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-collections4</artifactId>
-        <version>${commons-collections4.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>${commons-io.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-lang</groupId>
-        <artifactId>commons-lang</artifactId>
-        <version>${commons-lang.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>cglib</groupId>
-        <artifactId>cglib-nodep</artifactId>
-        <version>${cglib-nodep.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.hutool</groupId>
-        <artifactId>hutool-all</artifactId>
-        <version>${hutool.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger2</artifactId>
-        <version>${swagger.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger-ui</artifactId>
-        <version>${swagger.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.reflections</groupId>
-        <artifactId>reflections</artifactId>
-        <version>${reflections.version}</version>
-      </dependency>
-
-      <!-- 自研组件 -->
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-common-dto</artifactId>
-        <version>${rpamis-common-dto.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-common-exception</artifactId>
-        <version>${rpamis-common-exception.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-common-trace</artifactId>
-        <version>${rpamis-common-trace.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-common-trace-toolkit</artifactId>
-        <version>${rpamis-common-trace-toolkit.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-common-utils</artifactId>
-        <version>${rpamis-common-utils.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-enum-spring-boot-starter</artifactId>
-        <version>${rpamis-enum-spring-boot-starter.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-exception-dto</artifactId>
-        <version>${rpamis-exception-dto.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-enum-core</artifactId>
-        <version>${rpamis-enum-core.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-exception-spring-boot-starter</artifactId>
-        <version>${rpamis-exception-spring-boot-starter.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-extension-aspect</artifactId>
-        <version>${rpamis-extension-spi.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-security-annotation</artifactId>
-        <version>${rpamis-security-annotation.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-security-annotation</artifactId>
-        <version>${rpamis-security-annotation.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-security-spring-boot-starter</artifactId>
-        <version>${rpamis-security-spring-boot-starter.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.rpamis</groupId>
-        <artifactId>rpamis-security-test</artifactId>
-        <version>${rpamis-security-test.version}</version>
-      </dependency>
-
-    </dependencies>
-  </dependencyManagement>
-
-  <!-- Package as an executable jar -->
-  <build>
-    <resources>
-      <resource>
-        <filtering>true</filtering>
-        <directory>${basedir}/src/main/resources</directory>
-        <includes>
-          <include>**/application*.yml</include>
-          <include>**/application*.yaml</include>
-          <include>**/application*.properties</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-        <excludes>
-          <exclude>**/application*.yml</exclude>
-          <exclude>**/application*.yaml</exclude>
-          <exclude>**/application*.properties</exclude>
-        </excludes>
-      </resource>
-    </resources>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>${springboot.version}</version>
-          <executions>
-            <execution>
-              <id>repackage</id>
-              <goals>
-                <goal>repackage</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
-    <plugins>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco.version}</version>
-        <configuration>
-          <append>true</append>
-        </configuration>
-        <executions>
-          <execution>
-            <id>prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>${maven-source-plugin.version}</version>
-        <configuration>
-          <attach>true</attach>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>${maven-site-plugin.version}</version>
-      </plugin>
-      <!-- Javadoc -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>${maven-javadoc-plugin.version}</version>
-        <configuration>
-          <additionalJOptions>
-            <additionalJOption>-Xdoclint:none</additionalJOption>
-          </additionalJOptions>
-          <!-- 解决控制台乱码 -->
-          <charset>UTF-8</charset>
-          <encoding>UTF-8</encoding>
-          <docencoding>UTF-8</docencoding>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- Gpg Signature -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>${maven-gpg-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
-  <!--url中配自己的项目地址,connection配自己项目地址加git,最后配自己对应账号主页-->
-  <scm>
-    <url>git@github.com:rpamis/rpamis.git</url>
-    <connection>scm:git@github.com:rpamis/rpamis.git</connection>
-    <developerConnection>https://github.com/rpamis</developerConnection>
-  </scm>
-
-  <issueManagement>
-    <system>Github Issue</system>
-    <url>https://github.com/rpamis/rpamis/issues</url>
-  </issueManagement>
-
-  <!--开发者信息-->
-  <developers>
-    <developer>
-      <name>benym</name>
-      <email>benyuanming@gmail.com</email>
-      <url>https://github.com/benym</url>
-    </developer>
-  </developers>
+    <!--开发者信息-->
+    <developers>
+        <developer>
+            <name>benym</name>
+            <email>benyuanming@gmail.com</email>
+            <url>https://github.com/benym</url>
+        </developer>
+    </developers>
 
 </project>
