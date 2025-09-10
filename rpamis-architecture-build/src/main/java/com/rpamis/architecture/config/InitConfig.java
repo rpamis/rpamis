@@ -1,6 +1,5 @@
 package com.rpamis.architecture.config;
 
-import cn.hutool.core.util.StrUtil;
 import com.rpamis.architecture.consts.ProjectPath;
 import com.rpamis.exception.dto.ExceptionFactory;
 import org.apache.commons.io.FileUtils;
@@ -21,6 +20,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.util.StringUtils;
 
 /**
  * 初始化
@@ -46,7 +46,7 @@ public class InitConfig implements CommandLineRunner {
 			for (Resource resource : resources) {
 				String filename = resource.getFilename();
 				String path = URLDecoder.decode(resource.getURL().getPath(), "UTF-8");
-				List<String> split = StrUtil.split(path, "/");
+				List<String> split = List.of(StringUtils.split(path, "/"));
 				if (!split.isEmpty()) {
 					InitConfig.PARENT_DIR_MAP.put(split.get(split.size() - 1), split.get(split.size() - 2));
 				}

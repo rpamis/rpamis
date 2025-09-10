@@ -6,7 +6,7 @@ import java.util.Objects;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -58,7 +58,7 @@ public class AspectHelper {
 		StandardEvaluationContext evaluationContext = new StandardEvaluationContext();
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		Method targetMethod = methodSignature.getMethod();
-		LocalVariableTableParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
+		StandardReflectionParameterNameDiscoverer parameterNameDiscoverer = new StandardReflectionParameterNameDiscoverer();
 		String[] parametersName = parameterNameDiscoverer.getParameterNames(targetMethod);
 		if (args == null || args.length == 0) {
 			return evaluationContext;
