@@ -147,7 +147,7 @@
                         <version>0.8.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <publishingServerId>central</publishingServerId>
+                            <publishingServerId>sonatype</publishingServerId>
                             <autoPublish>false</autoPublish> <!-- 手动发布 -->
                             <waitUntil>uploaded</waitUntil> <!-- 等待上传完成 -->
                         </configuration>
