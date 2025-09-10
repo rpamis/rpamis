@@ -54,22 +54,17 @@
     <profiles>
         <profile>
             <id>release</id>
-            <distributionManagement>
-                <repository>
-                    <id>central</id>
-                    <url>https://central.sonatype.com</url>
-                </repository>
-            </distributionManagement>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.6.0</version>
+                        <version>0.8.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <publishingServerId>central</publishingServerId>
-                            <!--<autoPublish>true</autoPublish>-->
+                            <publishingServerId>release</publishingServerId>
+                            <autoPublish>false</autoPublish> <!-- 手动发布 -->
+                            <waitUntil>uploaded</waitUntil> <!-- 等待上传完成 -->
                         </configuration>
                     </plugin>
                 </plugins>
@@ -77,22 +72,17 @@
         </profile>
         <profile>
             <id>sonatype</id>
-            <distributionManagement>
-                <repository>
-                    <id>central</id>
-                    <url>https://central.sonatype.com</url>
-                </repository>
-            </distributionManagement>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.6.0</version>
+                        <version>0.8.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <publishingServerId>central</publishingServerId>
-                            <!-- <autoPublish>true</autoPublish>-->
+                            <publishingServerId>sonatype</publishingServerId>
+                            <autoPublish>false</autoPublish> <!-- 手动发布 -->
+                            <waitUntil>uploaded</waitUntil> <!-- 等待上传完成 -->
                         </configuration>
                     </plugin>
                 </plugins>
