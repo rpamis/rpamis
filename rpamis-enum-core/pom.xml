@@ -14,6 +14,13 @@
     <name>rpamis-enum-core</name>
     <packaging>jar</packaging>
     <description>rpamis-enum-core</description>
+    <url>https://github.com/rpamis/rpamis</url>
+
+    <scm>
+        <url>git@github.com:rpamis/rpamis.git</url>
+        <connection>scm:git@github.com:rpamis/rpamis.git</connection>
+        <developerConnection>https://github.com/rpamis</developerConnection>
+    </scm>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
