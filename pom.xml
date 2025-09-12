@@ -7,7 +7,7 @@
     <groupId>com.rpamis</groupId>
     <artifactId>rpamis</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>rpamis</name>
     <description>rpamis</description>
     <url>https://github.com/rpamis/rpamis</url>
@@ -55,6 +55,9 @@
     <profiles>
         <profile>
             <id>release</id>
+            <properties>
+                <revision>1.0.2</revision>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -73,6 +76,9 @@
         </profile>
         <profile>
             <id>sonatype</id>
+            <properties>
+                <revision>1.0.2-SNAPSHOT</revision>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
