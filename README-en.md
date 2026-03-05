@@ -60,133 +60,19 @@ Provides developers with fast, unified project structure generation, unified pac
 
 ### 🔄 Using Unified Response
 
-```java
-import com.rpamis.common.dto.response.Response;
-
-@RestController
-@RequestMapping("/api")
-public class DemoController {
-
-    @GetMapping("/data")
-    public Response<String> getData() {
-        return Response.success("Hello, RPAMIS!");
-    }
-
-    @PostMapping("/save")
-    public Response<Void> saveData(@RequestBody DataRequest request) {
-        try {
-            // Business logic
-            return Response.success();
-        } catch (Exception e) {
-            return Response.fail("ERROR_CODE", "Save failed");
-        }
-    }
-}
-```
+For detailed usage, please refer to: [Exception Handling Usage Guide](docs/exception-handling/usage.md)
 
 ### ⚠️ Exception Handling Example
 
-```java
-import com.rpamis.common.exception.BizException;
-import com.rpamis.common.exception.ExceptionFactory;
-
-@Service
-public class DemoService {
-
-    public void doBusiness() {
-        try {
-            // Business logic
-            if (someCondition) {
-                throw new BizException("Business operation failed", "Detailed information");
-            }
-        } catch (Exception e) {
-            throw ExceptionFactory.sysException("System exception", e);
-        }
-    }
-}
-```
+For detailed usage, please refer to: [Exception Handling Usage Guide](docs/exception-handling/usage.md)
 
 ### 📊 Enum Usage Example
 
-```java
-import com.rpamis.enumcore.common.CachableEnum;
-import com.rpamis.enumcore.EnumLookup;
-
-// 1. Define enum class and implement CachableEnum interface
-public enum OrderStatusEnum implements CachableEnum<Integer, String> {
-    PENDING(1, "Pending"),
-    PAID(2, "Paid"),
-    SHIPPED(3, "Shipped"),
-    DELIVERED(4, "Delivered"),
-    CANCELLED(5, "Cancelled");
-
-    private final Integer code;
-    private final String desc;
-
-    OrderStatusEnum(Integer code, String desc) {
-        this.code = code;
-        this.desc = desc;
-    }
-
-    @Override
-    public Integer getCode() {
-        return code;
-    }
-
-    @Override
-    public String getDesc() {
-        return desc;
-    }
-}
-
-// 2. Use EnumLookup directly in code to get enum values
-public class OrderService {
-
-    public String getOrderStatusDesc(Integer status) {
-        // Directly retrieve enum values using EnumLookup, no need to repeatedly write code in enum classes
-        OrderStatusEnum statusEnum = EnumLookup.findEnumByCode(OrderStatusEnum.class, status);
-        return statusEnum != null ? statusEnum.getDesc() : "Unknown Status";
-    }
-}
-```
+For detailed usage, please refer to: [Enum Cache Mechanism Usage Guide](docs/enum-cache/usage.md)
 
 ### 🔌 SPI Usage Example
 
-```java
-import com.rpamis.extension.spi.RpamisSpi;
-import org.springframework.stereotype.Component;
-
-// 1. Define SPI interface and use @RpamisSpi annotation
-@RpamisSpi
-public interface CustomStrategy {
-    String execute(String param);
-}
-
-// 2. Implement SPI interface (supports pure Java or Spring Bean injection)
-@Component // If using Spring Bean injection, add this annotation
-public class DefaultStrategy implements CustomStrategy {
-    @Override
-    public String execute(String param) {
-        return "Default strategy: " + param;
-    }
-}
-
-// 3. Create configuration file in resource/META-INFO/rpamis directory
-// File name: com.example.CustomStrategy
-// File content:
-// default=com.example.DefaultStrategy
-
-// 4. Use SPI in code
-import com.rpamis.extension.spi.SpiLoader;
-
-public class StrategyClient {
-    public static void main(String[] args) {
-        CustomStrategy strategy = SpiLoader.getLoader(CustomStrategy.class).getExtension("default");
-        String result = strategy.execute("test parameter");
-        System.out.println(result); // Output: Default strategy: test parameter
-    }
-}
-```
+For detailed usage, please refer to: [SPI Extension Mechanism Usage Guide](docs/spi-extension/usage.md)
 
 ## 🏗️ Module Architecture
 
@@ -230,72 +116,7 @@ RPAMIS uses a Maven multi-module architecture, with the following main modules:
 
 rpamis-architecture-build is a powerful project scaffolding tool for quickly generating Spring Boot multi-module Maven projects.
 
-#### 1. Add Dependency
-
-```xml
-<dependency>
-    <groupId>com.rpamis</groupId>
-    <artifactId>rpamis-architecture-build</artifactId>
-    <version>1.0.2</version>
-</dependency>
-```
-
-#### 2. Generate Project Using API
-
-```java
-import com.rpamis.architecture.build.ArchitectureBuildController;
-import com.rpamis.architecture.build.vo.BaseProjectConfig;
-
-public class ProjectGenerator {
-
-    public static void main(String[] args) {
-        // Configure project basic information
-        BaseProjectConfig config = new BaseProjectConfig();
-        config.setGroupId("com.example");
-        config.setArtifactId("my-project");
-        config.setVersion("1.0.0");
-        config.setPackageName("com.example.myproject");
-        config.setDescription("My Example Project");
-
-        // Generate multi-module project
-        ArchitectureBuildController controller = new ArchitectureBuildController();
-        controller.buildMultiModuleProject(config);
-
-        System.out.println("Project generated successfully!");
-    }
-}
-```
-
-#### 3. Supported Project Types
-
-- **Single-module project** - Suitable for rapid development of small projects
-- **Multi-module project** - Suitable for large project architectures, including business modules, base modules, API modules, etc.
-- **Spring Boot Starter** - Quickly create custom Spring Boot Starter projects
-
-#### 4. Project Structure Example
-
-The generated project structure is as follows:
-
-```
-my-project/
-├── my-project-common/        # Common base module
-├── my-project-dao/          # Data access module
-├── my-project-service/      # Business logic module
-├── my-project-api/          # API interface module
-├── my-project-web/          # Web application module
-├── my-project-starter/      # Custom Starter
-└── pom.xml                  # Parent project dependency management
-```
-
-#### 5. Automatic Configuration
-
-The project scaffolding automatically configures:
-
-- Unified dependency management
-- Code formatting tools
-- Test framework configuration
-- CI/CD configuration
-- Common development tool integration
+For detailed usage, please refer to: [Project Scaffolding Usage Guide](docs/project-scaffolding/usage.md)
 
 ## 💻 System Requirements
 

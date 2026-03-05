@@ -60,133 +60,19 @@
 
 ### 🔄 统一响应使用
 
-```java
-import com.rpamis.common.dto.response.Response;
-
-@RestController
-@RequestMapping("/api")
-public class DemoController {
-
-    @GetMapping("/data")
-    public Response<String> getData() {
-        return Response.success("Hello, RPAMIS!");
-    }
-
-    @PostMapping("/save")
-    public Response<Void> saveData(@RequestBody DataRequest request) {
-        try {
-            // 业务逻辑
-            return Response.success();
-        } catch (Exception e) {
-            return Response.fail("ERROR_CODE", "保存失败");
-        }
-    }
-}
-```
+详细用法请参考：[异常处理使用指南](docs/exception-handling/usage.md)
 
 ### ⚠️ 异常处理示例
 
-```java
-import com.rpamis.common.exception.BizException;
-import com.rpamis.common.exception.ExceptionFactory;
-
-@Service
-public class DemoService {
-
-    public void doBusiness() {
-        try {
-            // 业务逻辑
-            if (someCondition) {
-                throw new BizException("业务操作失败", "详细信息");
-            }
-        } catch (Exception e) {
-            throw ExceptionFactory.sysException("系统异常", e);
-        }
-    }
-}
-```
+详细用法请参考：[异常处理使用指南](docs/exception-handling/usage.md)
 
 ### 📊 枚举使用示例
 
-```java
-import com.rpamis.enumcore.common.CachableEnum;
-import com.rpamis.enumcore.EnumLookup;
-
-// 1. 定义枚举类并实现 CachableEnum 接口
-public enum OrderStatusEnum implements CachableEnum<Integer, String> {
-    PENDING(1, "待支付"),
-    PAID(2, "已支付"),
-    SHIPPED(3, "已发货"),
-    DELIVERED(4, "已收货"),
-    CANCELLED(5, "已取消");
-
-    private final Integer code;
-    private final String desc;
-
-    OrderStatusEnum(Integer code, String desc) {
-        this.code = code;
-        this.desc = desc;
-    }
-
-    @Override
-    public Integer getCode() {
-        return code;
-    }
-
-    @Override
-    public String getDesc() {
-        return desc;
-    }
-}
-
-// 2. 在代码中使用 EnumLookup 直接获取枚举值
-public class OrderService {
-
-    public String getOrderStatusDesc(Integer status) {
-        // 直接通过 EnumLookup 获取枚举值，无需在枚举中反复编写获取代码
-        OrderStatusEnum statusEnum = EnumLookup.findEnumByCode(OrderStatusEnum.class, status);
-        return statusEnum != null ? statusEnum.getDesc() : "未知状态";
-    }
-}
-```
+详细用法请参考：[枚举缓存机制使用指南](docs/enum-cache/usage.md)
 
 ### 🔌 SPI 使用示例
 
-```java
-import com.rpamis.extension.spi.RpamisSpi;
-import org.springframework.stereotype.Component;
-
-// 1. 定义 SPI 接口并使用 @RpamisSpi 注解
-@RpamisSpi
-public interface CustomStrategy {
-    String execute(String param);
-}
-
-// 2. 实现 SPI 接口（支持纯 Java 或 Spring Bean 注入）
-@Component // 如果是 Spring Bean 注入，需要添加此注解
-public class DefaultStrategy implements CustomStrategy {
-    @Override
-    public String execute(String param) {
-        return "Default strategy: " + param;
-    }
-}
-
-// 3. 在 resource/META-INFO/rpamis 目录下创建配置文件
-// 文件名称：com.example.CustomStrategy
-// 文件内容：
-// default=com.example.DefaultStrategy
-
-// 4. 在代码中使用 SPI
-import com.rpamis.extension.spi.SpiLoader;
-
-public class StrategyClient {
-    public static void main(String[] args) {
-        CustomStrategy strategy = SpiLoader.getLoader(CustomStrategy.class).getExtension("default");
-        String result = strategy.execute("test parameter");
-        System.out.println(result); // 输出：Default strategy: test parameter
-    }
-}
-```
+详细用法请参考：[SPI 扩展机制使用指南](docs/spi-extension/usage.md)
 
 ## 🏗️ 模块架构
 
@@ -230,72 +116,7 @@ RPAMIS 采用 Maven 多模块架构，主要模块包括：
 
 rpamis-architecture-build 是一个强大的项目脚手架，用于快速生成 Spring Boot 的多模块 Maven 项目。
 
-#### 1. 引入依赖
-
-```xml
-<dependency>
-    <groupId>com.rpamis</groupId>
-    <artifactId>rpamis-architecture-build</artifactId>
-    <version>1.0.2</version>
-</dependency>
-```
-
-#### 2. 使用 API 生成项目
-
-```java
-import com.rpamis.architecture.build.ArchitectureBuildController;
-import com.rpamis.architecture.build.vo.BaseProjectConfig;
-
-public class ProjectGenerator {
-
-    public static void main(String[] args) {
-        // 配置项目基本信息
-        BaseProjectConfig config = new BaseProjectConfig();
-        config.setGroupId("com.example");
-        config.setArtifactId("my-project");
-        config.setVersion("1.0.0");
-        config.setPackageName("com.example.myproject");
-        config.setDescription("我的示例项目");
-
-        // 生成多模块项目
-        ArchitectureBuildController controller = new ArchitectureBuildController();
-        controller.buildMultiModuleProject(config);
-
-        System.out.println("项目生成成功！");
-    }
-}
-```
-
-#### 3. 支持的项目类型
-
-- **单模块项目** - 适合小型项目快速开发
-- **多模块项目** - 适合大型项目架构，包含业务模块、基础模块、API模块等
-- **Spring Boot Starter** - 快速创建自定义的 Spring Boot Starter 项目
-
-#### 4. 项目结构示例
-
-生成的项目结构如下：
-
-```
-my-project/
-├── my-project-common/        # 公共基础模块
-├── my-project-dao/          # 数据访问模块
-├── my-project-service/      # 业务逻辑模块
-├── my-project-api/          # API接口模块
-├── my-project-web/          # Web应用模块
-├── my-project-starter/      # 自定义Starter
-└── pom.xml                  # 父项目依赖管理
-```
-
-#### 5. 自动化配置
-
-项目脚手架会自动配置：
-
-- 统一的依赖管理
-- 代码格式化工具
-- 测试框架配置
-- CI/CD 配置
-- 常见开发工具集成
+详细用法请参考：[项目脚手架使用指南](docs/project-scaffolding/usage.md)
 
 ## 💻 系统要求
 

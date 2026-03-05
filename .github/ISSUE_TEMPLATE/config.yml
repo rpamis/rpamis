@@ -16,5 +16,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Community Support
-    url: https://github.com/rpamis/rpamis-security/discussions
+    url: https://github.com/rpamis/rpamis/discussions
     about: Please ask and answer questions here.

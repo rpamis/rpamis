@@ -1,6 +1,6 @@
-## Rpamis-Security Version
+## Rpamis Component Version
 
-[The version of Rpamis-Security you are working on, e.g. 1.1.0, check your pom.xml dependency version]
+[The version of Rpamis component you are working on, e.g. 1.0.0, check your pom.xml dependency version]
 
 ## Description
 
