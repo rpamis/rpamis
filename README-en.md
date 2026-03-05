@@ -11,14 +11,32 @@
 
 Provides developers with fast, unified project structure generation, unified package management tools, and ready-to-use development efficiency tools.
 
-## ✨ Features
+## ✨ Core Features
 
-- 🎯 **Unified Response Format** - Standardized API response structure, supporting success/failure responses
-- 🛡️ **Exception System** - Hierarchical exception handling, supporting separation of business and system exceptions
+### 🚀 Project Scaffolding
+- **rpamis-architecture-build** - Quickly generate Spring Boot multi-module Maven projects
+- Supports single-module and multi-module project structure generation
+- Automatically configures project dependencies and architecture
+- Provides complete development and build scripts
+
+### 🛡️ Exception Handling System
+- **rpamis-exception-spring-boot-starter** - Exception Starter for automatic configuration of exception handling
+- **rpamis-common-exception** - Core exception handling module
+  - Provides custom validators
+  - Supports various types of exception handling (business exceptions, system exceptions, validation exceptions, etc.)
+  - Global exception handling
+  - Dubbo exception handling Filter
+  - Unified exception response format
+
+### 📊 Enum Cache Mechanism
+- **rpamis-enum-core** - Implements enum caching functionality
+- **CachableEnum Interface** - Unified enum definition approach
+- **EnumLookup SDK** - Built-in enum lookup tool, directly obtain Value from Key
+- Eliminates the need to repeatedly write code to retrieve enum values within enum classes
+
+### 🎯 Other Core Features
 - 🔍 **Distributed Tracing** - Automatically records request and response logs, supporting distributed tracing
-- 📊 **Cacheable Enums** - High-performance enum management, supporting automatic scanning and caching
 - 🔌 **SPI Extension Mechanism** - Flexible plugin-based extension framework
-- 📦 **Project Generation Tool** - Automatically creates project architectures
 - 🛠️ **Common Utilities** - Provides commonly used tool methods (Snowflake ID, Bean operations, etc.)
 - 🌟 **Spring Boot Support** - Out-of-the-box automatic configuration
 
@@ -82,6 +100,50 @@ public class DemoService {
 }
 ```
 
+### 📊 Enum Usage Example
+
+```java
+import com.rpamis.enumcore.common.CachableEnum;
+import com.rpamis.enumcore.EnumLookup;
+
+// 1. Define enum class and implement CachableEnum interface
+public enum OrderStatusEnum implements CachableEnum<Integer, String> {
+    PENDING(1, "Pending"),
+    PAID(2, "Paid"),
+    SHIPPED(3, "Shipped"),
+    DELIVERED(4, "Delivered"),
+    CANCELLED(5, "Cancelled");
+
+    private final Integer code;
+    private final String desc;
+
+    OrderStatusEnum(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
+
+    @Override
+    public Integer getCode() {
+        return code;
+    }
+
+    @Override
+    public String getDesc() {
+        return desc;
+    }
+}
+
+// 2. Use EnumLookup directly in code to get enum values
+public class OrderService {
+
+    public String getOrderStatusDesc(Integer status) {
+        // Directly retrieve enum values using EnumLookup, no need to repeatedly write code in enum classes
+        OrderStatusEnum statusEnum = EnumLookup.findEnumByCode(OrderStatusEnum.class, status);
+        return statusEnum != null ? statusEnum.getDesc() : "Unknown Status";
+    }
+}
+```
+
 ## 🏗️ Module Architecture
 
 RPAMIS uses a Maven multi-module architecture, with the following main modules:
@@ -91,7 +153,7 @@ RPAMIS uses a Maven multi-module architecture, with the following main modules:
 |------------|--------------|------|
 | **rpamis-boot-starter-parent** | Spring Boot parent project dependency management | Base Module |
 | **rpamis-common-dto** | Common data transfer object definitions (Response, Request, etc.) | Core Library |
-| **rpamis-common-exception** | Common exception handling mechanism (BizException, SysException, etc.) | Core Library |
+| **rpamis-common-exception** | Common exception handling mechanism (BizException, SysException, etc.), providing custom validators, various types of exception handling, global exception handling, and Dubbo exception handling Filter | Core Library |
 | **rpamis-common-trace** | Distributed tracing and logging tools | Core Library |
 | **rpamis-common-trace-toolkit** | Tracing toolkit (supports SkyWalking) | Core Library |
 | **rpamis-common-utils** | Common utility class collection (Snowflake ID, Bean tools, JSON tools, etc.) | Core Library |
@@ -99,14 +161,14 @@ RPAMIS uses a Maven multi-module architecture, with the following main modules:
 ### ⚡ Spring Boot Starters
 | Module Name | Main Function | Type |
 |------------|--------------|------|
-| **rpamis-exception-spring-boot-starter** | Exception handling automatic configuration | Starter |
+| **rpamis-exception-spring-boot-starter** | Exception Starter, automatically configures exception handling, core dependency on rpamis-common-exception | Starter |
 | **rpamis-enum-spring-boot-starter** | Cacheable enum automatic configuration | Starter |
 
 ### 🔧 Architecture and Extension Modules
 | Module Name | Main Function | Type |
 |------------|--------------|------|
-| **rpamis-architecture-build** | Project architecture generation and construction tools | Architecture Tool |
-| **rpamis-enum-core** | Cacheable enum type core library | Core Library |
+| **rpamis-architecture-build** | Project scaffolding for quickly generating Spring Boot multi-module Maven projects | Architecture Tool |
+| **rpamis-enum-core** | Implements enum caching functionality, providing CachableEnum interface and EnumLookup SDK for directly retrieving enum values by key | Core Library |
 | **rpamis-exception-dto** | Exception data transfer objects | Core Library |
 | **rpamis-extension-spi** | SPI (Service Provider Interface) framework | Extension Library |
 | **rpamis-extension-aspect** | Extension aspect support | Extension Library |
@@ -120,11 +182,76 @@ RPAMIS uses a Maven multi-module architecture, with the following main modules:
 
 ## 🚀 Rapid Architecture Generation
 
-Use the rpamis-architecture-build module to quickly generate project architectures:
+### Using Project Scaffolding
+
+rpamis-architecture-build is a powerful project scaffolding tool for quickly generating Spring Boot multi-module Maven projects.
+
+#### 1. Add Dependency
+
+```xml
+<dependency>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-architecture-build</artifactId>
+    <version>1.0.2</version>
+</dependency>
+```
+
+#### 2. Generate Project Using API
 
 ```java
-// TODO: Example code
+import com.rpamis.architecture.build.ArchitectureBuildController;
+import com.rpamis.architecture.build.vo.BaseProjectConfig;
+
+public class ProjectGenerator {
+
+    public static void main(String[] args) {
+        // Configure project basic information
+        BaseProjectConfig config = new BaseProjectConfig();
+        config.setGroupId("com.example");
+        config.setArtifactId("my-project");
+        config.setVersion("1.0.0");
+        config.setPackageName("com.example.myproject");
+        config.setDescription("My Example Project");
+
+        // Generate multi-module project
+        ArchitectureBuildController controller = new ArchitectureBuildController();
+        controller.buildMultiModuleProject(config);
+
+        System.out.println("Project generated successfully!");
+    }
+}
 ```
+
+#### 3. Supported Project Types
+
+- **Single-module project** - Suitable for rapid development of small projects
+- **Multi-module project** - Suitable for large project architectures, including business modules, base modules, API modules, etc.
+- **Spring Boot Starter** - Quickly create custom Spring Boot Starter projects
+
+#### 4. Project Structure Example
+
+The generated project structure is as follows:
+
+```
+my-project/
+├── my-project-common/        # Common base module
+├── my-project-dao/          # Data access module
+├── my-project-service/      # Business logic module
+├── my-project-api/          # API interface module
+├── my-project-web/          # Web application module
+├── my-project-starter/      # Custom Starter
+└── pom.xml                  # Parent project dependency management
+```
+
+#### 5. Automatic Configuration
+
+The project scaffolding automatically configures:
+
+- Unified dependency management
+- Code formatting tools
+- Test framework configuration
+- CI/CD configuration
+- Common development tool integration
 
 ## 💻 System Requirements
 

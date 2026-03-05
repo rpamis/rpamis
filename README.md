@@ -11,14 +11,32 @@
 
 为开发者提供快速、统一的项目结构生成，统一的包管理工具，并提供开箱即用的开发效能工具。
 
-## ✨ 功能特性
+## ✨ 核心功能
 
-- 🎯 **统一响应格式** - 标准化 API 响应结构，支持成功/失败响应
-- 🛡️ **异常体系** - 层次化异常处理，支持业务和系统异常分离
+### 🚀 项目脚手架
+- **rpamis-architecture-build** - 快速生成 Spring Boot 多模块 Maven 项目
+- 支持单模块、多模块项目结构生成
+- 自动化配置项目依赖和架构
+- 提供完整的开发和构建脚本
+
+### 🛡️ 异常处理体系
+- **rpamis-exception-spring-boot-starter** - Exception Starter，自动配置异常处理
+- **rpamis-common-exception** - 核心异常处理模块
+  - 提供自定义校验器
+  - 支持多种类型异常处理（业务异常、系统异常、验证异常等）
+  - 全局异常处理
+  - Dubbo 异常处理 Filter
+  - 统一的异常响应格式
+
+### 📊 枚举缓存机制
+- **rpamis-enum-core** - 实现枚举缓存功能
+- **CachableEnum 接口** - 统一的枚举定义方式
+- **EnumLookup SDK** - 内置枚举查找工具，通过 Key 直接获取 Value
+- 避免在枚举中重复编写获取枚举值的代码
+
+### 🎯 其他核心功能
 - 🔍 **分布式追踪** - 自动记录请求响应日志，支持链路追踪
-- 📊 **可缓存枚举** - 高性能枚举管理，支持自动扫描和缓存
 - 🔌 **SPI 扩展机制** - 灵活的插件化扩展框架
-- 📦 **项目生成工具** - 自动化创建项目架构
 - 🛠️ **通用工具库** - 提供常用工具方法（雪花ID、Bean操作等）
 - 🌟 **Spring Boot 支持** - 开箱即用的自动配置
 
@@ -82,6 +100,50 @@ public class DemoService {
 }
 ```
 
+### 📊 枚举使用示例
+
+```java
+import com.rpamis.enumcore.common.CachableEnum;
+import com.rpamis.enumcore.EnumLookup;
+
+// 1. 定义枚举类并实现 CachableEnum 接口
+public enum OrderStatusEnum implements CachableEnum<Integer, String> {
+    PENDING(1, "待支付"),
+    PAID(2, "已支付"),
+    SHIPPED(3, "已发货"),
+    DELIVERED(4, "已收货"),
+    CANCELLED(5, "已取消");
+
+    private final Integer code;
+    private final String desc;
+
+    OrderStatusEnum(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
+
+    @Override
+    public Integer getCode() {
+        return code;
+    }
+
+    @Override
+    public String getDesc() {
+        return desc;
+    }
+}
+
+// 2. 在代码中使用 EnumLookup 直接获取枚举值
+public class OrderService {
+
+    public String getOrderStatusDesc(Integer status) {
+        // 直接通过 EnumLookup 获取枚举值，无需在枚举中反复编写获取代码
+        OrderStatusEnum statusEnum = EnumLookup.findEnumByCode(OrderStatusEnum.class, status);
+        return statusEnum != null ? statusEnum.getDesc() : "未知状态";
+    }
+}
+```
+
 ## 🏗️ 模块架构
 
 RPAMIS 采用 Maven 多模块架构，主要模块包括：
@@ -91,7 +153,7 @@ RPAMIS 采用 Maven 多模块架构，主要模块包括：
 |---------|---------|------|
 | **rpamis-boot-starter-parent** | Spring Boot 父项目依赖管理 | 基础模块 |
 | **rpamis-common-dto** | 通用数据传输对象定义（Response、Request等） | 核心库 |
-| **rpamis-common-exception** | 通用异常处理机制（BizException、SysException等） | 核心库 |
+| **rpamis-common-exception** | 通用异常处理机制（BizException、SysException等），提供自定义校验器、多种类型异常处理、全局异常处理、Dubbo异常处理Filter | 核心库 |
 | **rpamis-common-trace** | 分布式追踪与日志工具 | 核心库 |
 | **rpamis-common-trace-toolkit** | 追踪工具包（支持 SkyWalking） | 核心库 |
 | **rpamis-common-utils** | 通用工具类集合（雪花ID、Bean工具、JSON工具等） | 核心库 |
@@ -99,14 +161,14 @@ RPAMIS 采用 Maven 多模块架构，主要模块包括：
 ### ⚡ Spring Boot Starters
 | 模块名称 | 主要功能 | 类型 |
 |---------|---------|------|
-| **rpamis-exception-spring-boot-starter** | 异常处理自动配置 | Starter |
+| **rpamis-exception-spring-boot-starter** | Exception 的 Starter，自动配置异常处理，核心依赖 rpamis-common-exception | Starter |
 | **rpamis-enum-spring-boot-starter** | 可缓存枚举自动配置 | Starter |
 
 ### 🔧 架构与扩展模块
 | 模块名称 | 主要功能 | 类型 |
 |---------|---------|------|
-| **rpamis-architecture-build** | 项目架构生成与构建工具 | 架构工具 |
-| **rpamis-enum-core** | 可缓存枚举类型核心库 | 核心库 |
+| **rpamis-architecture-build** | 项目脚手架，用于快速生成 Spring Boot 多模块 Maven 项目 | 架构工具 |
+| **rpamis-enum-core** | 实现枚举缓存，提供 CachableEnum 接口，通过 EnumLookup 直接获取枚举 Key 对应的 Value | 核心库 |
 | **rpamis-exception-dto** | 异常数据传输对象 | 核心库 |
 | **rpamis-extension-spi** | SPI（服务提供者接口）框架 | 扩展库 |
 | **rpamis-extension-aspect** | 扩展切面支持 | 扩展库 |
@@ -120,11 +182,76 @@ RPAMIS 采用 Maven 多模块架构，主要模块包括：
 
 ## 🚀 快速架构生成
 
-使用 rpamis-architecture-build 模块快速生成项目架构：
+### 使用项目脚手架
+
+rpamis-architecture-build 是一个强大的项目脚手架，用于快速生成 Spring Boot 的多模块 Maven 项目。
+
+#### 1. 引入依赖
+
+```xml
+<dependency>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-architecture-build</artifactId>
+    <version>1.0.2</version>
+</dependency>
+```
+
+#### 2. 使用 API 生成项目
 
 ```java
-// TODO: 示例代码
+import com.rpamis.architecture.build.ArchitectureBuildController;
+import com.rpamis.architecture.build.vo.BaseProjectConfig;
+
+public class ProjectGenerator {
+
+    public static void main(String[] args) {
+        // 配置项目基本信息
+        BaseProjectConfig config = new BaseProjectConfig();
+        config.setGroupId("com.example");
+        config.setArtifactId("my-project");
+        config.setVersion("1.0.0");
+        config.setPackageName("com.example.myproject");
+        config.setDescription("我的示例项目");
+
+        // 生成多模块项目
+        ArchitectureBuildController controller = new ArchitectureBuildController();
+        controller.buildMultiModuleProject(config);
+
+        System.out.println("项目生成成功！");
+    }
+}
 ```
+
+#### 3. 支持的项目类型
+
+- **单模块项目** - 适合小型项目快速开发
+- **多模块项目** - 适合大型项目架构，包含业务模块、基础模块、API模块等
+- **Spring Boot Starter** - 快速创建自定义的 Spring Boot Starter 项目
+
+#### 4. 项目结构示例
+
+生成的项目结构如下：
+
+```
+my-project/
+├── my-project-common/        # 公共基础模块
+├── my-project-dao/          # 数据访问模块
+├── my-project-service/      # 业务逻辑模块
+├── my-project-api/          # API接口模块
+├── my-project-web/          # Web应用模块
+├── my-project-starter/      # 自定义Starter
+└── pom.xml                  # 父项目依赖管理
+```
+
+#### 5. 自动化配置
+
+项目脚手架会自动配置：
+
+- 统一的依赖管理
+- 代码格式化工具
+- 测试框架配置
+- CI/CD 配置
+- 常见开发工具集成
 
 ## 💻 系统要求
 
