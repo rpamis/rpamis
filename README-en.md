@@ -34,9 +34,15 @@ Provides developers with fast, unified project structure generation, unified pac
 - **EnumLookup SDK** - Built-in enum lookup tool, directly obtain Value from Key
 - Eliminates the need to repeatedly write code to retrieve enum values within enum classes
 
+### 🔌 SPI Extension Mechanism
+- **rpamis-extension-spi** - SPI plugin package provided by RPAMIS
+- **@RpamisSpi Annotation** - Used to mark SPI interfaces
+- **SPI Configuration Files** - Create configuration files in `resource/META-INFO/rpamis` directory, format: `interfaceName=com.xxx.ImplementationClass` (e.g., `customStrategy=com.xxx.CustomStrategy`)
+- **Support for Multiple Injection Methods** - SPI implementation classes support pure Java and Spring Bean injection
+- **Replace System Core Content** - Facilitates users to use SPI mode to replace core content in their systems
+
 ### 🎯 Other Core Features
 - 🔍 **Distributed Tracing** - Automatically records request and response logs, supporting distributed tracing
-- 🔌 **SPI Extension Mechanism** - Flexible plugin-based extension framework
 - 🛠️ **Common Utilities** - Provides commonly used tool methods (Snowflake ID, Bean operations, etc.)
 - 🌟 **Spring Boot Support** - Out-of-the-box automatic configuration
 
@@ -144,6 +150,44 @@ public class OrderService {
 }
 ```
 
+### 🔌 SPI Usage Example
+
+```java
+import com.rpamis.extension.spi.RpamisSpi;
+import org.springframework.stereotype.Component;
+
+// 1. Define SPI interface and use @RpamisSpi annotation
+@RpamisSpi
+public interface CustomStrategy {
+    String execute(String param);
+}
+
+// 2. Implement SPI interface (supports pure Java or Spring Bean injection)
+@Component // If using Spring Bean injection, add this annotation
+public class DefaultStrategy implements CustomStrategy {
+    @Override
+    public String execute(String param) {
+        return "Default strategy: " + param;
+    }
+}
+
+// 3. Create configuration file in resource/META-INFO/rpamis directory
+// File name: com.example.CustomStrategy
+// File content:
+// default=com.example.DefaultStrategy
+
+// 4. Use SPI in code
+import com.rpamis.extension.spi.SpiLoader;
+
+public class StrategyClient {
+    public static void main(String[] args) {
+        CustomStrategy strategy = SpiLoader.getLoader(CustomStrategy.class).getExtension("default");
+        String result = strategy.execute("test parameter");
+        System.out.println(result); // Output: Default strategy: test parameter
+    }
+}
+```
+
 ## 🏗️ Module Architecture
 
 RPAMIS uses a Maven multi-module architecture, with the following main modules:
@@ -170,7 +214,7 @@ RPAMIS uses a Maven multi-module architecture, with the following main modules:
 | **rpamis-architecture-build** | Project scaffolding for quickly generating Spring Boot multi-module Maven projects | Architecture Tool |
 | **rpamis-enum-core** | Implements enum caching functionality, providing CachableEnum interface and EnumLookup SDK for directly retrieving enum values by key | Core Library |
 | **rpamis-exception-dto** | Exception data transfer objects | Core Library |
-| **rpamis-extension-spi** | SPI (Service Provider Interface) framework | Extension Library |
+| **rpamis-extension-spi** | SPI plugin package provided by RPAMIS. Supports users to annotate interfaces with @RpamisSpi, implement the corresponding interfaces, and configure them in the resource/META-INFO/rpamis directory. Supports pure Java and Spring Bean injection | Extension Library |
 | **rpamis-extension-aspect** | Extension aspect support | Extension Library |
 
 ## 📚 Detailed Documentation

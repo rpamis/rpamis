@@ -34,9 +34,15 @@
 - **EnumLookup SDK** - 内置枚举查找工具，通过 Key 直接获取 Value
 - 避免在枚举中重复编写获取枚举值的代码
 
+### 🔌 SPI 扩展机制
+- **rpamis-extension-spi** - RPAMIS 提供的 SPI 插件包
+- **@RpamisSpi 注解** - 用于标注 SPI 接口
+- **SPI 配置文件** - 在 `resource/META-INFO/rpamis` 目录中创建配置文件，格式：`接口名称=实现类全路径`（如：`customStrategy=com.xxx.CustomStrategy`）
+- **支持多种注入方式** - SPI 实现类中支持纯 Java 和 Spring Bean 的注入
+- **替代系统核心内容** - 方便用户使用 SPI 模式替代自己系统中的核心功能
+
 ### 🎯 其他核心功能
 - 🔍 **分布式追踪** - 自动记录请求响应日志，支持链路追踪
-- 🔌 **SPI 扩展机制** - 灵活的插件化扩展框架
 - 🛠️ **通用工具库** - 提供常用工具方法（雪花ID、Bean操作等）
 - 🌟 **Spring Boot 支持** - 开箱即用的自动配置
 
@@ -144,6 +150,44 @@ public class OrderService {
 }
 ```
 
+### 🔌 SPI 使用示例
+
+```java
+import com.rpamis.extension.spi.RpamisSpi;
+import org.springframework.stereotype.Component;
+
+// 1. 定义 SPI 接口并使用 @RpamisSpi 注解
+@RpamisSpi
+public interface CustomStrategy {
+    String execute(String param);
+}
+
+// 2. 实现 SPI 接口（支持纯 Java 或 Spring Bean 注入）
+@Component // 如果是 Spring Bean 注入，需要添加此注解
+public class DefaultStrategy implements CustomStrategy {
+    @Override
+    public String execute(String param) {
+        return "Default strategy: " + param;
+    }
+}
+
+// 3. 在 resource/META-INFO/rpamis 目录下创建配置文件
+// 文件名称：com.example.CustomStrategy
+// 文件内容：
+// default=com.example.DefaultStrategy
+
+// 4. 在代码中使用 SPI
+import com.rpamis.extension.spi.SpiLoader;
+
+public class StrategyClient {
+    public static void main(String[] args) {
+        CustomStrategy strategy = SpiLoader.getLoader(CustomStrategy.class).getExtension("default");
+        String result = strategy.execute("test parameter");
+        System.out.println(result); // 输出：Default strategy: test parameter
+    }
+}
+```
+
 ## 🏗️ 模块架构
 
 RPAMIS 采用 Maven 多模块架构，主要模块包括：
@@ -170,7 +214,7 @@ RPAMIS 采用 Maven 多模块架构，主要模块包括：
 | **rpamis-architecture-build** | 项目脚手架，用于快速生成 Spring Boot 多模块 Maven 项目 | 架构工具 |
 | **rpamis-enum-core** | 实现枚举缓存，提供 CachableEnum 接口，通过 EnumLookup 直接获取枚举 Key 对应的 Value | 核心库 |
 | **rpamis-exception-dto** | 异常数据传输对象 | 核心库 |
-| **rpamis-extension-spi** | SPI（服务提供者接口）框架 | 扩展库 |
+| **rpamis-extension-spi** | RPAMIS 提供的 SPI 插件包，支持用户用 @RpamisSpi 标注接口，实现接口后在 resource/META-INFO/rpamis 目录中配置，支持纯 Java 和 Spring Bean 的注入 | 扩展库 |
 | **rpamis-extension-aspect** | 扩展切面支持 | 扩展库 |
 
 ## 📚 详细文档
