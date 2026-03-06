@@ -1,5 +1,7 @@
 # Rpamis 🚀
 
+[中文](README.md) | [English](README-en.md)
+
 [![Maven Central](https://img.shields.io/maven-central/v/com.rpamis/rpamis.svg?style=flat-square)](https://search.maven.org/search?q=g:com.rpamis)
 [![GitHub Actions](https://github.com/rpamis/rpamis/workflows/full-build/badge.svg?branch=master)](https://github.com/rpamis/rpamis/actions)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
@@ -51,32 +53,50 @@
 ### 📦 依赖引入
 
 ```xml
+<!-- 异常处理 -->
 <dependency>
     <groupId>com.rpamis</groupId>
     <artifactId>rpamis-exception-spring-boot-starter</artifactId>
     <version>1.0.2</version>
 </dependency>
+
+<!-- 枚举缓存 -->
+<dependency>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-enum-core</artifactId>
+    <version>1.0.2</version>
+</dependency>
+
+<!-- SPI 扩展 -->
+<dependency>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-extension-spi</artifactId>
+    <version>1.0.2</version>
+</dependency>
+
+<!-- 项目脚手架 -->
+<dependency>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-architecture-build</artifactId>
+    <version>1.0.2</version>
+</dependency>
 ```
 
-### 🔄 统一响应使用
+### 🔄 统一响应/统一异常处理使用
 
-详细用法请参考：[异常处理使用指南](docs/exception-handling/usage.md)
-
-### ⚠️ 异常处理示例
-
-详细用法请参考：[异常处理使用指南](docs/exception-handling/usage.md)
+[异常处理使用指南](docs/exception-handling/usage.md)
 
 ### 📊 枚举使用示例
 
-详细用法请参考：[枚举缓存机制使用指南](docs/enum-cache/usage.md)
+[枚举缓存使用指南](docs/enum-cache/usage.md)
 
 ### 🔌 SPI 使用示例
 
-详细用法请参考：[SPI 扩展机制使用指南](docs/spi-extension/usage.md)
+[SPI 扩展机制使用指南](docs/spi-extension/usage.md)
 
 ## 🏗️ 模块架构
 
-RPAMIS 采用 Maven 多模块架构，主要模块包括：
+Rpamis 采用 Maven 多模块架构，主要模块包括：
 
 ### 📋 核心依赖模块
 | 模块名称 | 主要功能 | 类型 |
@@ -106,7 +126,6 @@ RPAMIS 采用 Maven 多模块架构，主要模块包括：
 ## 📚 详细文档
 
 - 📖 [使用指南](docs/usage.md) - 详细的功能使用说明
-- 📚 [API 文档](https://rpamis.github.io/rpamis/) - 完整的 API 文档
 - 📦 [模块说明](docs/modules.md) - 各模块详细功能介绍
 - ❓ [常见问题](docs/faq.md) - 常见问题解答
 
@@ -186,12 +205,7 @@ mvn clean deploy -Psonatype
 
 - **项目主页**: https://github.com/rpamis/rpamis 🏠
 - **Issue 跟踪**: https://github.com/rpamis/rpamis/issues 🐛
-- **开发邮件**: benyuanming@gmail.com ✉️
-
-## 🙏 致谢
-
-感谢所有为 RPAMIS 做出贡献的开发者！
 
 ---
 
-**RPAMIS** - 让开发变得更简单、更高效！ 🚀
+**Rpamis** - 让开发变得更简单、更高效！ 🚀

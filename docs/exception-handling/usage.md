@@ -2,7 +2,7 @@
 
 ## 概述
 
-rpamis-exception-spring-boot-starter 是 RPAMIS 提供的异常处理模块，它的核心模块是 rpamis-common-exception，提供了自定义的校验器、多种类型异常处理、全局异常处理以及 Dubbo 异常处理 Filter。
+rpamis-exception-spring-boot-starter 是 RPAMIS 提供的异常处理模块，它的核心模块是 rpamis-common-exception 和 rpamis-exception-dto，提供了自定义的校验器、多种类型异常处理、全局异常处理以及 Dubbo 异常处理 Filter。
 
 ## 功能特性
 
@@ -31,24 +31,25 @@ rpamis-common-exception 提供了多种异常类型，包括：
 | 异常类型 | 描述 |
 | --- | --- |
 | BizException | 业务异常，用于表示业务逻辑错误 |
+| BizNoStackException | 无堆栈的业务异常，用于不需要打印堆栈的场景 |
 | SysException | 系统异常，用于表示系统级错误 |
 | ValidException | 验证异常，用于表示参数验证失败 |
-| CodedException | 带编码的异常，用于需要返回特定错误码的场景 |
+| RpamisException | 自定义异常，接受任意状态码 |
 
 ### 3. 异常使用示例
 
 ```java
-import com.rpamis.common.exception.BizException;
-import com.rpamis.common.exception.ExceptionFactory;
+import com.rpamis.exception.dto.BizException;
+import com.rpamis.exception.dto.ExceptionFactory;
 
 @Service
 public class DemoService {
 
-    public void doBusiness() {
+    public void doBusiness(boolean someCondition) {
         try {
             // 业务逻辑
             if (someCondition) {
-                throw new BizException("业务操作失败", "详细信息");
+                throw ExceptionFactory.bizException("业务操作失败", new RuntimeException("详细信息"));
             }
         } catch (Exception e) {
             throw ExceptionFactory.sysException("系统异常", e);
@@ -89,35 +90,23 @@ public class ExceptionHandlerConfig {
 
 ```json
 {
-    "code": "ERROR_CODE",
-    "message": "错误信息",
-    "details": "详细信息",
+    "errCode": "ERROR_CODE",
+    "errMessage": "错误信息",
+    "detailMessage": "详细信息",
     "data": null
 }
 ```
 
+### 3. 异常响应Http Code
+- 日志级别WARN:对于前置校验类异常，正常来说状态码为400，代表前端参数错误，400状态下前端不能直接拿到返回体，需要前端异常捕获配合才能打印msg，该类型异常已知，不需要人工处理
+- 日志级别WARN:对于业务类校验异常ValidException(不带堆栈)，状态码为200，表示请求正常只是业务拦截，该类型异常已知，不需要人工处理
+- 日志级别WARN：对于业务类异常BizException(带堆栈)、BizNoStackException(不带堆栈)，状态码200，表示请求正常只是业务拦截，该类型异常已知，不需要人工处理
+- 日志级别ERROR:对于已知可能发生的系统级异常SysException(带堆栈)，状态码为500，表示出现系统异常，开发者手动抛出该异常说明，该系统级异常已知，需要人工处理
+- 日志级别ERROR:对于未知的发生的系统级异常Exception(带堆栈)，状态码500，表示出现未知的没有被try catch的异常，需要人工处理
+- 日志级别WARN:用于非固定状态码任意位置的异常RpamisException(可带堆栈、也可不带)，状态码200，由于该类接受任意状态码，目的是兼容前端对接业务状态码场景，可用于兼容老项目做全局异常
+- 强调http code规范，弱化业务code属性，业务code属性理论上属于后端开发需要观测，前端仅需根据http code做出对应处理
+
 ## 自定义校验器
-
-### 1. 创建自定义校验器
-
-```java
-import com.rpamis.common.exception.validator.Validator;
-
-public class CustomValidator implements Validator<Object> {
-    @Override
-    public boolean validate(Object value) {
-        // 自定义验证逻辑
-        return value != null && value.toString().length() > 0;
-    }
-
-    @Override
-    public String getErrorMessage() {
-        return "值不能为空";
-    }
-}
-```
-
-### 2. 使用自定义校验器
 
 ```java
 import com.rpamis.common.exception.annotation.Validate;
@@ -125,8 +114,8 @@ import com.rpamis.common.exception.validator.Validator;
 
 public class UserDTO {
 
-    @Validate(validator = CustomValidator.class)
-    private String username;
+    @SpecifiesValidator(message = "status必须符合枚举", enumClass = StatusEnum.class)
+    private String status;
 
     // 其他字段和方法
 }
@@ -138,9 +127,10 @@ public class UserDTO {
 
 rpamis-common-exception 提供了 Dubbo 异常处理 Filter，可以自动处理 Dubbo 服务调用中的异常：
 
-```xml
-<dubbo:provider filter="exceptionFilter" />
-<dubbo:consumer filter="exceptionFilter" />
+开启方式在`resource/META-INF/dubbo/org.apache.dubbo.rpc.Filter`中添加：
+
+```
+DubboExceptionFilter=com.rpamis.common.exception.exception.DubboExceptionFilter
 ```
 
 ### 2. 异常转换
@@ -156,36 +146,10 @@ rpamis-common-exception 提供了 Dubbo 异常处理 Filter，可以自动处理
 ```yaml
 rpamis:
   exception:
-    enabled: true               # 是否启用异常处理
-    printStack: false           # 是否打印堆栈信息
-    defaultCode: "ERROR"        # 默认错误码
-    defaultMessage: "系统错误"  # 默认错误信息
+    # 是否开启全局Web异常
+    enabled: true
+    # 是否开启全局RPC统一返回体
+    rpc-pack: true
+    # 是否开启Exception.class捕获
+    include-exception-class: true
 ```
-
-### 2. 验证配置
-
-```yaml
-rpamis:
-  validation:
-    enabled: true               # 是否启用参数验证
-    failFast: true              # 是否快速失败
-```
-
-## 常见问题
-
-### 1. 如何自定义异常响应格式？
-
-您可以实现自定义的 ExceptionHandler 来覆盖默认的异常响应格式。
-
-### 2. 如何添加自定义异常类型？
-
-您可以继承 CodedException 或其他基础异常类来创建自定义异常类型。
-
-### 3. 参数验证不生效怎么办？
-
-确保您已正确配置验证器，并在需要验证的字段上添加了 @Validate 注解。
-
-## 参考链接
-
-- [官方文档](https://github.com/rpamis/rpamis/wiki/Exception-Handling)
-- [API 文档](https://rpamis.github.io/rpamis)

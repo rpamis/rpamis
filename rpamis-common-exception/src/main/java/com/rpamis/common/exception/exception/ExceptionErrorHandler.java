@@ -30,9 +30,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * SpringBoot使用时请采用
+ * SpringBoot使用时请采用yaml配置
  * <p/>
- * @ComponentScan({"你的启动类基础package路径","cn.rpamis.common.exception"})
  * 非SpringBoot项目请采用XML文件方式
  * <p/>
  * <context:component-scan base-package="你的启动类基础package路径, cn.rpamis.common.exception"/>
@@ -44,7 +43,7 @@ import java.util.stream.Collectors;
  * 日志级别WARN：对于业务类异常BizException(带堆栈)、BizNoStackException(不带堆栈)，状态码200，表示请求正常只是业务拦截，该类型异常已知，不需要人工处理
  * 日志级别ERROR:对于已知可能发生的系统级异常SysException(带堆栈)，状态码为500，表示出现系统异常，开发者手动抛出该异常说明，该系统级异常已知，需要人工处理
  * 日志级别ERROR:对于未知的发生的系统级异常Exception(带堆栈)，状态码500，表示出现未知的没有被try catch的异常，需要人工处理
- * 日志级别WARN:用于非固定状态码任意位置的异常RpasException(可带堆栈、也可不带)，状态码200，由于该类接受任意状态码，目的是兼容前端对接业务状态码场景，可用于兼容老项目做全局异常
+ * 日志级别WARN:用于非固定状态码任意位置的异常RpamisException(可带堆栈、也可不带)，状态码200，由于该类接受任意状态码，目的是兼容前端对接业务状态码场景，可用于兼容老项目做全局异常
  * <p/>
  * 强调http code规范，弱化业务code属性，业务code属性理论上属于后端开发需要观测，前端仅需根据http code做出对应处理
  *

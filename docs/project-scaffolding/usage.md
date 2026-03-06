@@ -29,25 +29,42 @@ rpamis-architecture-build 是一个强大的项目脚手架工具，用于快速
 ### 2. 使用 API 生成项目
 
 ```java
-import com.rpamis.architecture.build.ArchitectureBuildController;
-import com.rpamis.architecture.build.vo.BaseProjectConfig;
+import com.rpamis.architecture.config.BaseProjectConfig;
+import com.rpamis.architecture.consts.TemplateTypeEnum;
+import com.rpamis.architecture.pojo.Project;
+import com.rpamis.architecture.pojo.Dependency;
+import com.rpamis.architecture.controller.ArchitectureBuildController;
+import com.rpamis.architecture.service.BuildService;
+import com.rpamis.architecture.service.impl.BuildServiceImpl;
+import com.rpamis.architecture.pojo.FileVO;
 
 public class ProjectGenerator {
 
     public static void main(String[] args) {
         // 配置项目基本信息
-        BaseProjectConfig config = new BaseProjectConfig();
-        config.setGroupId("com.example");
-        config.setArtifactId("my-project");
-        config.setVersion("1.0.0");
-        config.setPackageName("com.example.myproject");
-        config.setDescription("我的示例项目");
+        Project project = Project.builder()
+                .groupId("com.example")
+                .artifactId("my-project")
+                .version("1.0.0")
+                .packageName("com.example.myproject")
+                .description("我的示例项目")
+                .build();
 
-        // 生成多模块项目
-        ArchitectureBuildController controller = new ArchitectureBuildController();
-        controller.buildMultiModuleProject(config);
+        Dependency dependency = new Dependency();
+        // 可以配置依赖信息，如consul、feign、database等
 
-        System.out.println("项目生成成功！");
+        // 创建项目配置
+        BaseProjectConfig config = BaseProjectConfig.builder()
+                .project(project)
+                .dependency(dependency)
+                .templateType(TemplateTypeEnum.MULTI_MOUDULE) // 多模块项目
+                .build();
+
+        // 生成项目
+        BuildService buildService = new BuildServiceImpl();
+        FileVO fileVO = buildService.architectureBuild(config);
+
+        System.out.println("项目生成成功！下载ID：" + fileVO.getId());
     }
 }
 ```
@@ -85,66 +102,70 @@ BaseProjectConfig 类包含以下主要配置选项：
 
 | 属性 | 类型 | 描述 |
 | --- | --- | --- |
-| groupId | String | 项目组织ID |
-| artifactId | String | 项目ID |
-| version | String | 项目版本 |
-| packageName | String | 包名 |
-| description | String | 项目描述 |
-| projectType | ProjectType | 项目类型（单模块/多模块/Starter） |
-| modules | List<String> | 自定义模块列表（多模块项目时使用） |
+| project | Project | 项目基本信息 |
+| dependency | Dependency | 项目依赖配置 |
+| templateType | TemplateTypeEnum | 项目类型（单模块/多模块/Starter） |
 
 ### 支持的项目类型
 
 ```java
-public enum ProjectType {
-    SINGLE_MODULE,    // 单模块项目
-    MULTI_MODULE,     // 多模块项目
-    SPRING_BOOT_STARTER // Spring Boot Starter
+import com.rpamis.architecture.consts.TemplateTypeEnum;
+
+public enum TemplateTypeEnum {
+    MULTI_MOUDULE("MULTI", "多模块项目"),
+    SINGLE_MOUDULE("SINGLE", "单模块项目"),
+    STARTER("STARTER", "Starter项目");
 }
 ```
 
-### 高级配置
+### 项目基本信息配置（Project类）
 
-您可以通过以下方式进行更高级的配置：
+| 属性 | 类型 | 描述 |
+| --- | --- | --- |
+| groupId | String | 项目组织ID |
+| artifactId | String | 项目ID |
+| type | String | 项目类型（默认maven） |
+| packaging | String | 打包方式（jar或war） |
+| javaVersion | String | Java版本 |
+| version | String | 项目版本 |
+| packageName | String | 包名 |
+| description | String | 项目描述 |
+| mainName | String | 主类名（由artifactId自动转化生成） |
 
-```java
-import com.rpamis.architecture.build.vo.ProjectTemplate;
+### 依赖配置（Dependency类）
 
-public class CustomProjectGenerator {
-    public static void main(String[] args) {
-        BaseProjectConfig config = new BaseProjectConfig();
-        config.setGroupId("com.example");
-        config.setArtifactId("custom-project");
-        config.setVersion("1.0.0");
-        config.setPackageName("com.example.customproject");
-        config.setDescription("自定义项目架构");
-
-        // 使用自定义模板
-        ProjectTemplate customTemplate = new ProjectTemplate();
-        customTemplate.setTemplateName("custom-template");
-        customTemplate.setModuleNames(Arrays.asList("common", "dao", "service", "api"));
-
-        ArchitectureBuildController controller = new ArchitectureBuildController();
-        controller.buildProjectWithTemplate(config, customTemplate);
-    }
-}
-```
+| 属性 | 类型 | 描述 |
+| --- | --- | --- |
+| consul | Consul | Consul配置 |
+| feign | Feign | Feign配置 |
+| database | Database | 数据库配置 |
 
 ## 常见问题
 
-### 1. 如何指定项目模板？
+### 1. 项目生成失败怎么办？
+
+- 确保groupId、artifactId、packageName等必填字段不为空
+- 检查artifactId是否符合命名规范（仅能以英文字母开头、英文字母结尾，可包含字母、数字、-线）
+- 确保项目输出路径有写入权限
+
+### 2. 如何选择项目类型？
+
+- 对于简单的项目或原型开发，选择单模块项目（SINGLE_MOUDULE）
+- 对于大型项目或需要模块化架构的项目，选择多模块项目（MULTI_MOUDULE）
+- 如果您需要创建自定义的Spring Boot Starter，选择STARTER项目类型
+
+### 3. 如何配置数据库？
+
+在Dependency类中配置Database对象，支持常见的数据库类型（如MySQL、PostgreSQL等）。
+
+### 4. 如何指定项目模板？
 
 您可以通过 `ProjectTemplate` 类来指定自定义模板，或者使用预定义的模板。
 
-### 2. 如何添加自定义模块？
+### 5. 如何添加自定义模块？
 
 在 `BaseProjectConfig` 的 `modules` 属性中添加您想要的模块名称列表。
 
-### 3. 项目生成后如何配置？
+### 6. 项目生成后如何配置？
 
 项目生成后，您可以根据需要修改 `pom.xml` 和其他配置文件。
-
-## 参考链接
-
-- [官方文档](https://github.com/rpamis/rpamis/wiki/Architecture-Build)
-- [API 文档](https://rpamis.github.io/rpamis)

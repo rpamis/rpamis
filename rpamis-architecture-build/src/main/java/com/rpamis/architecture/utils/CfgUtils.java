@@ -18,7 +18,7 @@ public class CfgUtils {
 
 	public static Configuration getCfg() {
 		if (cfg == null) {
-			synchronized (Configuration.class) {
+			synchronized (CfgUtils.class) {
 				if (cfg == null) {
 					try {
 						cfg = new Configuration(Configuration.VERSION_2_3_30);

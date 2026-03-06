@@ -34,7 +34,7 @@ rpamis-enum-core 实现了枚举缓存功能，提供了 CachableEnum 接口，�
 ### 2. 定义枚举类
 
 ```java
-import com.rpamis.enumcore.common.CachableEnum;
+import com.rpamis.enums.core.CachableEnum;
 
 // 1. 定义枚举类并实现 CachableEnum 接口
 public enum OrderStatusEnum implements CachableEnum<Integer, String> {
@@ -67,13 +67,13 @@ public enum OrderStatusEnum implements CachableEnum<Integer, String> {
 ### 3. 在代码中使用 EnumLookup 直接获取枚举值
 
 ```java
-import com.rpamis.enumcore.EnumLookup;
+import com.rpamis.enums.core.EnumLookup;
 
 public class OrderService {
 
     public String getOrderStatusDesc(Integer status) {
         // 直接通过 EnumLookup 获取枚举值，无需在枚举中反复编写获取代码
-        OrderStatusEnum statusEnum = EnumLookup.findEnumByCode(OrderStatusEnum.class, status);
+        OrderStatusEnum statusEnum = EnumLookup.getEnumByCode(OrderStatusEnum.class, status);
         return statusEnum != null ? statusEnum.getDesc() : "未知状态";
     }
 }
@@ -81,101 +81,21 @@ public class OrderService {
 
 ## 高级用法
 
-### 1. 获取所有枚举值
+### 1. 根据描述获取枚举值
 
 ```java
-import com.rpamis.enumcore.EnumLookup;
-
-public class EnumDemo {
-    public static void main(String[] args) {
-        // 获取所有 OrderStatusEnum 枚举值
-        List<OrderStatusEnum> allStatuses = EnumLookup.getAllEnums(OrderStatusEnum.class);
-
-        for (OrderStatusEnum status : allStatuses) {
-            System.out.println("Code: " + status.getCode() + ", Desc: " + status.getDesc());
-        }
-    }
-}
-```
-
-### 2. 根据描述获取枚举值
-
-```java
-import com.rpamis.enumcore.EnumLookup;
+import com.rpamis.enums.core.EnumLookup;
 
 public class EnumDemo {
     public static void main(String[] args) {
         // 根据描述获取枚举值
-        OrderStatusEnum status = EnumLookup.findEnumByDesc(OrderStatusEnum.class, "已支付");
+        OrderStatusEnum status = EnumLookup.getEnumByDesc(OrderStatusEnum.class, "已支付");
 
         if (status != null) {
             System.out.println("Found: Code = " + status.getCode() + ", Desc = " + status.getDesc());
         } else {
             System.out.println("Not found");
         }
-    }
-}
-```
-
-### 3. 获取所有枚举值的 Map 表示
-
-```java
-import com.rpamis.enumcore.EnumLookup;
-
-public class EnumDemo {
-    public static void main(String[] args) {
-        // 获取所有枚举值的 Map 表示 (Code -> Enum)
-        Map<Integer, OrderStatusEnum> enumMap = EnumLookup.getEnumMapByCode(OrderStatusEnum.class);
-
-        System.out.println(enumMap); // 输出: {1=PENDING, 2=PAID, 3=SHIPPED, 4=DELIVERED, 5=CANCELLED}
-
-        // 获取所有枚举值的 Map 表示 (Desc -> Enum)
-        Map<String, OrderStatusEnum> descMap = EnumLookup.getEnumMapByDesc(OrderStatusEnum.class);
-
-        System.out.println(descMap); // 输出: {待支付=PENDING, 已支付=PAID, 已发货=SHIPPED, 已收货=DELIVERED, 已取消=CANCELLED}
-    }
-}
-```
-
-## 配置选项
-
-### 1. 自定义缓存配置
-
-如果您需要自定义缓存配置，可以通过以下方式：
-
-```java
-import com.rpamis.enumcore.cache.EnumCache;
-
-public class EnumConfig {
-    public static void main(String[] args) {
-        // 获取默认的枚举缓存
-        EnumCache enumCache = EnumCache.getInstance();
-
-        // 或者创建自定义配置的枚举缓存
-        EnumCache customCache = new EnumCache(
-            EnumCache.EnumCacheConfig.builder()
-                .enableCache(true)
-                .initialCapacity(100)
-                .loadFactor(0.75f)
-                .build()
-        );
-    }
-}
-```
-
-### 2. 禁用缓存
-
-如果您不想使用缓存功能，可以通过以下方式禁用：
-
-```java
-import com.rpamis.enumcore.cache.EnumCache;
-
-public class EnumConfig {
-    public static void main(String[] args) {
-        EnumCache.getInstance().clearCache();
-        EnumCache.EnumCacheConfig config = EnumCache.EnumCacheConfig.builder()
-            .enableCache(false)
-            .build();
     }
 }
 ```
@@ -208,8 +128,3 @@ CachableEnum 是一个接口，枚举类可以继承其他接口，但不能继�
 2. **避免重复代码**：使用 EnumLookup 来替代在每个枚举类中编写重复的获取代码
 3. **考虑线程安全**：虽然枚举类本身是线程安全的，但如果您需要自定义操作，应该考虑线程安全问题
 4. **合理使用缓存**：对于大型项目，可以考虑禁用不必要的枚举类的缓存
-
-## 参考链接
-
-- [官方文档](https://github.com/rpamis/rpamis/wiki/Enum-Cache)
-- [API 文档](https://rpamis.github.io/rpamis)

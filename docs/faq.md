@@ -1,19 +1,19 @@
-# RPAMIS 常见问题
+# Rpamis 常见问题
 
 ## 入门问题
 
-### Q: RPAMIS 是什么？
-A: RPAMIS（Rapid Project Architecture and Micro Infrastructure Service）是一个开源的 Java 基础设施库，为开发者提供快速、统一的项目结构生成，统一的包管理工具，并提供开箱即用的开发效能工具。
+### Q: Rpamis 是什么？
+A: Rpamis（Rapid Project Architecture and Micro Infrastructure Service）是一个开源的 Java 基础设施库，为开发者提供快速、统一的项目结构生成，统一的包管理工具，并提供开箱即用的开发效能工具。
 
-### Q: RPAMIS 需要什么版本的 Java？
-A: RPAMIS 要求 Java 17 及以上版本。
+### Q: Rpamis 需要什么版本的 Java？
+A: Rpamis 要求 Java 17 及以上版本。
 
-### Q: RPAMIS 支持哪些框架？
-A: RPAMIS 主要支持 Spring Boot 3.x 框架，但也可以在其他 Java 项目中使用。
+### Q: Rpamis 支持哪些框架？
+A: Rpamis 主要支持 Spring Boot 3.x 框架，但也可以在其他 Java 项目中使用。
 
 ## 依赖管理
 
-### Q: 如何引入 RPAMIS 依赖？
+### Q: 如何引入 Rpamis 依赖？
 A: 在 Maven 项目中，您可以直接在 `pom.xml` 中引入所需的模块依赖：
 
 ```xml
@@ -47,9 +47,6 @@ A: 如果您使用 `Response.success()` 而不带参数，data 字段将为 `nul
 A:
 - **BizException**：用于业务逻辑异常，不会打印堆栈信息（提高性能）
 - **SysException**：用于系统级异常，会打印完整堆栈信息
-
-### Q: 如何全局处理异常？
-A: 您可以创建一个全局异常处理器，并使用 `@RestControllerAdvice` 注解。
 
 ### Q: 异常处理会影响性能吗？
 A: 不会显著影响，尤其是 BizException 已优化为无堆栈信息的版本。
@@ -185,25 +182,3 @@ A:
 1. 检查是否引入了正确的依赖
 2. 检查是否禁用了追踪功能
 3. 检查日志级别配置是否正确
-
-## 支持与贡献
-
-### Q: 如何报告问题？
-A: 在 [GitHub Issues](https://github.com/rpamis/rpamis/issues) 上创建问题。
-
-### Q: 如何贡献代码？
-A: 提交 Pull Request 到 GitHub 仓库。
-
-### Q: 是否有中文文档？
-A: 有，README.md 和 docs 目录下的文档都是中文的。
-
-## 版本更新
-
-### Q: 如何升级到最新版本？
-A: 只需更改 pom.xml 中的版本号。
-
-### Q: 版本号有什么规则？
-A: 使用 Semantic Versioning（语义化版本）规则：MAJOR.MINOR.PATCH。
-
-### Q: 是否有迁移指南？
-A: 在项目 Wiki 或发布说明中有详细的迁移指南。

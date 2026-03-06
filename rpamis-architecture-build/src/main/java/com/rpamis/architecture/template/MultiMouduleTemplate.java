@@ -6,7 +6,7 @@ import com.rpamis.architecture.config.InitConfig;
 import com.rpamis.architecture.consts.ProjectTemplate;
 import com.rpamis.architecture.consts.TemplateTypeEnum;
 import com.rpamis.architecture.pojo.FileVO;
-import com.rpamis.architecture.utils.StringUtils;
+import com.rpamis.common.utils.StringUtils;
 import com.rpamis.architecture.consts.ProjectKey;
 import com.rpamis.architecture.consts.ProjectPath;
 import com.rpamis.common.utils.SnowflakeUtil;

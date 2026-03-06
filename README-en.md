@@ -1,5 +1,7 @@
 # Rpamis 🚀
 
+[中文](README.md) | [English](README-en.md)
+
 [![Maven Central](https://img.shields.io/maven-central/v/com.rpamis/rpamis.svg?style=flat-square)](https://search.maven.org/search?q=g:com.rpamis)
 [![GitHub Actions](https://github.com/rpamis/rpamis/workflows/full-build/badge.svg?branch=master)](https://github.com/rpamis/rpamis/actions)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
@@ -51,28 +53,46 @@ Provides developers with fast, unified project structure generation, unified pac
 ### 📦 Dependency Introduction
 
 ```xml
+<!-- Exception Handling -->
 <dependency>
     <groupId>com.rpamis</groupId>
     <artifactId>rpamis-exception-spring-boot-starter</artifactId>
     <version>1.0.2</version>
 </dependency>
+
+<!-- Enum Cache -->
+<dependency>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-enum-core</artifactId>
+    <version>1.0.2</version>
+</dependency>
+
+<!-- SPI Extension -->
+<dependency>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-extension-spi</artifactId>
+    <version>1.0.2</version>
+</dependency>
+
+<!-- Project Scaffolding -->
+<dependency>
+    <groupId>com.rpamis</groupId>
+    <artifactId>rpamis-architecture-build</artifactId>
+    <version>1.0.2</version>
+</dependency>
 ```
 
-### 🔄 Using Unified Response
+### 🔄 Using Unified Response/Unified Exception Handling
 
-For detailed usage, please refer to: [Exception Handling Usage Guide](docs/exception-handling/usage.md)
-
-### ⚠️ Exception Handling Example
-
-For detailed usage, please refer to: [Exception Handling Usage Guide](docs/exception-handling/usage.md)
+[Exception Handling Usage Guide](docs/exception-handling/usage.md)
 
 ### 📊 Enum Usage Example
 
-For detailed usage, please refer to: [Enum Cache Mechanism Usage Guide](docs/enum-cache/usage.md)
+[Enum Cache Usage Guide](docs/enum-cache/usage.md)
 
 ### 🔌 SPI Usage Example
 
-For detailed usage, please refer to: [SPI Extension Mechanism Usage Guide](docs/spi-extension/usage.md)
+[SPI Extension Mechanism Usage Guide](docs/spi-extension/usage.md)
 
 ## 🏗️ Module Architecture
 
@@ -106,7 +126,6 @@ RPAMIS uses a Maven multi-module architecture, with the following main modules:
 ## 📚 Detailed Documentation
 
 - 📖 [Usage Guide](docs/usage.md) - Detailed function usage instructions
-- 📚 [API Documentation](https://rpamis.github.io/rpamis/) - Complete API documentation
 - 📦 [Module Descriptions](docs/modules.md) - Detailed function descriptions for each module
 - ❓ [FAQ](docs/faq.md) - Frequently Asked Questions
 
@@ -186,12 +205,7 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 - **Project Home**: https://github.com/rpamis/rpamis 🏠
 - **Issue Tracking**: https://github.com/rpamis/rpamis/issues 🐛
-- **Development Email**: benyuanming@gmail.com ✉️
-
-## 🙏 Acknowledgments
-
-Thank you to all developers who have contributed to RPAMIS!
 
 ---
 
-**RPAMIS** - Make development simpler and more efficient! 🚀
+**Rpamis** - Make development simpler and more efficient! 🚀

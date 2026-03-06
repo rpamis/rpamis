@@ -1,6 +1,6 @@
-# RPAMIS 使用指南
+# Rpamis 使用指南
 
-本文档详细介绍 RPAMIS 各个模块的使用方法和最佳实践。
+本文档详细介绍 Rpamis 各个模块的使用方法和最佳实践。
 
 ## 统一响应模块 (rpamis-common-dto)
 
@@ -241,118 +241,6 @@ public class MyService {
 }
 ```
 
-## 通用工具模块 (rpamis-common-utils)
-
-### 1. 雪花ID生成
-
-```java
-import com.rpamis.common.utils.SnowflakeUtil;
-
-public class IdGenerator {
-
-    // 初始化（可选，默认使用默认配置）
-    static {
-        SnowflakeUtil.init(1, 1);
-    }
-
-    public long generateId() {
-        return SnowflakeUtil.nextId();
-    }
-}
-```
-
-### 2. Bean 属性工具
-
-```java
-import com.rpamis.common.utils.RpamisBeanUtil;
-
-public class BeanCopier {
-
-    public void copyProperties(Object source, Object target) {
-        RpamisBeanUtil.copyProperties(source, target);
-    }
-
-    public Map<String, Object> toMap(Object object) {
-        return RpamisBeanUtil.objectToMap(object);
-    }
-}
-```
-
-### 3. 文件工具
-
-```java
-import com.rpamis.common.utils.FileUtil;
-
-public class FileOperations {
-
-    public String readFile(String filePath) {
-        return FileUtil.readFileToString(filePath);
-    }
-
-    public void writeFile(String filePath, String content) {
-        FileUtil.writeStringToFile(filePath, content);
-    }
-}
-```
-
-### 4. JSON 工具
-
-```java
-import com.rpamis.common.utils.JackSonUtil;
-
-public class JsonOperations {
-
-    public String toJson(Object object) {
-        return JackSonUtil.toJson(object);
-    }
-
-    public <T> T fromJson(String json, Class<T> clazz) {
-        return JackSonUtil.toObject(json, clazz);
-    }
-}
-```
-
-## 架构生成工具 (rpamis-architecture-build)
-
-### 1. 快速生成单模块项目
-
-```java
-ArchitectureBuildController controller = new ArchitectureBuildController();
-controller.buildSingleModuleProject("my-project", "com.example", "1.0.0");
-```
-
-### 2. 生成多模块项目
-
-```java
-ArchitectureBuildController controller = new ArchitectureBuildController();
-controller.buildMultiModuleProject("my-project", "com.example", "1.0.0");
-```
-
-### 3. 配置说明
-
-#### 项目配置
-
-```yaml
-rpamis:
-  architecture:
-    groupId: com.example
-    artifactId: my-project
-    version: 1.0.0
-    packageName: com.example.myproject
-    description: 我的项目
-```
-
-#### 依赖配置
-
-```yaml
-rpamis:
-  architecture:
-    dependencies:
-      - spring-boot-starter-web
-      - mybatis-plus-boot-starter
-      - mysql-connector-j
-```
-
 ## 最佳实践
 
 ### 1. 响应设计最佳实践
@@ -423,24 +311,3 @@ public class OrderService {
     }
 }
 ```
-
-## 常见问题
-
-### Q: 如何自定义响应码？
-
-A: 可以继承 Response 类并覆盖相应方法，或使用自定义的响应类。
-
-### Q: 如何禁用自动配置？
-
-A: 在 Spring Boot 启动类上添加排除配置：
-
-```java
-@SpringBootApplication(exclude = {
-    CacheEnumAutoConfiguration.class,
-    ExceptionAutoConfiguration.class
-})
-```
-
-### Q: 如何自定义异常处理？
-
-A: 继承 ExceptionBaseHandler 并实现自己的异常处理逻辑。
