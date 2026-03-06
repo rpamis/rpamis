@@ -2,8 +2,10 @@ package com.rpamis.architecture.service;
 
 import com.rpamis.architecture.config.BaseProjectConfig;
 import com.rpamis.architecture.pojo.FileVO;
+import com.rpamis.architecture.pojo.SpringBootVersion;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * 生成类Service
@@ -41,5 +43,12 @@ public interface BuildService {
 	 * @return String
 	 */
 	String zipProject(String artifactId, String buildId);
+
+	/**
+	 * 初始化父类Map
+	 * @param parentMap parentMap
+	 * @param springBootVersion springBoot版本
+	 */
+	void initParentMap(Map<String, String> parentMap, SpringBootVersion springBootVersion);
 
 }

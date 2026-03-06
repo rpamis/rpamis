@@ -37,7 +37,7 @@ public class TemplateFactory implements InitializingBean {
 		templateMap = Optional.of(beansOfType)
 			.map(beansOfTypeMap -> beansOfTypeMap.values()
 				.stream()
-				.filter(template -> !StringUtils.isEmpty(template.getTemplateType()))
+				.filter(template -> StringUtils.hasLength(template.getTemplateType()))
 				.collect(Collectors.toMap(AbstractBuildTemplate::getTemplateType, Function.identity())))
 			.orElse(new HashMap<>(8));
 	}

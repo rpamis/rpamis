@@ -13,11 +13,11 @@ public enum TemplateTypeEnum implements CachableEnum<String, String> {
 	/**
 	 * 多模块项目
 	 */
-	MULTI_MOUDULE("MULTI", "多模块项目"),
+	MULTI_MODULE("MULTI", "多模块项目"),
 	/**
 	 * 单模块项目
 	 */
-	SINGLE_MOUDULE("SINGLE", "单模块项目"),
+	SINGLE_MODULE("SINGLE", "单模块项目"),
 	/**
 	 * Starter项目
 	 */

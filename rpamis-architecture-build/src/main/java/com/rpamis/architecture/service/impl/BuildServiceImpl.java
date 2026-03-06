@@ -1,32 +1,42 @@
 package com.rpamis.architecture.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.rpamis.architecture.config.BaseProjectConfig;
 import com.rpamis.architecture.consts.ProjectPath;
 import com.rpamis.architecture.pojo.FileVO;
+import com.rpamis.architecture.pojo.SpringBootVersion;
 import com.rpamis.architecture.service.BuildService;
 import com.rpamis.architecture.template.AbstractBuildTemplate;
 import com.rpamis.architecture.template.TemplateFactory;
 import com.rpamis.architecture.utils.CfgUtils;
 import com.rpamis.common.utils.FileUtil;
+import com.rpamis.exception.dto.BizException;
+import com.rpamis.exception.dto.BizNoStackException;
 import com.rpamis.exception.dto.ExceptionFactory;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -42,6 +52,9 @@ public class BuildServiceImpl implements BuildService {
 
 	@Autowired
 	private TemplateFactory templateFactory;
+
+	@Autowired
+	private CfgUtils cfgUtils;
 
 	@Override
 	public FileVO architectureBuild(BaseProjectConfig baseProjectConfig) {
@@ -66,7 +79,7 @@ public class BuildServiceImpl implements BuildService {
 			}
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file),
 					StandardCharsets.UTF_8);
-			CfgUtils.getCfg().getTemplate(templatesFtl, "UTF-8").process(baseProjectConfig, outputStreamWriter);
+			cfgUtils.getCfg().getTemplate(templatesFtl, "UTF-8").process(baseProjectConfig, outputStreamWriter);
 			outputStreamWriter.flush();
 			outputStreamWriter.close();
 		}
@@ -83,6 +96,35 @@ public class BuildServiceImpl implements BuildService {
 		ZipUtil.zip(genProjectPath, saveZipPath);
 		cn.hutool.core.io.FileUtil.del(genProjectPath);
 		return saveZipPath;
+	}
+
+	@Override
+	public void initParentMap(Map<String, String> parentMap, SpringBootVersion springBootVersion) {
+		try {
+			ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+			Resource[] resources;
+			if (SpringBootVersion.V1.getCode().equals(springBootVersion.getCode())) {
+				resources = resolver.getResources("classpath:templates/springboot2/*/*.ftl");
+			}
+			else if (SpringBootVersion.V2.getCode().equals(springBootVersion.getCode())) {
+				resources = resolver.getResources("classpath:templates/springboot3/*/*.ftl");
+			}
+			else {
+				throw new BizNoStackException("未找到生成资源路径");
+			}
+			for (Resource resource : resources) {
+				String path = URLDecoder.decode(resource.getURL().getPath(), StandardCharsets.UTF_8);
+				List<String> split = StrUtil.split(path, "/");
+				if (!split.isEmpty()) {
+					parentMap.put(split.get(split.size() - 1),
+							split.get(split.size() - 3).toLowerCase() + File.separator + split.get(split.size() - 2));
+				}
+			}
+		}
+		catch (IOException e) {
+			logger.error("初始化parentDirMap异常:{}", e.getMessage());
+			throw new BizException("初始化parentDirMap异常", e);
+		}
 	}
 
 	@Override
@@ -104,7 +146,7 @@ public class BuildServiceImpl implements BuildService {
 			try (ServletOutputStream outputStream = Objects.requireNonNull(response).getOutputStream()) {
 				response.setContentType("application/x-download");
 				response.addHeader("Content-Disposition",
-						"attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+						"attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
 				String filePath = ProjectPath.CACHETEMP_PATH + id + File.separator + fileName;
 				outputStream.write(cn.hutool.core.io.FileUtil.readBytes(filePath));
 				outputStream.flush();

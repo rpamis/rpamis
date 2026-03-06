@@ -28,16 +28,6 @@ public final class ProjectPath {
 
 	public static final String TEMPLATES_PATH = RESOURCE_PATH + "templates" + File.separator;
 
-	public static final String YAML_PATH = TEMPLATES_PATH + "yaml" + File.separator;
-
-	public static final String CRUD_PATH = TEMPLATES_PATH + "crud" + File.separator;
-
-	public static final String POM_PATH = TEMPLATES_PATH + "pom" + File.separator;
-
-	public static final String PRACTICE_PATH = TEMPLATES_PATH + "practice" + File.separator;
-
-	public static final String APPLICATION_PATH = TEMPLATES_PATH + "application" + File.separator;
-
 	public static final String POJO_PATH = "pojo" + File.separator;
 
 	public static final String DTO_PATH = "dto" + File.separator;
@@ -65,6 +55,28 @@ public final class ProjectPath {
 	public static final String MAPPER_XML_PATH = "mapper" + File.separator;
 
 	public static final String CONTROLLER_PATH = "controller" + File.separator;
+
+	public static final String DUBBO_FILTER_PATH = "META-INF" + File.separator + "dubbo" + File.separator;
+
+	public static final String AOP_PATH = "aop" + File.separator;
+
+	public static final String COMMON_PATH = "common" + File.separator;
+
+	public static final String CONSTANT_PATH = "constant" + File.separator;
+
+	public static final String ENUMS_PATH = "enums" + File.separator;
+
+	public static final String FILTER_PATH = "filter" + File.separator;
+
+	public static final String UTILS_PATH = "utils" + File.separator;
+
+	public static final String MANAGER_PATH = "manager" + File.separator;
+
+	public static final String IMPL_PATH = "impl" + File.separator;
+
+	public static final String ASSEMBLY_PATH = "assembly" + File.separator;
+
+	public static final String BIN_PATH = "bin" + File.separator;
 
 	private ProjectPath() {
 		throw new IllegalStateException("常量类，禁止实例化");

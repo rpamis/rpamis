@@ -3,6 +3,7 @@ package com.rpamis.architecture.config;
 import com.rpamis.architecture.consts.TemplateTypeEnum;
 import com.rpamis.architecture.pojo.Dependency;
 import com.rpamis.architecture.pojo.Project;
+import com.rpamis.architecture.pojo.SpringBootVersion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,5 +41,10 @@ public class BaseProjectConfig implements Serializable {
 	 * 模板类型
 	 */
 	private TemplateTypeEnum templateType;
+
+	/**
+	 * SpringBoot版本
+	 */
+	private SpringBootVersion springBootVersion;
 
 }

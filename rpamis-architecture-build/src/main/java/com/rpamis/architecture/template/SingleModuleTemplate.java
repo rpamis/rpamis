@@ -11,11 +11,16 @@ import org.springframework.stereotype.Component;
  * @date 2022/7/21 10:39 上午
  */
 @Component
-public class SingleMouduleTemplate extends AbstractBuildTemplate {
+public class SingleModuleTemplate extends AbstractBuildTemplate {
 
 	@Override
 	protected String getTemplateType() {
-		return TemplateTypeEnum.SINGLE_MOUDULE.getCode();
+		return TemplateTypeEnum.SINGLE_MODULE.getCode();
+	}
+
+	@Override
+	protected void initParentDirMap() {
+
 	}
 
 	@Override

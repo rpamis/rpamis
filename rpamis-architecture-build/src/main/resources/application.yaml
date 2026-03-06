@@ -11,6 +11,7 @@ server:
   servlet:
     context-path: /rpamis-architecture-build
 rpamis:
+  activate: local
   exception:
     # 是否开启全局Web异常
     enabled: true

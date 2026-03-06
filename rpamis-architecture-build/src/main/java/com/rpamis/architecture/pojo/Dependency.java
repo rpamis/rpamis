@@ -35,4 +35,39 @@ public class Dependency implements Serializable {
 	 */
 	private Database database;
 
+	/**
+	 * kafka
+	 */
+	private Kafka kafka;
+
+	/**
+	 * redis
+	 */
+	private Redis redis;
+
+	/**
+	 * mongoDb
+	 */
+	private MongoDb mongoDb;
+
+	/**
+	 * exception
+	 */
+	private Exception exception;
+
+	/**
+	 * security
+	 */
+	private Security security;
+
+	/**
+	 * healthCheck
+	 */
+	private HealthCheck healthCheck;
+
+	/**
+	 * springcloud
+	 */
+	private SpringCloud springcloud;
+
 }

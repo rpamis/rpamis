@@ -19,6 +19,11 @@ public class StarterTemplate extends AbstractBuildTemplate {
 	}
 
 	@Override
+	protected void initParentDirMap() {
+
+	}
+
+	@Override
 	protected void initPath() {
 
 	}
