@@ -10,3 +10,12 @@ server:
   port: 8180
   servlet:
     context-path: /rpamis-architecture-build
+rpamis:
+  activate: local
+  exception:
+    # 是否开启全局Web异常
+    enabled: true
+    # 是否开启全局RPC统一返回体
+    rpc-pack: true
+    # 是否开启Exception.class捕获
+    include-exception-class: true

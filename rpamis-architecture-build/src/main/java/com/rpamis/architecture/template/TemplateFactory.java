@@ -22,23 +22,24 @@ import java.util.stream.Collectors;
 @Component
 public class TemplateFactory implements InitializingBean {
 
-  @Autowired
-  private ApplicationContext applicationContext;
+	@Autowired
+	private ApplicationContext applicationContext;
 
-  private Map<String, AbstractBuildTemplate> templateMap;
+	private Map<String, AbstractBuildTemplate> templateMap;
 
-  public AbstractBuildTemplate getTemplate(TemplateTypeEnum templateTypeEnum) {
-    return templateMap.get(templateTypeEnum.getCode());
-  }
+	public AbstractBuildTemplate getTemplate(TemplateTypeEnum templateTypeEnum) {
+		return templateMap.get(templateTypeEnum.getCode());
+	}
 
-  @Override
-  public void afterPropertiesSet() {
-    Map<String, AbstractBuildTemplate> beansOfType = applicationContext.getBeansOfType(
-        AbstractBuildTemplate.class);
-    templateMap = Optional.of(beansOfType)
-        .map(beansOfTypeMap -> beansOfTypeMap.values().stream()
-            .filter(template -> !StringUtils.isEmpty(template.getTemplateType()))
-            .collect(Collectors.toMap(AbstractBuildTemplate::getTemplateType, Function.identity())))
-        .orElse(new HashMap<>(8));
-  }
+	@Override
+	public void afterPropertiesSet() {
+		Map<String, AbstractBuildTemplate> beansOfType = applicationContext.getBeansOfType(AbstractBuildTemplate.class);
+		templateMap = Optional.of(beansOfType)
+			.map(beansOfTypeMap -> beansOfTypeMap.values()
+				.stream()
+				.filter(template -> StringUtils.hasLength(template.getTemplateType()))
+				.collect(Collectors.toMap(AbstractBuildTemplate::getTemplateType, Function.identity())))
+			.orElse(new HashMap<>(8));
+	}
+
 }

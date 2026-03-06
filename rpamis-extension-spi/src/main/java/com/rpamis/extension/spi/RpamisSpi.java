@@ -14,14 +14,13 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 public @interface RpamisSpi {
 
-  /**
-   * 默认使用的Spi实现类名称
-   *
-   * @return String
-   */
-  String value() default "";
+	/**
+	 * 默认使用的Spi实现类名称
+	 * @return String
+	 */
+	String value() default "";
 
 }

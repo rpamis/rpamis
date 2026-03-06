@@ -18,19 +18,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Consul implements Serializable {
 
-  private static final long serialVersionUID = 2541572673289440848L;
-  /**
-   * host
-   */
-  private String host;
+	private static final long serialVersionUID = 2541572673289440848L;
 
-  /**
-   * port
-   */
-  private String port;
+	/**
+	 * host
+	 */
+	private String host;
 
-  /**
-   * enabled
-   */
-  private Boolean enabled;
+	/**
+	 * port
+	 */
+	private String port;
+
+	/**
+	 * enabled
+	 */
+	private Boolean enabled;
+
 }

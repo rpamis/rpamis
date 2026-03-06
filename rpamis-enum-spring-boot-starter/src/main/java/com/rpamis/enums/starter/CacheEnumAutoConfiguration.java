@@ -16,15 +16,17 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(CacheEnumProperties.class)
-@ConditionalOnProperty(prefix = CacheEnumProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = CacheEnumProperties.PREFIX, name = "enabled", havingValue = "true",
+		matchIfMissing = true)
 public class CacheEnumAutoConfiguration implements ApplicationRunner {
 
-  @Autowired
-  private CacheEnumProperties cacheEnumProperties;
+	@Autowired
+	private CacheEnumProperties cacheEnumProperties;
 
-  @Override
-  public void run(ApplicationArguments args) throws Exception {
-    EnumCacheBuilder.setScanPackages(cacheEnumProperties.getPackages());
-    EnumCacheBuilder.build();
-  }
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		EnumCacheBuilder.setScanPackages(cacheEnumProperties.getPackages());
+		EnumCacheBuilder.build();
+	}
+
 }

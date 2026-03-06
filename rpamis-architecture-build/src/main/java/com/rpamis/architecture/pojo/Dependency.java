@@ -18,19 +18,56 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Dependency implements Serializable {
 
-  private static final long serialVersionUID = 2002865978882205674L;
-  /**
-   * consul
-   */
-  private Consul consul;
+	private static final long serialVersionUID = 2002865978882205674L;
 
-  /**
-   * feign
-   */
-  private Feign feign;
+	/**
+	 * consul
+	 */
+	private Consul consul;
 
-  /**
-   * database
-   */
-  private Database database;
+	/**
+	 * feign
+	 */
+	private Feign feign;
+
+	/**
+	 * database
+	 */
+	private Database database;
+
+	/**
+	 * kafka
+	 */
+	private Kafka kafka;
+
+	/**
+	 * redis
+	 */
+	private Redis redis;
+
+	/**
+	 * mongoDb
+	 */
+	private MongoDb mongoDb;
+
+	/**
+	 * exception
+	 */
+	private Exception exception;
+
+	/**
+	 * security
+	 */
+	private Security security;
+
+	/**
+	 * healthCheck
+	 */
+	private HealthCheck healthCheck;
+
+	/**
+	 * springcloud
+	 */
+	private SpringCloud springcloud;
+
 }

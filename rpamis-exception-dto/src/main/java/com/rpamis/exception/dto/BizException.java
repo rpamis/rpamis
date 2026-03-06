@@ -11,23 +11,24 @@ import com.rpamis.common.dto.enums.StatusCode;
  */
 public class BizException extends AbstractException {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private static final ResponseCode DEAULT_BIZ_ERRCODE = ResponseCode.BIZ_EXCEPTION_CODE;
+	private static final ResponseCode DEAULT_BIZ_ERRCODE = ResponseCode.BIZ_EXCEPTION_CODE;
 
-  public BizException(String errMessage, Throwable e) {
-    super(DEAULT_BIZ_ERRCODE.getCode(), errMessage, e);
-  }
+	public BizException(String errMessage, Throwable e) {
+		super(DEAULT_BIZ_ERRCODE.getCode(), errMessage, e);
+	}
 
-  public BizException(StatusCode statusCode, Throwable e) {
-    super(statusCode.getCode(), statusCode.getMessage(), e);
-  }
+	public BizException(StatusCode statusCode, Throwable e) {
+		super(statusCode.getCode(), statusCode.getMessage(), e);
+	}
 
-  public BizException(String errCode, String errMessage, Throwable e) {
-    super(errCode, errMessage, e);
-  }
+	public BizException(String errCode, String errMessage, Throwable e) {
+		super(errCode, errMessage, e);
+	}
 
-  public BizException(Throwable e) {
-    super(DEAULT_BIZ_ERRCODE, e);
-  }
+	public BizException(Throwable e) {
+		super(DEAULT_BIZ_ERRCODE, e);
+	}
+
 }

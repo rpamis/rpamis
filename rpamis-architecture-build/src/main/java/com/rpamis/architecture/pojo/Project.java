@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.NoArgsConstructor;
 
 /**
@@ -22,62 +22,64 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Project implements Serializable {
 
-  private static final long serialVersionUID = 8725624102238392562L;
-  /**
-   * groupId
-   */
-  @NotBlank(message = "groupId不能为空")
-  @ApiModelProperty("groupId")
-  private String groupId;
+	private static final long serialVersionUID = 8725624102238392562L;
 
-  /**
-   * artifactId
-   */
-  @NotBlank(message = "artifactId不能为空")
-  @ApiModelProperty("artifactId")
-  @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z]$", message = "artifactId仅能以英文字母开头, 英文字母结尾, 可包含字母、数字、-线")
-  private String artifactId;
+	/**
+	 * groupId
+	 */
+	@NotBlank(message = "groupId不能为空")
+	@ApiModelProperty("groupId")
+	private String groupId;
 
-  /**
-   * type
-   */
-  @ApiModelProperty("maven")
-  private String type;
+	/**
+	 * artifactId
+	 */
+	@NotBlank(message = "artifactId不能为空")
+	@ApiModelProperty("artifactId")
+	@Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z]$", message = "artifactId仅能以英文字母开头, 英文字母结尾, 可包含字母、数字、-线")
+	private String artifactId;
 
-  /**
-   * packaging
-   */
-  @ApiModelProperty("jar or war")
-  private String packaging;
+	/**
+	 * type
+	 */
+	@ApiModelProperty("maven")
+	private String type;
 
-  /**
-   * javaVersion
-   */
-  @ApiModelProperty("Java版本")
-  private String javaVersion;
+	/**
+	 * packaging
+	 */
+	@ApiModelProperty("jar or war")
+	private String packaging;
 
-  /**
-   * 项目版本
-   */
-  @ApiModelProperty("项目版本")
-  private String version;
+	/**
+	 * javaVersion
+	 */
+	@ApiModelProperty("Java版本")
+	private String javaVersion;
 
-  /**
-   * packageName
-   */
-  @NotBlank(message = "packageName不能为空")
-  @ApiModelProperty("package")
-  private String packageName;
+	/**
+	 * 项目版本
+	 */
+	@ApiModelProperty("项目版本")
+	private String version;
 
-  /**
-   * 描述
-   */
-  @ApiModelProperty("项目描述")
-  private String description;
+	/**
+	 * packageName
+	 */
+	@NotBlank(message = "packageName不能为空")
+	@ApiModelProperty("package")
+	private String packageName;
 
-  /**
-   * mainName
-   */
-  @ApiModelProperty("主类名(由artifactId自动转化生成)")
-  private String mainName;
+	/**
+	 * 描述
+	 */
+	@ApiModelProperty("项目描述")
+	private String description;
+
+	/**
+	 * mainName
+	 */
+	@ApiModelProperty("主类名(由artifactId自动转化生成)")
+	private String mainName;
+
 }

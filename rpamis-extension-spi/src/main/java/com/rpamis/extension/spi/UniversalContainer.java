@@ -8,16 +8,17 @@ package com.rpamis.extension.spi;
  */
 public class UniversalContainer<T> {
 
-  private volatile T value;
+	private volatile T value;
 
-  public UniversalContainer() {
-  }
+	public UniversalContainer() {
+	}
 
-  public T getValue() {
-    return value;
-  }
+	public T getValue() {
+		return value;
+	}
 
-  public void setValue(T value) {
-    this.value = value;
-  }
+	public void setValue(T value) {
+		this.value = value;
+	}
+
 }

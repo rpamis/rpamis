@@ -11,26 +11,24 @@ import com.rpamis.common.utils.SnowflakeUtil;
  */
 public interface TraceStrategy {
 
-  /**
-   * 生成Trace实体
-   *
-   * @return Trace
-   */
-  Trace generateTrace();
+	/**
+	 * 生成Trace实体
+	 * @return Trace
+	 */
+	Trace generateTrace();
 
-  /**
-   * 生成Id
-   *
-   * @return String
-   */
-  default String generateId(){
-    return String.valueOf(SnowflakeUtil.get().next());
-  }
+	/**
+	 * 生成Id
+	 * @return String
+	 */
+	default String generateId() {
+		return String.valueOf(SnowflakeUtil.get().next());
+	}
 
-  /**
-   * 策略名称
-   *
-   * @return String
-   */
-  String strategyName();
+	/**
+	 * 策略名称
+	 * @return String
+	 */
+	String strategyName();
+
 }

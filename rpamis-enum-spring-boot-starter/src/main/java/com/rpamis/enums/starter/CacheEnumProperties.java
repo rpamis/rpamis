@@ -12,32 +12,32 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = CacheEnumProperties.PREFIX)
 public class CacheEnumProperties {
 
-  public static final String PREFIX = "cache.enums";
+	public static final String PREFIX = "cache.enums";
 
-  /**
-   * 是否启用枚举缓存
-   */
-  private Boolean enabled = true;
+	/**
+	 * 是否启用枚举缓存
+	 */
+	private Boolean enabled = true;
 
-  /**
-   * 基本扫描路径
-   */
-  private List<String> packages;
+	/**
+	 * 基本扫描路径
+	 */
+	private List<String> packages;
 
+	public List<String> getPackages() {
+		return packages;
+	}
 
-  public List<String> getPackages() {
-    return packages;
-  }
+	public void setPackages(List<String> packages) {
+		this.packages = packages;
+	}
 
-  public void setPackages(List<String> packages) {
-    this.packages = packages;
-  }
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
-  public Boolean getEnabled() {
-    return enabled;
-  }
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled = enabled;
-  }
 }

@@ -8,18 +8,19 @@ package com.rpamis.extension.spi.loading;
  */
 public class RpamisExternalSpiLoadingStrategy implements SpiLoadingStrategy {
 
-  @Override
-  public String spiPath() {
-    return "META-INF/rpamis/";
-  }
+	@Override
+	public String spiPath() {
+		return "META-INF/rpamis/";
+	}
 
-  @Override
-  public String getName() {
-    return "RPAMIS_EXTERNAL";
-  }
+	@Override
+	public String getName() {
+		return "RPAMIS_EXTERNAL";
+	}
 
-  @Override
-  public int getPriority() {
-    return DEFAULT_PRIORITY;
-  }
+	@Override
+	public int getPriority() {
+		return DEFAULT_PRIORITY;
+	}
+
 }

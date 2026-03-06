@@ -18,9 +18,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Feign implements Serializable {
 
-  private static final long serialVersionUID = 931400845255790384L;
-  /**
-   * enabled
-   */
-  private Boolean enabled;
+	private static final long serialVersionUID = 931400845255790384L;
+
+	/**
+	 * enabled
+	 */
+	private Boolean enabled;
+
 }

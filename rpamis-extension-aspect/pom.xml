@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <parent>
-    <groupId>com.rpamis</groupId>
-    <artifactId>rpamis-boot-starter-parent</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
-    <relativePath>../rpamis-boot-starter-parent/pom.xml</relativePath>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.rpamis</groupId>
+        <artifactId>rpamis-boot-starter-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../rpamis-boot-starter-parent/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>rpamis-extension-aspect</artifactId>
-  <version>${rpamis-extension-aspect.version}</version>
-  <name>rpamis-extension-aspect</name>
-  <packaging>jar</packaging>
-  <description>rpamis-extension-aspect</description>
+    <artifactId>rpamis-extension-aspect</artifactId>
+    <name>rpamis-extension-aspect</name>
+    <packaging>jar</packaging>
+    <description>rpamis-extension-aspect</description>
+    <url>https://github.com/rpamis/rpamis</url>
 
-  <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <scm>
+        <url>git@github.com:rpamis/rpamis.git</url>
+        <connection>scm:git@github.com:rpamis/rpamis.git</connection>
+        <developerConnection>https://github.com/rpamis</developerConnection>
+    </scm>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjrt</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-expression</artifactId>
-      <optional>true</optional>
-    </dependency>
-  </dependencies>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 
 </project>
